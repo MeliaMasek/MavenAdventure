@@ -1,0 +1,74 @@
+{
+    "name": "Controller",
+    "maps": [
+        {
+            "name": "Android",
+            "id": "3af36cca-1b58-49b5-9f4c-8ef0642ea51b",
+            "actions": [
+                {
+                    "name": "TouchTap",
+                    "type": "PassThrough",
+                    "id": "bcbee66f-e53e-4d9c-a28d-c9b0ea3fef7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TouchPos",
+                    "type": "PassThrough",
+                    "id": "37dbf328-dc1c-4d90-84ca-1587501cac45",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Stick",
+                    "type": "Value",
+                    "id": "28500281-986f-4cd0-9004-af2c5b53ea28",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f4c005df-f7ce-4d22-b8e1-2b3f0eafc1ee",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdab06b9-8b83-49fd-be62-dd548fcbbdd3",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1be4a5e-889c-4cb9-89a1-1e56b7729dd8",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

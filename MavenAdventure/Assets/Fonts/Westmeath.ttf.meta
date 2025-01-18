@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: ab66e68e54cb46d499dcabc452752cdc
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Westmeath
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b69c3ec6b8dc2624e819cd53d0114361, type: 3}
+  - {fileID: 12800000, guid: 1ad330ca7e574174e8976e21cae59450, type: 3}
+  - {fileID: 12800000, guid: 1b025878b9b82094c841801b257a7741, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
