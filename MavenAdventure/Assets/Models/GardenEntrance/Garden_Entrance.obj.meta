@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: c7b035b06fa38f444b7997a54d60f77b
+guid: e6da474678dbe494eba44ea5b134ba35
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Small1Mat
-    second: {fileID: 2100000, guid: 46c0fe1ea13574442a39e35cc9dbea68, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Small1_DoorMat
-    second: {fileID: 2100000, guid: 46c0fe1ea13574442a39e35cc9dbea68, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Small1_Door_KnobMat
-    second: {fileID: 2100000, guid: 46c0fe1ea13574442a39e35cc9dbea68, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

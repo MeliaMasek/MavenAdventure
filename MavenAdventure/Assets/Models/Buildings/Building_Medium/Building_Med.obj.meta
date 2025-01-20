@@ -3,7 +3,22 @@ guid: bb2478c98a3a492418bbb59e45a91624
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_Med1_Building_Med2Mat
+    second: {fileID: 2100000, guid: 2e24e299292e1244da9c2ef1c4bedb5f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_Med2_DoorMat
+    second: {fileID: 2100000, guid: 2e24e299292e1244da9c2ef1c4bedb5f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Building_Med2_KnobMat
+    second: {fileID: 2100000, guid: 2e24e299292e1244da9c2ef1c4bedb5f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
