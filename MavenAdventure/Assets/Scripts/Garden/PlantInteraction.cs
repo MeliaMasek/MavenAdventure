@@ -6,23 +6,42 @@ public class PlantInteraction : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Check if the player clicked this plant
-        Debug.Log($"Clicked on plant: {plantData.baseStage.name}");
+        if (plantData == null || plantData.currentStageObject == null)
+        {
+            Debug.LogWarning("No plant data or current stage object assigned to this PlantInteraction script.");
+            return;
+        }
 
-        // Access the PlantInfoUI to show details about this plant
+        // Log the plant interaction
+        Debug.Log($"Clicked on plant: {plantData.currentStageObject.name}");
+
+        // Find the PlantInfo UI to display details about this plant
         PlantInfo plantInfoUI = FindObjectOfType<PlantInfo>();
         if (plantInfoUI != null)
         {
             plantInfoUI.ShowPlantInfo(plantData);
         }
+        else
+        {
+            Debug.LogWarning("PlantInfo UI is not found in the scene.");
+        }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        // Detects if the water can icon enters the plant area
+        if (other == null) return;
+
+        // Check if the collider is the watering can
         if (other.CompareTag("WateringCan"))
         {
-            Debug.Log("Water can is over this plant");
+            Debug.Log($"Water can is over the plant: {plantData.currentStageObject?.name ?? "Unnamed Plant"}");
+
+            // Trigger watering logic
+            if (plantData != null)
+            {
+                plantData.isWatered = true;
+                Debug.Log($"Plant {plantData.currentStageObject?.name ?? "Unnamed Plant"} is now watered.");
+            }
         }
     }
 }

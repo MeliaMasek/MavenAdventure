@@ -7,7 +7,7 @@ public class WateringInteraction : MonoBehaviour
     public PlantManager plantManager; // Reference to the PlantManager script
     public Material dirtWet;          // Material for wet dirt
     public Material dirtDry;          // Material for dry dirt
-    
+
     // Called when the Watering Button is clicked
     public void ActivateWateringMode()
     {
@@ -23,49 +23,68 @@ public class WateringInteraction : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, plantLayer))
             {
+                Debug.Log($"Hit object: {hit.collider.gameObject.name}");
+
                 // Find the plant associated with the clicked GameObject
-                foreach (var plant in plantManager.plants) // Access plants from PlantManager
+                foreach (var plant in plantManager.plants)
                 {
-                    if (plant.baseStage == hit.collider.gameObject ||
-                        plant.seedStage == hit.collider.gameObject ||
-                        plant.sproutStage == hit.collider.gameObject ||
-                        plant.matureStage == hit.collider.gameObject)
+                    if (plant.currentStageObject == hit.collider.gameObject)  // Check if clicked object matches the current stage object
                     {
-                        plant.isWatered = true;
-                        ChangeDirtMaterial(plant.baseStage); // Change the dirt material when watered
-                        Debug.Log($"Watered the plant: {hit.collider.gameObject.name}");
+                        Debug.Log($"Watering plant: {hit.collider.gameObject.name}");
+
+                        if (!plant.isWatered)
+                        {
+                            plant.isWatered = true;
+                            ChangeDirtMaterial(plant.currentStageObject); // Change the dirt material when watered
+                            Debug.Log($"Watered the plant: {hit.collider.gameObject.name}");
+                        }
+                        else
+                        {
+                            Debug.Log("This plant is already watered today.");
+                        }
+
                         isWateringMode = false;
                         break;
                     }
                 }
             }
-        }
-    }
-    
-    private void ChangeDirtMaterial(GameObject baseStage)
-    {
-        // Ensure the baseStage has at least two children
-        if (baseStage.transform.childCount > 1)
-        {
-            // Get the second child (index 1, as indexing is zero-based)
-            Transform secondChild = baseStage.transform.GetChild(1);
-
-            // Attempt to get the MeshRenderer from the second child
-            MeshRenderer meshRenderer = secondChild.GetComponent<MeshRenderer>();
-
-            if (meshRenderer != null)
-            {
-                meshRenderer.material = dirtWet; // Change the material to the wet material
-                Debug.Log($"Changed material to wet for second child of {baseStage.name}.");
-            }
             else
             {
-                Debug.LogWarning($"Second child of {baseStage.name} does not have a MeshRenderer.");
+                Debug.Log("Raycast did not hit anything.");
             }
         }
-        else
+    }
+
+    private void ChangeDirtMaterial(GameObject stageObject)
+    {
+        // Find all child objects with the "Dirt" tag
+        Transform[] childTransforms = stageObject.GetComponentsInChildren<Transform>();
+
+        bool materialChanged = false;
+
+        foreach (Transform child in childTransforms)
         {
-            Debug.LogWarning($"{baseStage.name} does not have a second child.");
+            if (child.CompareTag("Dirt"))
+            {
+                // Get the MeshRenderer of the dirt object
+                MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
+
+                if (meshRenderer != null)
+                {
+                    meshRenderer.material = dirtWet; // Change to wet material
+                    materialChanged = true;
+                    Debug.Log($"Changed material to wet for {child.name} in {stageObject.name}.");
+                }
+                else
+                {
+                    Debug.LogWarning($"No MeshRenderer found on {child.name} tagged as 'Dirt'.");
+                }
+            }
+        }
+
+        if (!materialChanged)
+        {
+            Debug.LogWarning($"No objects tagged as 'Dirt' found in {stageObject.name}.");
         }
     }
 }

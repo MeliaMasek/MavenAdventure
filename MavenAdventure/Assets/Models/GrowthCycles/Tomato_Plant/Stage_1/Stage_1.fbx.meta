@@ -7,17 +7,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Bed_Mat
+      name: Stage_1_Bed_Mat
     second: {fileID: 2100000, guid: 2359f8be6a9f1e64c9324f03f4ef3cd0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Dirt_Mat
+      name: Stage_1_Dirt_Mat
     second: {fileID: 2100000, guid: cd2339335db50904ab18108e4005f5c3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Seeds_Mat
+      name: Stage_1_Seeds_Mat
     second: {fileID: 2100000, guid: 3440a4ad21e2d5c4f91c1ceb89744524, type: 2}
   materials:
     materialImportMode: 2

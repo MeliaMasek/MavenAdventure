@@ -8,8 +8,6 @@ public class PlantInfo : MonoBehaviour
     public Text currentStageText;     // Text element for current stage
     public Text nextStageText;        // Text element for next stage
     public Text daysRemainingText;    // Text element for days remaining
-    //public Text waterStatusText;      // Text element for water status
-    //public Text fertilizerStatusText; // Text element for fertilizer status
 
     private PlantManager.Plant currentPlant;
 
@@ -24,18 +22,25 @@ public class PlantInfo : MonoBehaviour
 
     public void ShowPlantInfo(PlantManager.Plant plant)
     {
+        if (plant == null)
+        {
+            Debug.LogWarning("No plant provided to ShowPlantInfo.");
+            return;
+        }
+
         currentPlant = plant;
 
         // Update UI text elements with plant data
-        plantNameText.text = "Plant Name: " + (plant.baseStage.name ?? "Unknown");
+        plantNameText.text = "Plant Name: " + (plant.basePrefab?.name ?? "Unknown");
         currentStageText.text = "Current Stage: " + GetStageName(plant.currentStage);
         nextStageText.text = "Next Stage: " + GetStageName(plant.currentStage + 1);
         daysRemainingText.text = "Days Remaining: " + GetDaysRemaining(plant);
-        //waterStatusText.text = "Watered Today: " + (plant.isWatered ? "Yes" : "No");
-        //fertilizerStatusText.text = "Fertilized Today: " + (plant.isFertilized ? "Yes" : "No");
 
         // Show the popup
-        infoPopup.SetActive(true);
+        if (infoPopup != null)
+        {
+            infoPopup.SetActive(true);
+        }
     }
 
     public void ClosePopup()
@@ -61,13 +66,30 @@ public class PlantInfo : MonoBehaviour
 
     private int GetDaysRemaining(PlantManager.Plant plant)
     {
-        if (plant.currentStage == -1)
-            return plant.daysToSprout - plant.daysElapsed;
-        else if (plant.currentStage == 0)
-            return plant.daysToSprout - plant.daysElapsed;
-        else if (plant.currentStage == 1)
-            return plant.daysToMature - plant.daysElapsed;
-        else
-            return 0; // No further stages
+        if (plant == null)
+        {
+            Debug.LogWarning("Plant is null in GetDaysRemaining.");
+            return 0;
+        }
+
+        int remainingDays = 0;
+
+        switch (plant.currentStage)
+        {
+            case -1:
+                remainingDays = plant.daysToSprout - plant.daysElapsed;
+                break;
+            case 0:
+                remainingDays = plant.daysToSprout - plant.daysElapsed;
+                break;
+            case 1:
+                remainingDays = plant.daysToMature - plant.daysElapsed;
+                break;
+            default:
+                remainingDays = 0;
+                break;
+        }
+
+        return Mathf.Max(0, remainingDays); // Ensure non-negative values
     }
 }
