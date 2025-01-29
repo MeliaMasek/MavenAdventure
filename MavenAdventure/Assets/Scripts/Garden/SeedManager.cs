@@ -5,7 +5,6 @@ public class SeedManager : MonoBehaviour
     public bool isPlantingMode = false; // Tracks if planting mode is active
     public LayerMask plantLayer;       // Layer for plant objects
     public PlantManager plantManager;  // Reference to the PlantManager script
-    //public Material dirtWet;           // Material for wet dirt
     public Material dirtDry;           // Material for dry dirt
 
     // Called when the Planting Button is clicked
