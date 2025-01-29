@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28287014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28287015}
+  m_Layer: 0
+  m_Name: PlantBedLocator2
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &28287015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28287014}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.69, y: -4, z: 2.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 122597702}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &122597701
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +183,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1781861327}
+  - {fileID: 28287015}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -197,6 +229,19 @@ MonoBehaviour:
     isWatered: 0
     isFertilized: 0
     spawnLocator: {fileID: 1781861327}
+    spawnScale: {x: 70, y: 70, z: 70}
+  - basePrefab: {fileID: 919132149155446097, guid: 4549e5b5c95413a439f02752ad46edeb, type: 3}
+    seedPrefab: {fileID: 919132149155446097, guid: 1e86992e93ebc2345b13f5876eaf7e43, type: 3}
+    sproutPrefab: {fileID: 919132149155446097, guid: 7fbfd1145fe6388478f3a042e8f965f2, type: 3}
+    maturePrefab: {fileID: 919132149155446097, guid: 27bcba143b14136439b9ba9f9e9b65b3, type: 3}
+    daysToSprout: 1
+    daysToMature: 2
+    currentStageObject: {fileID: 0}
+    currentStage: 0
+    daysElapsed: 0
+    isWatered: 0
+    isFertilized: 0
+    spawnLocator: {fileID: 28287015}
     spawnScale: {x: 70, y: 70, z: 70}
 --- !u!4 &162928837
 Transform:
