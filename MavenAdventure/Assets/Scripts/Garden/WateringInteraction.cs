@@ -30,6 +30,13 @@ public class WateringInteraction : MonoBehaviour
                 {
                     if (plant.currentStageObject == hit.collider.gameObject)  // Check if clicked object matches the current stage object
                     {
+                        // Prevent watering if the plant is in the base stage
+                        if (plant.currentStage == -1)
+                        {
+                            Debug.Log("Cannot water base stage. Plant a seed instead.");
+                            return; // Exit without watering
+                        }
+
                         Debug.Log($"Watering plant: {hit.collider.gameObject.name}");
 
                         if (!plant.isWatered)
@@ -54,6 +61,7 @@ public class WateringInteraction : MonoBehaviour
             }
         }
     }
+
 
     private void ChangeDirtMaterial(GameObject stageObject)
     {

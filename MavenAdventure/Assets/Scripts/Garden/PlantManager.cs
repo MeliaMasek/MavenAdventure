@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlantManager : MonoBehaviour
 {
@@ -24,10 +25,24 @@ public class PlantManager : MonoBehaviour
         public Vector3 spawnScale;    // Store the initial scale
     }
 
+    public int dayCounter = 1; 
+    public Text dayCounterText;
+    
+    public WateringInteraction wateringInteraction; // Reference to the watering script
+
     public List<Plant> plants = new List<Plant>();
 
     private void Start()
     {
+        {
+            if (wateringInteraction == null)
+            {
+                wateringInteraction = FindObjectOfType<WateringInteraction>(); // Auto-assign if not set
+            }
+            
+            UpdateDayCounterUI(); // Initialize UI
+        }
+        
         foreach (var plant in plants)
         {
             if (plant.spawnLocator != null)
@@ -49,6 +64,7 @@ public class PlantManager : MonoBehaviour
         }
     }
 
+    
     public void EndDay()
     {
         foreach (var plant in plants)
@@ -80,6 +96,40 @@ public class PlantManager : MonoBehaviour
 
             plant.isWatered = false;
             plant.isFertilized = false;
+        }
+
+        ResetDirtToDry(); // Reset dirt to dry at the end of each day
+        UpdateDayCounterUI();
+    }
+
+    private void ResetDirtToDry()
+    {
+        if (wateringInteraction == null)
+        {
+            Debug.LogError("WateringInteraction reference is missing!");
+            return;
+        }
+
+        foreach (var plant in plants)
+        {
+            if (plant.currentStageObject != null)
+            {
+                Transform[] childTransforms = plant.currentStageObject.GetComponentsInChildren<Transform>();
+
+                foreach (Transform child in childTransforms)
+                {
+                    if (child.CompareTag("Dirt"))
+                    {
+                        MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
+
+                        if (meshRenderer != null)
+                        {
+                            meshRenderer.material = wateringInteraction.dirtDry; // Set dirt back to dry
+                            Debug.Log($"Dirt reset to dry for {child.name} in {plant.currentStageObject.name}.");
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -127,5 +177,13 @@ public class PlantManager : MonoBehaviour
         }
 
         Debug.Log($"Set plant to stage {stage} at position {plant.spawnLocator.position}");
+    }
+    
+    private void UpdateDayCounterUI()
+    {
+        if (dayCounterText != null)
+        {
+            dayCounterText.text = "Day: " + dayCounter; // Update UI text
+        }
     }
 }
