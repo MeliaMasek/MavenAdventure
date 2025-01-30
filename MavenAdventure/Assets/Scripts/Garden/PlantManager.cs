@@ -67,6 +67,8 @@ public class PlantManager : MonoBehaviour
     
     public void EndDay()
     {
+        dayCounter++;
+        
         foreach (var plant in plants)
         {
             if (plant.isWatered)
