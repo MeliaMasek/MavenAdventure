@@ -1,106 +1,71 @@
 using UnityEngine;
-using UnityEngine.UI;
-using System;
+using UnityEngine.UI; // Import UI
 
 public class TimedEnergyBar : MonoBehaviour
 {
-    public Slider energySlider; // UI Slider for displaying energy
-    public float maxEnergy = 100f; // Maximum energy
-    public float depletionRate = 10f; // Energy lost per second
-    public float rechargeRate = 10f; // Energy gained per second
-    public float clickEnergyCost = 20f; // Energy cost per click
-    public bool autoRecharge = true; // Allow auto recharge?
-    public WateringInteraction wateringInteraction; // Reference to WateringInteraction
+    public int maxEnergy = 100;  // Maximum energy
+    public int currentEnergy;    // Current energy level
+   public int reduceEnergyRate = 10; // Energy reduced per click
+    public float rechargeRate = 10f; // Energy gained per hour (real-time)
+    
+    public Slider energySlider;  // UI Slider for visual energy bar
+    public Text energyText;      // UI Text to display energy amount
 
-    private float currentEnergy;
-    private string lastSavedTimeKey = "LastExitTime";
-    private string energyKey = "EnergyValue";
-
-    void Start()
+    private void Start()
     {
-        LoadEnergyData();
+        LoadEnergy(); // Load saved energy when game starts
         UpdateEnergyUI();
     }
 
-    void Update()
+    private void Update()
     {
-        if (currentEnergy < maxEnergy && autoRecharge)
-        {
-            RechargeEnergy();
-        }
-
-        UpdateEnergyUI();
-    }
-
-    void OnApplicationQuit()
-    {
-        SaveEnergyData();
-    }
-
-    void OnApplicationPause(bool pause)
-    {
-        if (pause)
-            SaveEnergyData();
-    }
-
-    void RechargeEnergy()
-    {
-        currentEnergy += rechargeRate * Time.deltaTime;
-        if (currentEnergy > maxEnergy)
-        {
-            currentEnergy = maxEnergy;
-        }
+        RegenerateEnergy();
     }
 
     public void ReduceEnergyOnClick()
     {
-        if (currentEnergy >= clickEnergyCost)
+        if (currentEnergy > 0)
         {
-            currentEnergy -= clickEnergyCost;
+            currentEnergy -= reduceEnergyRate; // Reduce energy by a set amount
+            SaveEnergy();
             UpdateEnergyUI();
-            Debug.Log("Energy reduced for watering a plant.");
-        }
-        else
-        {
-            Debug.Log("Not enough energy!");
         }
     }
 
-
-    void UpdateEnergyUI()
+    private void RegenerateEnergy()
     {
-        if (energySlider != null)
+        float hoursPassed = (float)(System.DateTime.Now - LoadLastPlayedTime()).TotalHours;
+        int energyToRestore = Mathf.FloorToInt(hoursPassed * rechargeRate);
+
+        if (energyToRestore > 0)
         {
-            energySlider.value = currentEnergy / maxEnergy;
+            currentEnergy = Mathf.Clamp(currentEnergy + energyToRestore, 0, maxEnergy);
+            SaveEnergy();
+            UpdateEnergyUI();
         }
     }
 
-    void SaveEnergyData()
+    private void UpdateEnergyUI()
     {
-        PlayerPrefs.SetFloat(energyKey, currentEnergy);
-        PlayerPrefs.SetString(lastSavedTimeKey, DateTime.UtcNow.ToString());
+        energySlider.value = (float)currentEnergy / maxEnergy;
+        energyText.text = currentEnergy.ToString(); // Update number display
+    }
+
+    private void SaveEnergy()
+    {
+        PlayerPrefs.SetInt("SavedEnergy", currentEnergy);
+        PlayerPrefs.SetString("LastPlayedTime", System.DateTime.Now.ToString());
         PlayerPrefs.Save();
     }
 
-    void LoadEnergyData()
+    private void LoadEnergy()
     {
-        if (PlayerPrefs.HasKey(energyKey))
-        {
-            currentEnergy = PlayerPrefs.GetFloat(energyKey);
-        }
-        else
-        {
-            currentEnergy = maxEnergy; // Start at full if first time playing
-        }
+        currentEnergy = PlayerPrefs.GetInt("SavedEnergy", maxEnergy);
+    }
 
-        if (PlayerPrefs.HasKey(lastSavedTimeKey))
-        {
-            string lastTime = PlayerPrefs.GetString(lastSavedTimeKey);
-            DateTime lastExitTime = DateTime.Parse(lastTime);
-            TimeSpan timePassed = DateTime.UtcNow - lastExitTime;
-
-            float energyRecovered = (float)timePassed.TotalSeconds * rechargeRate;
-            currentEnergy = Mathf.Min(currentEnergy + energyRecovered, maxEnergy);
-        }
+    private System.DateTime LoadLastPlayedTime()
+    {
+        string savedTime = PlayerPrefs.GetString("LastPlayedTime", System.DateTime.Now.ToString());
+        return System.DateTime.Parse(savedTime);
     }
 }
