@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MavenAdventure_GardenScreen.unity
+    guid: 529b0b44f7b90754a86ad92a73ea6b90
   m_configObjects: {}
