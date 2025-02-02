@@ -27,21 +27,25 @@ public class PlantManager : MonoBehaviour
 
     public int dayCounter = 1; 
     public Text dayCounterText;
-    
+
     public WateringInteraction wateringInteraction; // Reference to the watering script
+    public PlayerBackpack backpack;  // Reference to the backpack system
 
     public List<Plant> plants = new List<Plant>();
 
     private void Start()
     {
+        if (wateringInteraction == null)
         {
-            if (wateringInteraction == null)
-            {
-                wateringInteraction = FindObjectOfType<WateringInteraction>(); // Auto-assign if not set
-            }
-            
-            UpdateDayCounterUI(); // Initialize UI
+            wateringInteraction = FindObjectOfType<WateringInteraction>(); // Auto-assign if not set
         }
+
+        if (backpack == null)
+        {
+            backpack = FindObjectOfType<PlayerBackpack>(); // Auto-assign if not set
+        }
+        
+        UpdateDayCounterUI(); // Initialize UI
         
         foreach (var plant in plants)
         {
@@ -64,17 +68,15 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    
-    public void EndDay()
+    private void EndDay()
     {
-        dayCounter++;
-        
+        List<Plant> plantsToRemove = new List<Plant>();
+
         foreach (var plant in plants)
         {
             if (plant.isWatered)
             {
                 plant.daysElapsed++;
-
                 int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.daysToSprout - 1) : plant.daysToSprout;
                 int matureDays = plant.isFertilized ? Mathf.Max(1, plant.daysToMature - 1) : plant.daysToMature;
 
@@ -91,16 +93,18 @@ public class PlantManager : MonoBehaviour
                     SetStage(plant, 2);
                 }
             }
-            else
-            {
-                Debug.Log($"Plant is not watered and will not grow: {plant}");
-            }
 
             plant.isWatered = false;
             plant.isFertilized = false;
         }
 
-        ResetDirtToDry(); // Reset dirt to dry at the end of each day
+        // Remove collected plants safely after iteration
+        foreach (var plant in plantsToRemove)
+        {
+            plants.Remove(plant);
+        }
+
+        ResetDirtToDry();
         UpdateDayCounterUI();
     }
 
@@ -180,12 +184,26 @@ public class PlantManager : MonoBehaviour
 
         Debug.Log($"Set plant to stage {stage} at position {plant.spawnLocator.position}");
     }
-    
+
     private void UpdateDayCounterUI()
     {
         if (dayCounterText != null)
         {
             dayCounterText.text = "Day: " + dayCounter; // Update UI text
+        }
+    }
+
+    private List<Plant> plantsToRemove = new List<Plant>();
+
+    public void CollectPlant(Plant plant)
+    {
+        if (plant.currentStage == 2) // Fully grown
+        {
+            FindObjectOfType<BackpackManager>().AddToBackpack(plant.maturePrefab.name);
+            Destroy(plant.currentStageObject); // Remove from scene
+        
+            // Mark plant for removal instead of directly removing
+            plantsToRemove.Add(plant);
         }
     }
 }

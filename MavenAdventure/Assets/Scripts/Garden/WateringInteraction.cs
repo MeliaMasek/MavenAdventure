@@ -6,13 +6,27 @@ public class WateringInteraction : MonoBehaviour
     public bool isWateringMode = false; // Tracks if watering mode is active
     public LayerMask plantLayer;       // Layer for plant objects
     public PlantManager plantManager;  // Reference to the PlantManager script
+    public BackpackManager backpackManager; // Reference to BackpackManager
     public Material dirtWet;           // Material for wet dirt
     public Material dirtDry;           // Material for dry dirt
 
     public TimedEnergyBar energyBar;  // Reference to Energy Bar
-    public Button wateringButton;        // Reference to the UI Button
+    public Button wateringButton;     // Reference to the UI Button
 
-    // Called when the Watering Button is clicked
+    private void Start()
+    {
+        // Ensure references are assigned
+        if (plantManager == null)
+        {
+            plantManager = FindObjectOfType<PlantManager>();
+        }
+
+        if (backpackManager == null)
+        {
+            backpackManager = FindObjectOfType<BackpackManager>();
+        }
+    }
+
     public void ActivateWateringMode()
     {
         if (!isWateringMode) // Prevent re-activating and consuming energy
@@ -25,27 +39,54 @@ public class WateringInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (isWateringMode && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, plantLayer))
             {
-                Debug.Log($"Hit object: {hit.collider.gameObject.name}");
-
-                bool watered = TryWaterPlant(hit.collider.gameObject);
-
-                if (watered) 
+                foreach (var plant in plantManager.plants)
                 {
-                    isWateringMode = false; // Exit watering mode ONLY if a plant was watered
-                    energyBar.ReduceEnergyOnClick(); // Deduct energy
-                    wateringButton.interactable = true; // Enable button again
+                    if (plant.currentStageObject == hit.collider.gameObject)
+                    {
+                        if (plant.currentStage == 2) // Fully grown stage
+                        {
+                            CollectPlant(plant); // Use new collection function
+                            return;
+                        }
+                        else if (isWateringMode) // Only water if in watering mode
+                        {
+                            bool watered = TryWaterPlant(hit.collider.gameObject);
+
+                            if (watered) 
+                            {
+                                isWateringMode = false;
+                                energyBar.ReduceEnergyOnClick();
+                                wateringButton.interactable = true;
+                            }
+                        }
+                    }
                 }
+            }
+        }
+    }
+
+    private void CollectPlant(PlantManager.Plant plant)
+    {
+        if (plant.currentStage == 2) // Fully grown
+        {
+            if (backpackManager != null)
+            {
+                backpackManager.AddToBackpack(plant.maturePrefab.name); // Add to backpack UI
+                Debug.Log($"Collected {plant.maturePrefab.name} and added to backpack.");
             }
             else
             {
-                Debug.Log("Raycast did not hit anything.");
+                Debug.LogError("BackpackManager reference is missing!");
             }
+
+            Destroy(plant.currentStageObject); // Remove from scene
+            plantManager.plants.Remove(plant); // Remove from list
         }
     }
 

@@ -2809,7 +2809,7 @@ GameObject:
   - component: {fileID: 2040125958820107251}
   - component: {fileID: 1688362495087916238}
   m_Layer: 6
-  m_Name: Stage_3
+  m_Name: Strawberry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
