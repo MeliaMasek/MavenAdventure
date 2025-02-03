@@ -98,6 +98,8 @@ public class PlantManager : MonoBehaviour
             plant.isFertilized = false;
         }
 
+        dayCounter++;
+
         // Remove collected plants safely after iteration
         foreach (var plant in plantsToRemove)
         {

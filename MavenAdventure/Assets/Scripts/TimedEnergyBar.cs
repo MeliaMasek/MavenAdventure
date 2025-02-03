@@ -1,19 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI; // Import UI
+using UnityEngine.UI;
 
 public class TimedEnergyBar : MonoBehaviour
 {
-    public int maxEnergy = 100;  // Maximum energy
-    public int currentEnergy;    // Current energy level
-   public int reduceEnergyRate = 10; // Energy reduced per click
+    public IntData currentEnergy; // ScriptableObject for energy
+    public IntData maxEnergy;     // Max energy stored as ScriptableObject
+    public IntData reduceEnergyRate; // Energy reduction per click
     public float rechargeRate = 10f; // Energy gained per hour (real-time)
-    
-    public Slider energySlider;  // UI Slider for visual energy bar
-    public Text energyText;      // UI Text to display energy amount
+
+    public Slider energySlider;  
+    public Text energyText;      
 
     private void Start()
     {
         LoadEnergy(); // Load saved energy when game starts
+        RegenerateEnergy(); 
         UpdateEnergyUI();
     }
 
@@ -24,9 +25,9 @@ public class TimedEnergyBar : MonoBehaviour
 
     public void ReduceEnergyOnClick()
     {
-        if (currentEnergy > 0)
+        if (currentEnergy.value > 0)
         {
-            currentEnergy -= reduceEnergyRate; // Reduce energy by a set amount
+            currentEnergy.value -= reduceEnergyRate.value; 
             SaveEnergy();
             UpdateEnergyUI();
         }
@@ -34,33 +35,35 @@ public class TimedEnergyBar : MonoBehaviour
 
     private void RegenerateEnergy()
     {
-        float hoursPassed = (float)(System.DateTime.Now - LoadLastPlayedTime()).TotalHours;
+        System.DateTime lastTime = LoadLastPlayedTime();
+        float hoursPassed = (float)(System.DateTime.Now - lastTime).TotalHours;
         int energyToRestore = Mathf.FloorToInt(hoursPassed * rechargeRate);
 
         if (energyToRestore > 0)
         {
-            currentEnergy = Mathf.Clamp(currentEnergy + energyToRestore, 0, maxEnergy);
+            currentEnergy.value = Mathf.Clamp(currentEnergy.value + energyToRestore, 0, maxEnergy.value);
             SaveEnergy();
-            UpdateEnergyUI();
         }
+
+        UpdateEnergyUI();
     }
 
     private void UpdateEnergyUI()
     {
-        energySlider.value = (float)currentEnergy / maxEnergy;
-        energyText.text = currentEnergy.ToString(); // Update number display
+        energySlider.value = (float)currentEnergy.value / maxEnergy.value;
+        energyText.text = currentEnergy.value.ToString();
     }
 
     private void SaveEnergy()
     {
-        PlayerPrefs.SetInt("SavedEnergy", currentEnergy);
+        PlayerPrefs.SetInt("SavedEnergy", currentEnergy.value);
         PlayerPrefs.SetString("LastPlayedTime", System.DateTime.Now.ToString());
         PlayerPrefs.Save();
     }
 
     private void LoadEnergy()
     {
-        currentEnergy = PlayerPrefs.GetInt("SavedEnergy", maxEnergy);
+        currentEnergy.value = PlayerPrefs.GetInt("SavedEnergy", maxEnergy.value);
     }
 
     private System.DateTime LoadLastPlayedTime()

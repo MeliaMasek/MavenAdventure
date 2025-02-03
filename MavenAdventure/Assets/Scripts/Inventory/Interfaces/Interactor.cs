@@ -8,20 +8,20 @@ public class Interactor : MonoBehaviour
     public LayerMask interactionLayer;
     public float interactionPointRadius = 1f;
     public InputActionReference playerInput;
-    public GameObject interactionButton; // Reference to the button object
-    public Button clickInteractionButton; // Reference to the click interaction button
+    //public GameObject interactionButton; // Reference to the button object
+    //public Button clickInteractionButton; // Reference to the click interaction button
     private bool isInteracting;
 
     private void Start()
     {
         // Add a listener to the click interaction button
-        clickInteractionButton.onClick.AddListener(OnClickInteraction);
+        //clickInteractionButton.onClick.AddListener(OnClickInteraction);
     }
 
     private void OnDestroy()
     {
         // Remove the listener when the object is destroyed to prevent memory leaks
-        clickInteractionButton.onClick.RemoveListener(OnClickInteraction);
+        //clickInteractionButton.onClick.RemoveListener(OnClickInteraction);
     }
 
     private void OnClickInteraction()
@@ -50,7 +50,7 @@ public class Interactor : MonoBehaviour
         bool isInRange = colliders.Length > 0;
 
         // Set the visibility of the interaction button based on whether the player is in range
-        interactionButton.SetActive(isInRange);
+        //interactionButton.SetActive(isInRange);
 
         // Optionally, you can still keep the keyboard input as an alternative way to trigger interaction
         if (Keyboard.current.aKey.wasPressedThisFrame && isInRange)
