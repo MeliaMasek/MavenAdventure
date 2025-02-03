@@ -8,18 +8,20 @@ public class BackpackManager : MonoBehaviour
     public Transform itemGrid;        // Parent for item list (GridLayoutGroup)
     public GameObject itemPrefab;     // Prefab for displaying items
 
-    private Dictionary<string, int> collectedPlants = new Dictionary<string, int>();
+    private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
 
-    // Add plant to the backpack
-    public void AddToBackpack(string plantName)
+    // Add an item to the backpack
+    public void AddToBackpack(InventoryData itemData)
     {
-        if (collectedPlants.ContainsKey(plantName))
+        if (itemData == null) return;
+
+        if (collectedItems.ContainsKey(itemData))
         {
-            collectedPlants[plantName]++;
+            collectedItems[itemData]++;
         }
         else
         {
-            collectedPlants[plantName] = 1;
+            collectedItems[itemData] = 1;
         }
 
         UpdateBackpackUI();
@@ -34,27 +36,30 @@ public class BackpackManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Add new items based on collected plants
-        foreach (var plant in collectedPlants)
+        // Add new items based on collected items
+        foreach (var item in collectedItems)
         {
-            // Instantiate the new item prefab
             GameObject newItem = Instantiate(itemPrefab, itemGrid);
 
-            // Set the text of the new item (make sure itemPrefab has a Text component)
-            Text itemText = newItem.GetComponentInChildren<Text>();
-            if (itemText != null)
+            // Assign the item icon
+            Image itemImage = newItem.GetComponentInChildren<Image>();
+            if (itemImage != null)
             {
-                itemText.text = $"{plant.Key} x{plant.Value}";
+                itemImage.sprite = item.Key.icon;
             }
             else
             {
-                Debug.LogWarning("No Text component found in itemPrefab.");
+                Debug.LogWarning("No Image component found in itemPrefab.");
             }
 
-            // Ensure the item is properly scaled
-            newItem.transform.localScale = Vector3.one;
+            // Assign the item count (if a text component is available)
+            Text itemText = newItem.GetComponentInChildren<Text>();
+            if (itemText != null)
+            {
+                itemText.text = $"x{item.Value}";
+            }
 
-            Debug.Log($"Added {plant.Key} x{plant.Value} to backpack.");
+            newItem.transform.localScale = Vector3.one;
         }
     }
 

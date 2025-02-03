@@ -11,6 +11,7 @@ public class PlantManager : MonoBehaviour
         public GameObject seedPrefab;
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
+        public InventoryData plantData; // Reference to the scriptable object
 
         public int daysToSprout = 2;
         public int daysToMature = 5;
@@ -201,10 +202,8 @@ public class PlantManager : MonoBehaviour
     {
         if (plant.currentStage == 2) // Fully grown
         {
-            FindObjectOfType<BackpackManager>().AddToBackpack(plant.maturePrefab.name);
-            Destroy(plant.currentStageObject); // Remove from scene
-        
-            // Mark plant for removal instead of directly removing
+            FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData);
+            Destroy(plant.currentStageObject);
             plantsToRemove.Add(plant);
         }
     }

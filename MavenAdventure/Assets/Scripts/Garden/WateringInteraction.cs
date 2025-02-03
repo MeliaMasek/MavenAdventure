@@ -77,7 +77,7 @@ public class WateringInteraction : MonoBehaviour
         {
             if (backpackManager != null)
             {
-                backpackManager.AddToBackpack(plant.maturePrefab.name); // Add to backpack UI
+                backpackManager.AddToBackpack(plant.plantData); // Add to backpack UI
                 Debug.Log($"Collected {plant.maturePrefab.name} and added to backpack.");
             }
             else
