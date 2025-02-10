@@ -30,7 +30,7 @@ public class PlantManager : MonoBehaviour
     public Text dayCounterText;
 
     public WateringInteraction wateringInteraction; // Reference to the watering script
-    public PlayerBackpack backpack;  // Reference to the backpack system
+    public BackpackManager backpack;  // Reference to the backpack system
 
     public List<Plant> plants = new List<Plant>();
 
@@ -43,7 +43,7 @@ public class PlantManager : MonoBehaviour
 
         if (backpack == null)
         {
-            backpack = FindObjectOfType<PlayerBackpack>(); // Auto-assign if not set
+            backpack = FindObjectOfType<BackpackManager>(); // Auto-assign if not set
         }
         
         UpdateDayCounterUI(); // Initialize UI
@@ -202,9 +202,43 @@ public class PlantManager : MonoBehaviour
     {
         if (plant.currentStage == 2) // Fully grown
         {
-            FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData);
-            Destroy(plant.currentStageObject);
-            plantsToRemove.Add(plant);
+            FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData); // Add to backpack
+            Destroy(plant.currentStageObject); // Remove the mature plant model
+
+            // Reset plant back to empty stage
+            SetStage(plant, -1);
+            plant.daysElapsed = 0;
+            plant.isWatered = false;
+            plant.isFertilized = false;
+
+            Debug.Log($"Plant collected and planter reverted to empty stage.");
         }
+    }
+    
+    public void PlantSeedAt(Transform planterLocation)
+    {
+        if (backpack.GetSelectedSeed() == null)
+        {
+            Debug.Log("No seed selected!");
+            return;
+        }
+
+        InventoryData selectedSeed = backpack.GetSelectedSeed();
+
+        // Create a new Plant instance using the selected seed
+        Plant newPlant = new Plant
+        {
+            plantData = selectedSeed,
+            basePrefab = selectedSeed.seedPrefab, // Uses the correct prefab
+            spawnLocator = planterLocation,
+            spawnScale = Vector3.one
+        };
+
+        plants.Add(newPlant);
+        SetStage(newPlant, 0); // Plant at seed stage
+        Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
+
+        // Reduce the seed count in the backpack
+        backpack.RemoveItem(selectedSeed);
     }
 }

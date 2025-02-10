@@ -7,21 +7,41 @@ public class BackpackManager : MonoBehaviour
     public GameObject backpackPanel;  // Reference to UI Panel
     public Transform itemGrid;        // Parent for item list (GridLayoutGroup)
     public GameObject itemPrefab;     // Prefab for displaying items
+    public InventoryData selectedSeed;
 
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
 
+    [Header("Starting Seeds")] 
+    public List<InventoryData> startingSeeds;  // List of seeds the player starts with
+    public int startingSeedAmount = 5;  // Number of each seed to start with
+
     // Add an item to the backpack
-    public void AddToBackpack(InventoryData itemData)
+    
+    private void Start()
+    {
+        InitializeStartingSeeds(); // Give default seeds at game start
+        UpdateBackpackUI();
+    }
+    
+    private void InitializeStartingSeeds()
+    {
+        foreach (InventoryData seed in startingSeeds)
+        {
+            AddToBackpack(seed, startingSeedAmount); // Add 5 of each seed type
+        }
+    }
+
+    public void AddToBackpack(InventoryData itemData, int amount = 1)
     {
         if (itemData == null) return;
 
         if (collectedItems.ContainsKey(itemData))
         {
-            collectedItems[itemData]++;
+            collectedItems[itemData] += amount;
         }
         else
         {
-            collectedItems[itemData] = 1;
+            collectedItems[itemData] = amount;
         }
 
         UpdateBackpackUI();
@@ -30,42 +50,65 @@ public class BackpackManager : MonoBehaviour
     // Update the UI by clearing the old items and displaying the updated ones
     public void UpdateBackpackUI()
     {
-        // Clear existing UI elements
         foreach (Transform child in itemGrid)
         {
             Destroy(child.gameObject);
         }
 
-        // Add new items based on collected items
         foreach (var item in collectedItems)
         {
             GameObject newItem = Instantiate(itemPrefab, itemGrid);
-
-            // Assign the item icon
             Image itemImage = newItem.GetComponentInChildren<Image>();
-            if (itemImage != null)
-            {
-                itemImage.sprite = item.Key.icon;
-            }
-            else
-            {
-                Debug.LogWarning("No Image component found in itemPrefab.");
-            }
 
-            // Assign the item count (if a text component is available)
+            if (itemImage != null)
+                itemImage.sprite = item.Key.icon;
+
             Text itemText = newItem.GetComponentInChildren<Text>();
             if (itemText != null)
-            {
                 itemText.text = $"x{item.Value}";
-            }
 
             newItem.transform.localScale = Vector3.one;
+
+            // Add button functionality to select the seed
+            Button button = newItem.GetComponent<Button>();
+            if (button != null)
+            {
+                InventoryData seedRef = item.Key;
+                button.onClick.AddListener(() => SelectSeed(seedRef));
+            }
         }
     }
+    
+    public void SelectSeed(InventoryData seed)
+    {
+        selectedSeed = seed;
+        Debug.Log("Selected Seed: " + seed.displayName);
+    }
 
+    public InventoryData GetSelectedSeed()
+    {
+        return selectedSeed;
+    }
     // Toggle backpack visibility
+
     public void ToggleBackpack(bool show)
     {
         backpackPanel.SetActive(show);
     }
+    
+    public void RemoveItem(InventoryData itemData)
+    {
+        if (collectedItems.ContainsKey(itemData))
+        {
+            collectedItems[itemData]--;
+
+            if (collectedItems[itemData] <= 0)
+            {
+                collectedItems.Remove(itemData);
+            }
+
+            UpdateBackpackUI();
+        }
+    }
+
 }

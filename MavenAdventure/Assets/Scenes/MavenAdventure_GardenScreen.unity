@@ -425,7 +425,7 @@ MonoBehaviour:
   dayCounter: 1
   dayCounterText: {fileID: 2081855278}
   wateringInteraction: {fileID: 1625897600}
-  backpack: {fileID: 700242542}
+  backpack: {fileID: 700242544}
   plants:
   - basePrefab: {fileID: 5534541621802477703, guid: 668c87ed7286fbe45824164f50f0792c, type: 3}
     seedPrefab: {fileID: 6100879739379839684, guid: b7b665fb5a4c4ff4a855c4a0ba7d82d9, type: 3}
@@ -2277,7 +2277,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700242543}
-  - component: {fileID: 700242542}
   - component: {fileID: 700242544}
   m_Layer: 0
   m_Name: BackpackManager
@@ -2286,20 +2285,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &700242542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700242541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56edc267133fa524795f22101e661cf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectedPlants: []
-  backpackManager: {fileID: 700242544}
 --- !u!4 &700242543
 Transform:
   m_ObjectHideFlags: 0
@@ -2330,6 +2315,9 @@ MonoBehaviour:
   backpackPanel: {fileID: 1477014624}
   itemGrid: {fileID: 1839887698}
   itemPrefab: {fileID: 1754524198587233181, guid: bcf2ba9d3a9f0a34ba9a39d7cd893917, type: 3}
+  selectedSeed: {fileID: 11400000, guid: bcaf7639110eceb41b334d3ad2d646e9, type: 2}
+  startingSeeds: []
+  startingSeedAmount: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5409,7 +5397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9843137, g: 0.22745098, b: 0.3664124, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
