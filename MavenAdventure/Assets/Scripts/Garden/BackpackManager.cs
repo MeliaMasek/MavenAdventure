@@ -61,28 +61,44 @@ public class BackpackManager : MonoBehaviour
             Image itemImage = newItem.GetComponentInChildren<Image>();
 
             if (itemImage != null)
+            {
                 itemImage.sprite = item.Key.icon;
+            }
 
             Text itemText = newItem.GetComponentInChildren<Text>();
             if (itemText != null)
-                itemText.text = $"x{item.Value}";
+            {
+                itemText.text = $"{item.Key.displayName} x{item.Value}";
+            }
 
-            newItem.transform.localScale = Vector3.one;
-
-            // Add button functionality to select the seed
             Button button = newItem.GetComponent<Button>();
             if (button != null)
             {
-                InventoryData seedRef = item.Key;
-                button.onClick.AddListener(() => SelectSeed(seedRef));
+                InventoryData seedRef = item.Key;  // Store correct seed reference
+
+                button.onClick.RemoveAllListeners();  // Prevent duplicate listeners
+                button.onClick.AddListener(() =>
+                {
+                    Debug.Log("Button Clicked! Should Select: " + seedRef.displayName);
+                    SelectSeed(seedRef);
+                });
             }
+            else
+            {
+                Debug.LogError("No Button component found on itemPrefab!");
+            }
+
+            newItem.transform.localScale = Vector3.one;
         }
     }
-    
+
+
+
+
     public void SelectSeed(InventoryData seed)
     {
-        selectedSeed = seed;
-        Debug.Log("Selected Seed: " + seed.displayName);
+        selectedSeed = seed;  // Store the selected seed
+        Debug.Log("Selected Seed: " + seed.displayName);  // Log the seed's name for debugging
     }
 
     public InventoryData GetSelectedSeed()
