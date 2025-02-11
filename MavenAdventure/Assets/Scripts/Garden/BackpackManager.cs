@@ -97,8 +97,11 @@ public class BackpackManager : MonoBehaviour
 
     public void SelectSeed(InventoryData seed)
     {
-        selectedSeed = seed;  // Store the selected seed
-        Debug.Log("Selected Seed: " + seed.displayName);  // Log the seed's name for debugging
+        selectedSeed = seed;
+        Debug.Log("Selected Seed: " + seed.displayName);
+
+        // Close the backpack menu after selecting a seed
+        ToggleBackpack(false);  // Close backpack UI
     }
 
     public InventoryData GetSelectedSeed()

@@ -142,7 +142,7 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    private void SetStage(Plant plant, int stage)
+    public void SetStage(Plant plant, int stage)
     {
         if (plant.currentStageObject != null)
         {
@@ -225,20 +225,33 @@ public class PlantManager : MonoBehaviour
 
         InventoryData selectedSeed = backpack.GetSelectedSeed();
 
-        // Create a new Plant instance using the selected seed
+        // Find a matching plant definition from your list (assuming each seed corresponds to a plant type)
+        Plant matchingPlant = plants.Find(p => p.plantData == selectedSeed);
+
+        if (matchingPlant == null)
+        {
+            Debug.LogError("No matching plant found for the selected seed!");
+            return;
+        }
+
+        // Create a new instance of the selected plant with its prefabs assigned
         Plant newPlant = new Plant
         {
             plantData = selectedSeed,
-            basePrefab = selectedSeed.seedPrefab, // Uses the correct prefab
+            basePrefab = matchingPlant.basePrefab,
+            seedPrefab = matchingPlant.seedPrefab,
+            sproutPrefab = matchingPlant.sproutPrefab,
+            maturePrefab = matchingPlant.maturePrefab,
             spawnLocator = planterLocation,
             spawnScale = Vector3.one
         };
 
         plants.Add(newPlant);
-        SetStage(newPlant, 0); // Plant at seed stage
+        SetStage(newPlant, 0); // Start at seed stage
         Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
 
-        // Reduce the seed count in the backpack
+        // Remove the used seed from inventory
         backpack.RemoveItem(selectedSeed);
     }
+
 }
