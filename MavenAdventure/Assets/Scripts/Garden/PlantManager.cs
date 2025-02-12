@@ -218,15 +218,26 @@ public class PlantManager : MonoBehaviour
     
     public void PlantSeedAt(Transform planterLocation)
     {
+        // Check if the planter is empty (not yet occupied by a plant)
+        Plant existingPlant = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
+
+        if (existingPlant != null)
+        {
+            Debug.Log("This bed is already occupied.");
+            return;
+        }
+
+        // Ensure a seed is selected
         if (backpack.GetSelectedSeed() == null)
         {
             Debug.Log("No seed selected!");
             return;
         }
 
+        // Get the selected seed data
         InventoryData selectedSeed = backpack.GetSelectedSeed();
 
-        // Find a matching plant definition from your list (assuming each seed corresponds to a plant type)
+        // Find matching plant from the available plants list
         Plant matchingPlant = plants.Find(p => p.plantData == selectedSeed);
 
         if (matchingPlant == null)
@@ -249,10 +260,10 @@ public class PlantManager : MonoBehaviour
 
         plants.Add(newPlant);
         SetStage(newPlant, 0); // Start at seed stage
-        Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
 
         // Remove the used seed from inventory
         backpack.RemoveItem(selectedSeed);
-    }
 
+        Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
+    }
 }

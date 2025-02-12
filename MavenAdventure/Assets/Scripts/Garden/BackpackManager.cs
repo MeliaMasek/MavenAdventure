@@ -1,4 +1,5 @@
 
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,8 @@ public class BackpackManager : MonoBehaviour
     public Transform itemGrid;        // Parent for item list (GridLayoutGroup)
     public GameObject itemPrefab;     // Prefab for displaying items
     public InventoryData selectedSeed;
-
+    public Button plantingButton;  // Assign this in the Inspector
+    public SeedManager seedManager;
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
 
     [Header("Starting Seeds")] 
@@ -72,17 +74,25 @@ public class BackpackManager : MonoBehaviour
                 itemText.text = $"{item.Key.displayName} x{item.Value}";
             }
 
-            Button button = newItem.GetComponent<Button>();
+            Button button = newItem.GetComponent<Button>(); 
             if (button != null)
             {
-                InventoryData seedRef = item.Key;  // Store correct seed reference
+                Debug.Log($"Assigning button event for {item.Key.displayName}"); // Debugging
 
-                button.onClick.RemoveAllListeners();  // Prevent duplicate listeners
-                button.onClick.AddListener(() =>
+                InventoryData seedRef = item.Key;
+
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(delegate { SelectSeed(seedRef); });
+
+                if (seedManager != null)
                 {
-                    Debug.Log("Button Clicked! Should Select: " + seedRef.displayName);
-                    SelectSeed(seedRef);
-                });
+                    button.onClick.AddListener(delegate { seedManager.ActivatePlantingMode(); });
+                    Debug.Log("Planting mode assigned to button click.");
+                }
+                else
+                {
+                    Debug.LogError("SeedManager not found! Make sure it's assigned in the Inspector.");
+                }
             }
             else
             {
@@ -93,9 +103,7 @@ public class BackpackManager : MonoBehaviour
         }
     }
 
-
-
-
+    
     public void SelectSeed(InventoryData seed)
     {
         selectedSeed = seed;

@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5286287210877599062}
   - component: {fileID: 2450610067758397958}
-  - component: {fileID: 3090831576190477691}
   m_Layer: 6
   m_Name: Empty_Plant_Bed 1
   m_TagString: Untagged
@@ -131,34 +130,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.051851075, y: 0.008908224, z: 0.04865282}
   m_Center: {x: -0.00020907947, y: 0.0015506963, z: -0.00049049174}
---- !u!114 &3090831576190477691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4762409929652627436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3a59a0be03e1a84ba2f9224757c5c4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantData:
-    basePrefab: {fileID: 0}
-    seedPrefab: {fileID: 0}
-    sproutPrefab: {fileID: 0}
-    maturePrefab: {fileID: 0}
-    plantData: {fileID: 0}
-    daysToSprout: 2
-    daysToMature: 5
-    currentStageObject: {fileID: 0}
-    currentStage: -1
-    daysElapsed: 0
-    isWatered: 0
-    isFertilized: 0
-    spawnLocator: {fileID: 0}
-    spawnScale: {x: 0, y: 0, z: 0}
-  backpackManager: {fileID: 0}
 --- !u!1 &8965863501237417017
 GameObject:
   m_ObjectHideFlags: 0
