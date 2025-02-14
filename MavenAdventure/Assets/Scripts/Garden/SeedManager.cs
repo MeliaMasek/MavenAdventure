@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 
 public class SeedManager : MonoBehaviour
@@ -22,23 +20,29 @@ public class SeedManager : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, plantLayer))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, plantLayer.value))
             {
                 Debug.Log($"Hit object: {hit.collider.gameObject.name}");
 
-                // Find the plant associated with the clicked GameObject
                 foreach (var plant in plantManager.plants)
                 {
                     if (plant.currentStageObject == hit.collider.gameObject)  
                     {
-                        // Only allow planting if the plant is still in the base stage (-1)
                         if (plant.currentStage == -1)
                         {
-                            PlantSeed(plant);
+                            PlantBed plantBed = hit.collider.GetComponentInParent<PlantBed>();
+                            if (plantBed != null)
+                            {
+                                PlantSeed(plant, plantBed);  // ✅ Now passes both required parameters
+                            }
+                            else
+                            {
+                                Debug.LogError("No PlantBed found for this plant!");
+                            }
                         }
                         else
                         {
-                            Debug.Log("This plant is not in the base stage and cannot be planted.");
+                            Debug.Log("This plant is not in the base stage.");
                         }
 
                         isPlantingMode = false;
@@ -53,24 +57,56 @@ public class SeedManager : MonoBehaviour
         }
     }
 
-    private void PlantSeed(PlantManager.Plant plant)
+    public void PlantSeed(PlantManager.Plant oldPlant, PlantBed plantBed)
     {
-        Debug.Log($"Planting seed at {plant.currentStageObject.transform.position}");
+        InventoryData selectedSeed = FindObjectOfType<BackpackManager>().GetSelectedSeed();
+        if (selectedSeed == null)
+        {
+            Debug.LogError("No seed selected! Select a seed before planting.");
+            return;
+        }
 
-        // Change dirt material to indicate planting
-        ChangeDirtMaterial(plant.currentStageObject);
+        Debug.Log($"Planting {selectedSeed.displayName} at {oldPlant.currentStageObject.transform.position}");
 
-        // Destroy the base stage object
-        Destroy(plant.currentStageObject);
+        // Destroy the old plant object (previous base bed)
+        Destroy(oldPlant.currentStageObject);
 
-        // Instantiate the seed stage at the same position
-        plant.currentStageObject = Instantiate(plant.seedPrefab, plant.spawnLocator.position, Quaternion.identity);
+        // Find the matching plant prefab set for this specific seed type
+        PlantManager.Plant matchingPlant = plantManager.plants.Find(p => p.plantData == selectedSeed);
+    
+        if (matchingPlant == null)
+        {
+            Debug.LogError($"No prefab set for {selectedSeed.displayName} in PlantManager!");
+            return;
+        }
 
-        // Update plant's current stage
-        plant.currentStage = 0;
+        // Create a new Plant instance and override the existing entry
+        PlantManager.Plant newPlant = new PlantManager.Plant
+        {
+            plantData = selectedSeed,
+            basePrefab = matchingPlant.basePrefab,
+            seedPrefab = matchingPlant.seedPrefab,
+            sproutPrefab = matchingPlant.sproutPrefab,
+            maturePrefab = matchingPlant.maturePrefab,
+            spawnLocator = oldPlant.spawnLocator, // Keep the same location
+            spawnScale = Vector3.one
+        };
 
-        Debug.Log($"Seed planted at {plant.spawnLocator.position}");
+        // Remove the old plant from the list and add the new one
+        plantManager.plants.Remove(oldPlant);
+        plantManager.plants.Add(newPlant);
+
+        // Instantiate the correct seed prefab
+        newPlant.currentStageObject = Instantiate(newPlant.seedPrefab, newPlant.spawnLocator.position, Quaternion.identity);
+        newPlant.currentStage = 0;
+
+        Debug.Log($"Seed planted: {selectedSeed.displayName} at {newPlant.spawnLocator.position}");
+
+        // Remove 1 seed from inventory
+        FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
     }
+
+
 
     private void ChangeDirtMaterial(GameObject stageObject)
     {

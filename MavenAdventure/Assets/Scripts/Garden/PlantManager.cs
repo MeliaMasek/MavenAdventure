@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +12,6 @@ public class PlantManager : MonoBehaviour
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
         public InventoryData plantData; // Reference to the scriptable object
-
         public int daysToSprout = 2;
         public int daysToMature = 5;
 
@@ -24,14 +22,14 @@ public class PlantManager : MonoBehaviour
         [HideInInspector] public bool isFertilized = false;
 
         public Transform spawnLocator; // Reference to the locator's Transform
-        public Vector3 spawnScale;    // Store the initial scale
+        public Vector3 spawnScale; // Store the initial scale
     }
 
-    public int dayCounter = 1; 
+    public int dayCounter = 1;
     public Text dayCounterText;
 
     public WateringInteraction wateringInteraction; // Reference to the watering script
-    public BackpackManager backpack;  // Reference to the backpack system
+    public BackpackManager backpack; // Reference to the backpack system
 
     public List<Plant> plants = new List<Plant>();
 
@@ -46,9 +44,9 @@ public class PlantManager : MonoBehaviour
         {
             backpack = FindObjectOfType<BackpackManager>(); // Auto-assign if not set
         }
-        
+
         UpdateDayCounterUI(); // Initialize UI
-        
+
         foreach (var plant in plants)
         {
             if (plant.spawnLocator != null)
@@ -145,6 +143,12 @@ public class PlantManager : MonoBehaviour
 
     public void SetStage(Plant plant, int stage)
     {
+        Debug.Log($"SetStage called for {plant.plantData.displayName} with stage {stage}");
+
+        Vector3 previousScale = plant.currentStageObject != null
+            ? plant.currentStageObject.transform.localScale
+            : plant.spawnScale;
+
         if (plant.currentStageObject != null)
         {
             Destroy(plant.currentStageObject);
@@ -154,9 +158,6 @@ public class PlantManager : MonoBehaviour
 
         switch (stage)
         {
-            case -1:
-                newStagePrefab = plant.basePrefab;
-                break;
             case 0:
                 newStagePrefab = plant.seedPrefab;
                 break;
@@ -166,27 +167,21 @@ public class PlantManager : MonoBehaviour
             case 2:
                 newStagePrefab = plant.maturePrefab;
                 break;
+            default:
+                Debug.LogError($"Unknown stage {stage} for {plant.plantData.displayName}");
+                return;
         }
 
         if (newStagePrefab != null)
         {
-            plant.currentStageObject = Instantiate(
-                newStagePrefab,
-                plant.spawnLocator.position,
-                plant.spawnLocator.rotation
-            );
-
-            plant.currentStageObject.transform.localScale = plant.spawnScale;
+            plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
+            plant.currentStageObject.transform.localScale = previousScale; // ✅ Retain scale
         }
 
         plant.currentStage = stage;
+        plant.daysElapsed = 0;
 
-        if (stage < 2)
-        {
-            plant.daysElapsed = 0;
-        }
-
-        Debug.Log($"Set plant to stage {stage} at position {plant.spawnLocator.position}");
+        Debug.Log($"Successfully set {plant.plantData.displayName} to stage {stage} with scale {previousScale}");
     }
 
     private void UpdateDayCounterUI()
@@ -204,64 +199,51 @@ public class PlantManager : MonoBehaviour
         if (plant.currentStage == 2) // Fully grown
         {
             FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData); // Add to backpack
-            Destroy(plant.currentStageObject); // Remove the mature plant model
 
-            // Reset plant back to empty stage
-            SetStage(plant, -1);
-            plant.daysElapsed = 0;
-            plant.isWatered = false;
-            plant.isFertilized = false;
+            // Set plant to resting state BEFORE destroying the mature plant
+            SetStage(plant, -2); // Transition to empty bed
 
             Debug.Log($"Plant collected and planter reverted to empty stage.");
         }
     }
-    
+
+
     public void PlantSeedAt(Transform planterLocation)
     {
-        // Check if the planter is empty (not yet occupied by a plant)
-        Plant existingPlant = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
+        Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
 
-        if (existingPlant != null)
+        if (emptyBed == null)
         {
-            Debug.Log("This bed is already occupied.");
+            Debug.LogError("No empty bed found at this location!");
             return;
         }
 
-        // Ensure a seed is selected
-        if (backpack.GetSelectedSeed() == null)
+        InventoryData selectedSeed = backpack.GetSelectedSeed(); // Now using InventoryData directly
+        if (selectedSeed == null)
         {
-            Debug.Log("No seed selected!");
+            Debug.LogError("No seed selected!");
             return;
         }
 
-        // Get the selected seed data
-        InventoryData selectedSeed = backpack.GetSelectedSeed();
-
-        // Find matching plant from the available plants list
-        Plant matchingPlant = plants.Find(p => p.plantData == selectedSeed);
-
-        if (matchingPlant == null)
+        if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null)
         {
-            Debug.LogError("No matching plant found for the selected seed!");
+            Debug.LogError($"Seed data missing prefabs for {selectedSeed.displayName}");
             return;
         }
 
-        // Create a new instance of the selected plant with its prefabs assigned
         Plant newPlant = new Plant
         {
-            plantData = selectedSeed,
-            basePrefab = matchingPlant.basePrefab,
-            seedPrefab = matchingPlant.seedPrefab,
-            sproutPrefab = matchingPlant.sproutPrefab,
-            maturePrefab = matchingPlant.maturePrefab,
+            plantData = selectedSeed, // Using InventoryData
+            basePrefab = emptyBed.basePrefab,
             spawnLocator = planterLocation,
-            spawnScale = Vector3.one
+            spawnScale = emptyBed.spawnScale
         };
 
+        plants.Remove(emptyBed);
         plants.Add(newPlant);
+
         SetStage(newPlant, 0); // Start at seed stage
 
-        // Remove the used seed from inventory
         backpack.RemoveItem(selectedSeed);
 
         Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");

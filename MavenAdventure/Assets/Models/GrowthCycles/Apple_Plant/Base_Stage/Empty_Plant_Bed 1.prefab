@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5286287210877599062}
   - component: {fileID: 2450610067758397958}
+  - component: {fileID: 4804825771375649090}
   m_Layer: 6
   m_Name: Empty_Plant_Bed 1
   m_TagString: Untagged
@@ -130,6 +131,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.051851075, y: 0.008908224, z: 0.04865282}
   m_Center: {x: -0.00020907947, y: 0.0015506963, z: -0.00049049174}
+--- !u!114 &4804825771375649090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4762409929652627436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebad39df8c8d4f4db7d9942b10ba2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  validSeeds:
+  - {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
 --- !u!1 &8965863501237417017
 GameObject:
   m_ObjectHideFlags: 0

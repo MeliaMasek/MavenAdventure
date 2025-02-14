@@ -18,4 +18,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 5af5ffa2dd5c1a547bce7d30554ef6fb, type: 3}
   maxStackSize: 50
   GoldValue: 3
-  seedPrefab: {fileID: 0}
+  seedPrefab: {fileID: 7528818466681106443, guid: 3e2422d90089a134f999a29592384123, type: 3}
+  sproutPrefab: {fileID: 6746097066852740716, guid: 8c8c273d10dbcbb47b5ca10c0737baeb, type: 3}
+  maturePrefab: {fileID: 4739671149124689440, guid: 0609f212036ab0e4bb0b4f86850a0a2a, type: 3}

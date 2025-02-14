@@ -13,5 +13,7 @@ public class InventoryData : ScriptableObject
     public Sprite icon;
     public int maxStackSize;
     public int GoldValue;
-    public GameObject seedPrefab;
+    public GameObject seedPrefab; // Only needed for planting
+    public GameObject sproutPrefab; // Only needed for planting
+    public GameObject maturePrefab; // Only needed for planting
 }

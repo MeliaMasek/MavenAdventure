@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class PlantingSystem : MonoBehaviour
 {
     public BackpackManager backpackManager;

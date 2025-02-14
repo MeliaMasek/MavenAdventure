@@ -1,6 +1,5 @@
-
 using UnityEngine;
-using UnityEngine.UI; // Import UI namespace
+using UnityEngine.UI;
 
 public class WateringInteraction : MonoBehaviour
 {
@@ -34,7 +33,7 @@ public class WateringInteraction : MonoBehaviour
         {
             isWateringMode = true;
             wateringButton.interactable = false; // Disable button while active
-            Debug.Log("Watering mode activated. Click a plant to water.");
+            //Debug.Log("Watering mode activated. Click a plant to water.");
         }
     }
 
@@ -79,11 +78,11 @@ public class WateringInteraction : MonoBehaviour
             if (backpackManager != null)
             {
                 backpackManager.AddToBackpack(plant.plantData); // Add to backpack UI
-                Debug.Log($"Collected {plant.maturePrefab.name} and added to backpack.");
+                //Debug.Log($"Collected {plant.maturePrefab.name} and added to backpack.");
             }
             else
             {
-                Debug.LogError("BackpackManager reference is missing!");
+                //Debug.LogError("BackpackManager reference is missing!");
             }
 
             Destroy(plant.currentStageObject); // Remove from scene
@@ -107,12 +106,12 @@ public class WateringInteraction : MonoBehaviour
                 {
                     plant.isWatered = true;
                     ChangeDirtMaterial(plant.currentStageObject);
-                    Debug.Log($"Watered the plant: {clickedObject.name}");
+                    //Debug.Log($"Watered the plant: {clickedObject.name}");
                     return true; // Successfully watered
                 }
                 else
                 {
-                    Debug.Log("This plant is already watered today.");
+                    //Debug.Log("This plant is already watered today.");
                     return false; // Already watered
                 }
             }
@@ -136,18 +135,18 @@ public class WateringInteraction : MonoBehaviour
                 {
                     meshRenderer.material = dirtWet; // Change to wet material
                     materialChanged = true;
-                    Debug.Log($"Changed material to wet for {child.name} in {stageObject.name}.");
+                    //Debug.Log($"Changed material to wet for {child.name} in {stageObject.name}.");
                 }
                 else
                 {
-                    Debug.LogWarning($"No MeshRenderer found on {child.name} tagged as 'Dirt'.");
+                    //Debug.LogWarning($"No MeshRenderer found on {child.name} tagged as 'Dirt'.");
                 }
             }
         }
 
         if (!materialChanged)
         {
-            Debug.LogWarning($"No objects tagged as 'Dirt' found in {stageObject.name}.");
+            //Debug.LogWarning($"No objects tagged as 'Dirt' found in {stageObject.name}.");
         }
     }
 

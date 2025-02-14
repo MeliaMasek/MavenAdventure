@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -77,7 +75,7 @@ public class BackpackManager : MonoBehaviour
             Button button = newItem.GetComponent<Button>(); 
             if (button != null)
             {
-                Debug.Log($"Assigning button event for {item.Key.displayName}"); // Debugging
+                //Debug.Log($"Assigning button event for {item.Key.displayName}"); // Debugging
 
                 InventoryData seedRef = item.Key;
 
@@ -87,16 +85,16 @@ public class BackpackManager : MonoBehaviour
                 if (seedManager != null)
                 {
                     button.onClick.AddListener(delegate { seedManager.ActivatePlantingMode(); });
-                    Debug.Log("Planting mode assigned to button click.");
+                    //Debug.Log("Planting mode assigned to button click.");
                 }
                 else
                 {
-                    Debug.LogError("SeedManager not found! Make sure it's assigned in the Inspector.");
+                    //Debug.LogError("SeedManager not found! Make sure it's assigned in the Inspector.");
                 }
             }
             else
             {
-                Debug.LogError("No Button component found on itemPrefab!");
+                //Debug.LogError("No Button component found on itemPrefab!");
             }
 
             newItem.transform.localScale = Vector3.one;
@@ -107,7 +105,7 @@ public class BackpackManager : MonoBehaviour
     public void SelectSeed(InventoryData seed)
     {
         selectedSeed = seed;
-        Debug.Log("Selected Seed: " + seed.displayName);
+        //Debug.Log("Selected Seed: " + seed.displayName);
 
         // Close the backpack menu after selecting a seed
         ToggleBackpack(false);  // Close backpack UI
@@ -135,7 +133,7 @@ public class BackpackManager : MonoBehaviour
                 collectedItems.Remove(itemData);
             }
 
-            UpdateBackpackUI();
+            UpdateBackpackUI(); // Refresh UI after removing seed
         }
     }
 
