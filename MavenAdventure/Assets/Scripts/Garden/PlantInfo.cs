@@ -77,13 +77,13 @@ public class PlantInfo : MonoBehaviour
         switch (plant.currentStage)
         {
             case -1:
-                remainingDays = plant.daysToSprout - plant.daysElapsed;
+                //remainingDays = plant.daysToSprout - plant.daysElapsed;
                 break;
             case 0:
-                remainingDays = plant.daysToSprout - plant.daysElapsed;
+                //remainingDays = plant.daysToSprout - plant.daysElapsed;
                 break;
             case 1:
-                remainingDays = plant.daysToMature - plant.daysElapsed;
+                //remainingDays = plant.daysToMature - plant.daysElapsed;
                 break;
             default:
                 remainingDays = 0;

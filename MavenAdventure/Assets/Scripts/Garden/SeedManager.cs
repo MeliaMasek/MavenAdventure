@@ -66,48 +66,49 @@ public class SeedManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Planting {selectedSeed.displayName} at {oldPlant.currentStageObject.transform.position}");
+        if (selectedSeed.seedPrefab == null)
+        {
+            Debug.LogError($"❌ ERROR: No seed prefab set for {selectedSeed.displayName}! Check InventoryData.");
+            return;
+        }
+
+        if (selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null)
+        {
+            Debug.LogError($"❌ ERROR: Missing growth stage prefabs for {selectedSeed.displayName}! Check InventoryData.");
+            return;
+        }
+
+        Debug.Log($"🌱 Planting seed: {selectedSeed.displayName}");
 
         // Destroy the old plant object (previous base bed)
         Destroy(oldPlant.currentStageObject);
 
-        // Find the matching plant prefab set for this specific seed type
-        PlantManager.Plant matchingPlant = plantManager.plants.Find(p => p.plantData == selectedSeed);
-    
-        if (matchingPlant == null)
-        {
-            Debug.LogError($"No prefab set for {selectedSeed.displayName} in PlantManager!");
-            return;
-        }
-
-        // Create a new Plant instance and override the existing entry
+        // ✅ Assign all prefabs properly
         PlantManager.Plant newPlant = new PlantManager.Plant
         {
             plantData = selectedSeed,
-            basePrefab = matchingPlant.basePrefab,
-            seedPrefab = matchingPlant.seedPrefab,
-            sproutPrefab = matchingPlant.sproutPrefab,
-            maturePrefab = matchingPlant.maturePrefab,
-            spawnLocator = oldPlant.spawnLocator, // Keep the same location
+            seedPrefab = selectedSeed.seedPrefab,      // ✅ Store Seed Prefab
+            sproutPrefab = selectedSeed.sproutPrefab,  // ✅ Store Sprout Prefab
+            maturePrefab = selectedSeed.maturePrefab,  // ✅ Store Mature Prefab
+            spawnLocator = oldPlant.spawnLocator,      // Keep the same location
             spawnScale = Vector3.one
         };
-
-        // Remove the old plant from the list and add the new one
-        plantManager.plants.Remove(oldPlant);
-        plantManager.plants.Add(newPlant);
 
         // Instantiate the correct seed prefab
         newPlant.currentStageObject = Instantiate(newPlant.seedPrefab, newPlant.spawnLocator.position, Quaternion.identity);
         newPlant.currentStage = 0;
 
-        Debug.Log($"Seed planted: {selectedSeed.displayName} at {newPlant.spawnLocator.position}");
+        // Remove the old plant from the list and add the new one
+        plantManager.plants.Remove(oldPlant);
+        plantManager.plants.Add(newPlant);
+
+        Debug.Log($"🌱 Seed planted: {selectedSeed.displayName} at {newPlant.spawnLocator.position}");
 
         // Remove 1 seed from inventory
         FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
     }
 
-
-
+    
     private void ChangeDirtMaterial(GameObject stageObject)
     {
         // Find all child objects with the "Dirt" tag

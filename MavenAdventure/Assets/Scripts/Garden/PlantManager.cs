@@ -12,8 +12,8 @@ public class PlantManager : MonoBehaviour
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
         public InventoryData plantData; // Reference to the scriptable object
-        public int daysToSprout = 2;
-        public int daysToMature = 5;
+        //public int daysToSprout = 2;
+        //public int daysToMature = 5;
 
         [HideInInspector] public GameObject currentStageObject;
         [HideInInspector] public int currentStage = -1;
@@ -77,8 +77,8 @@ public class PlantManager : MonoBehaviour
             if (plant.isWatered)
             {
                 plant.daysElapsed++;
-                int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.daysToSprout - 1) : plant.daysToSprout;
-                int matureDays = plant.isFertilized ? Mathf.Max(1, plant.daysToMature - 1) : plant.daysToMature;
+                int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToSprout - 1) : plant.plantData.daysToSprout;
+                int matureDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToMature - 1) : plant.plantData.daysToMature;
 
                 if (plant.currentStage == -1 && plant.daysElapsed >= sproutDays)
                 {
@@ -88,9 +88,9 @@ public class PlantManager : MonoBehaviour
                 {
                     SetStage(plant, 1);
                 }
-                else if (plant.currentStage == 1 && plant.daysElapsed >= matureDays)
+                if (plant.currentStage == 0 && (plant.daysElapsed - sproutDays) >= matureDays) // ✅ Only count days since sprout
                 {
-                    SetStage(plant, 2);
+                    SetStage(plant, 2); // Move to mature stage
                 }
             }
 
@@ -167,21 +167,25 @@ public class PlantManager : MonoBehaviour
             case 2:
                 newStagePrefab = plant.maturePrefab;
                 break;
-            default:
-                Debug.LogError($"Unknown stage {stage} for {plant.plantData.displayName}");
-                return;
         }
 
-        if (newStagePrefab != null)
+        if (newStagePrefab == null)
         {
-            plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
-            plant.currentStageObject.transform.localScale = previousScale; // ✅ Retain scale
+            Debug.LogError($"❌ ERROR: No prefab found for {plant.plantData.displayName} at stage {stage}!");
+            return;
         }
 
-        plant.currentStage = stage;
-        plant.daysElapsed = 0;
+// Debug before instantiating
+        Debug.Log($"🌱 Spawning new stage for {plant.plantData.displayName} at stage {stage}");
+        plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
 
-        Debug.Log($"Successfully set {plant.plantData.displayName} to stage {stage} with scale {previousScale}");
+        if (plant.currentStageObject == null)
+        {
+            Debug.LogError($"❌ ERROR: Failed to instantiate {plant.plantData.displayName} at stage {stage}!");
+            return;
+        }
+
+        Debug.Log($"✅ Successfully moved {plant.plantData.displayName} to stage {stage}");
     }
 
     private void UpdateDayCounterUI()
@@ -236,7 +240,7 @@ public class PlantManager : MonoBehaviour
             plantData = selectedSeed, // Using InventoryData
             basePrefab = emptyBed.basePrefab,
             spawnLocator = planterLocation,
-            spawnScale = emptyBed.spawnScale
+            spawnScale = emptyBed.spawnScale,
         };
 
         plants.Remove(emptyBed);
