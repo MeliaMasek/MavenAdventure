@@ -11,9 +11,7 @@ public class PlantManager : MonoBehaviour
         public GameObject seedPrefab;
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
-        public InventoryData plantData; // Reference to the scriptable object
-        //public int daysToSprout = 2;
-        //public int daysToMature = 5;
+        public InventoryData plantData;
 
         [HideInInspector] public GameObject currentStageObject;
         [HideInInspector] public int currentStage = -1;
@@ -21,15 +19,15 @@ public class PlantManager : MonoBehaviour
         [HideInInspector] public bool isWatered = false;
         [HideInInspector] public bool isFertilized = false;
 
-        public Transform spawnLocator; // Reference to the locator's Transform
-        public Vector3 spawnScale; // Store the initial scale
+        public Transform spawnLocator;
+        public Vector3 spawnScale;
     }
 
     public int dayCounter = 1;
     public Text dayCounterText;
 
-    public WateringInteraction wateringInteraction; // Reference to the watering script
-    public BackpackManager backpack; // Reference to the backpack system
+    public WateringInteraction wateringInteraction;
+    public BackpackManager backpack;
 
     public List<Plant> plants = new List<Plant>();
 
@@ -37,15 +35,15 @@ public class PlantManager : MonoBehaviour
     {
         if (wateringInteraction == null)
         {
-            wateringInteraction = FindObjectOfType<WateringInteraction>(); // Auto-assign if not set
+            wateringInteraction = FindObjectOfType<WateringInteraction>();
         }
 
         if (backpack == null)
         {
-            backpack = FindObjectOfType<BackpackManager>(); // Auto-assign if not set
+            backpack = FindObjectOfType<BackpackManager>();
         }
 
-        UpdateDayCounterUI(); // Initialize UI
+        UpdateDayCounterUI();
 
         foreach (var plant in plants)
         {
@@ -60,10 +58,6 @@ public class PlantManager : MonoBehaviour
                 baseStage.transform.localScale = plant.spawnScale;
                 plant.currentStageObject = baseStage;
                 plant.currentStage = -1;
-            }
-            else
-            {
-                Debug.LogWarning("Spawn locator not assigned for a plant!");
             }
         }
     }
@@ -88,9 +82,9 @@ public class PlantManager : MonoBehaviour
                 {
                     SetStage(plant, 1);
                 }
-                if (plant.currentStage == 0 && (plant.daysElapsed - sproutDays) >= matureDays) // ✅ Only count days since sprout
+                if (plant.currentStage == 0 && (plant.daysElapsed - sproutDays) >= matureDays) 
                 {
-                    SetStage(plant, 2); // Move to mature stage
+                    SetStage(plant, 2);
                 }
             }
 
@@ -100,7 +94,6 @@ public class PlantManager : MonoBehaviour
 
         dayCounter++;
 
-        // Remove collected plants safely after iteration
         foreach (var plant in plantsToRemove)
         {
             plants.Remove(plant);
@@ -114,7 +107,6 @@ public class PlantManager : MonoBehaviour
     {
         if (wateringInteraction == null)
         {
-            Debug.LogError("WateringInteraction reference is missing!");
             return;
         }
 
@@ -132,8 +124,7 @@ public class PlantManager : MonoBehaviour
 
                         if (meshRenderer != null)
                         {
-                            meshRenderer.material = wateringInteraction.dirtDry; // Set dirt back to dry
-                            Debug.Log($"Dirt reset to dry for {child.name} in {plant.currentStageObject.name}.");
+                            meshRenderer.material = wateringInteraction.dirtDry;
                         }
                     }
                 }
@@ -143,8 +134,6 @@ public class PlantManager : MonoBehaviour
 
     public void SetStage(Plant plant, int stage)
     {
-        Debug.Log($"SetStage called for {plant.plantData.displayName} with stage {stage}");
-
         Vector3 previousScale = plant.currentStageObject != null
             ? plant.currentStageObject.transform.localScale
             : plant.spawnScale;
@@ -171,28 +160,22 @@ public class PlantManager : MonoBehaviour
 
         if (newStagePrefab == null)
         {
-            Debug.LogError($"❌ ERROR: No prefab found for {plant.plantData.displayName} at stage {stage}!");
             return;
         }
 
-// Debug before instantiating
-        Debug.Log($"🌱 Spawning new stage for {plant.plantData.displayName} at stage {stage}");
         plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
 
         if (plant.currentStageObject == null)
         {
-            Debug.LogError($"❌ ERROR: Failed to instantiate {plant.plantData.displayName} at stage {stage}!");
             return;
         }
-
-        Debug.Log($"✅ Successfully moved {plant.plantData.displayName} to stage {stage}");
     }
 
     private void UpdateDayCounterUI()
     {
         if (dayCounterText != null)
         {
-            dayCounterText.text = "Day: " + dayCounter; // Update UI text
+            dayCounterText.text = "Day: " + dayCounter;
         }
     }
 
@@ -200,44 +183,37 @@ public class PlantManager : MonoBehaviour
 
     public void CollectPlant(Plant plant)
     {
-        if (plant.currentStage == 2) // Fully grown
+        if (plant.currentStage == 2)
         {
-            FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData); // Add to backpack
+            FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData);
 
-            // Set plant to resting state BEFORE destroying the mature plant
-            SetStage(plant, -2); // Transition to empty bed
-
-            Debug.Log($"Plant collected and planter reverted to empty stage.");
+            SetStage(plant, -2);
         }
     }
-
-
+    
     public void PlantSeedAt(Transform planterLocation)
     {
         Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
 
         if (emptyBed == null)
         {
-            Debug.LogError("No empty bed found at this location!");
             return;
         }
 
-        InventoryData selectedSeed = backpack.GetSelectedSeed(); // Now using InventoryData directly
+        InventoryData selectedSeed = backpack.GetSelectedSeed();
         if (selectedSeed == null)
         {
-            Debug.LogError("No seed selected!");
             return;
         }
 
         if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null)
         {
-            Debug.LogError($"Seed data missing prefabs for {selectedSeed.displayName}");
             return;
         }
 
         Plant newPlant = new Plant
         {
-            plantData = selectedSeed, // Using InventoryData
+            plantData = selectedSeed,
             basePrefab = emptyBed.basePrefab,
             spawnLocator = planterLocation,
             spawnScale = emptyBed.spawnScale,
@@ -249,7 +225,5 @@ public class PlantManager : MonoBehaviour
         SetStage(newPlant, 0); // Start at seed stage
 
         backpack.RemoveItem(selectedSeed);
-
-        Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
     }
 }

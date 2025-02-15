@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: TomatoSeedData
   m_EditorClassIdentifier: 
   ID: 40
-  displayName: Tomato
+  displayName: Tomato Seed
   description: 
   icon: {fileID: 3625043607559282579, guid: 1c2a92d2516a2dc43aa1edc99159e9b3, type: 3}
+  ProduceIcon: {fileID: 21300000, guid: 6c88544c054565b478aa8af60e55f5f7, type: 3}
   maxStackSize: 50
   GoldValue: 2
   seedPrefab: {fileID: 6100879739379839684, guid: b7b665fb5a4c4ff4a855c4a0ba7d82d9, type: 3}

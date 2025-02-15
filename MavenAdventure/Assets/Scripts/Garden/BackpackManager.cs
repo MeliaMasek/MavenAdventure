@@ -4,23 +4,21 @@ using UnityEngine.UI;
 
 public class BackpackManager : MonoBehaviour
 {
-    public GameObject backpackPanel;  // Reference to UI Panel
-    public Transform itemGrid;        // Parent for item list (GridLayoutGroup)
-    public GameObject itemPrefab;     // Prefab for displaying items
+    public GameObject backpackPanel;
+    public Transform itemGrid;
+    public GameObject itemPrefab;
     public InventoryData selectedSeed;
-    public Button plantingButton;  // Assign this in the Inspector
+    public Button plantingButton;
     public SeedManager seedManager;
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
 
     [Header("Starting Seeds")] 
-    public List<InventoryData> startingSeeds;  // List of seeds the player starts with
-    public int startingSeedAmount = 5;  // Number of each seed to start with
-
-    // Add an item to the backpack
+    public List<InventoryData> startingSeeds;
+    public int startingSeedAmount = 5;
     
     private void Start()
     {
-        InitializeStartingSeeds(); // Give default seeds at game start
+        InitializeStartingSeeds();
         UpdateBackpackUI();
     }
     
@@ -28,14 +26,14 @@ public class BackpackManager : MonoBehaviour
     {
         foreach (InventoryData seed in startingSeeds)
         {
-            AddToBackpack(seed, startingSeedAmount); // Add 5 of each seed type
+            AddToBackpack(seed, startingSeedAmount);
         }
     }
 
     public void AddToBackpack(InventoryData itemData, int amount = 1)
     {
         if (itemData == null) return;
-
+        
         if (collectedItems.ContainsKey(itemData))
         {
             collectedItems[itemData] += amount;
@@ -48,7 +46,6 @@ public class BackpackManager : MonoBehaviour
         UpdateBackpackUI();
     }
 
-    // Update the UI by clearing the old items and displaying the updated ones
     public void UpdateBackpackUI()
     {
         foreach (Transform child in itemGrid)
@@ -75,8 +72,6 @@ public class BackpackManager : MonoBehaviour
             Button button = newItem.GetComponent<Button>(); 
             if (button != null)
             {
-                //Debug.Log($"Assigning button event for {item.Key.displayName}"); // Debugging
-
                 InventoryData seedRef = item.Key;
 
                 button.onClick.RemoveAllListeners();
@@ -85,37 +80,22 @@ public class BackpackManager : MonoBehaviour
                 if (seedManager != null)
                 {
                     button.onClick.AddListener(delegate { seedManager.ActivatePlantingMode(); });
-                    //Debug.Log("Planting mode assigned to button click.");
-                }
-                else
-                {
-                    //Debug.LogError("SeedManager not found! Make sure it's assigned in the Inspector.");
                 }
             }
-            else
-            {
-                //Debug.LogError("No Button component found on itemPrefab!");
-            }
-
             newItem.transform.localScale = Vector3.one;
         }
     }
-
     
     public void SelectSeed(InventoryData seed)
     {
         selectedSeed = seed;
-        //Debug.Log("Selected Seed: " + seed.displayName);
-
-        // Close the backpack menu after selecting a seed
-        ToggleBackpack(false);  // Close backpack UI
+        ToggleBackpack(false);
     }
 
     public InventoryData GetSelectedSeed()
     {
         return selectedSeed;
     }
-    // Toggle backpack visibility
 
     public void ToggleBackpack(bool show)
     {
@@ -132,9 +112,7 @@ public class BackpackManager : MonoBehaviour
             {
                 collectedItems.Remove(itemData);
             }
-
-            UpdateBackpackUI(); // Refresh UI after removing seed
+            UpdateBackpackUI();
         }
     }
-
 }

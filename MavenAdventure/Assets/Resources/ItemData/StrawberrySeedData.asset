@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: StrawberrySeedData
   m_EditorClassIdentifier: 
   ID: 30
-  displayName: Strawberry
+  displayName: Strawberry Seed
   description: 
   icon: {fileID: 7482667652216324306, guid: b614f2228ac8a6c4e80e2b60cfba0858, type: 3}
+  ProduceIcon: {fileID: 21300000, guid: f43c26a7078215f4694e2397f884b06d, type: 3}
   maxStackSize: 50
   GoldValue: 4
   seedPrefab: {fileID: 4352389096216153976, guid: 8cf82665e8f6a024694c6b35dbe9796b, type: 3}
