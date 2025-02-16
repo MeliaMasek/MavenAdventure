@@ -10,6 +10,7 @@ public class BackpackManager : MonoBehaviour
     public InventoryData selectedSeed;
     public Button plantingButton;
     public SeedManager seedManager;
+    
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
 
     [Header("Starting Seeds")] 
@@ -33,7 +34,7 @@ public class BackpackManager : MonoBehaviour
     public void AddToBackpack(InventoryData itemData, int amount = 1)
     {
         if (itemData == null) return;
-        
+
         if (collectedItems.ContainsKey(itemData))
         {
             collectedItems[itemData] += amount;
@@ -48,19 +49,30 @@ public class BackpackManager : MonoBehaviour
 
     public void UpdateBackpackUI()
     {
+        // Clear UI first
         foreach (Transform child in itemGrid)
         {
             Destroy(child.gameObject);
         }
 
+        // Display inventory items (seeds and harvested plants)
         foreach (var item in collectedItems)
         {
+            // Check for a tag (like "Seed" or "Produce")
             GameObject newItem = Instantiate(itemPrefab, itemGrid);
             Image itemImage = newItem.GetComponentInChildren<Image>();
 
             if (itemImage != null)
             {
-                itemImage.sprite = item.Key.icon;
+                // Show produce icon if the item has a "Produce" tag, otherwise show the seed icon
+                if (item.Key.tags.Contains("Produce"))
+                {
+                    itemImage.sprite = item.Key.ProduceIcon != null ? item.Key.ProduceIcon : item.Key.Seedicon;
+                }
+                else
+                {
+                    itemImage.sprite = item.Key.Seedicon;
+                }
             }
 
             Text itemText = newItem.GetComponentInChildren<Text>();
@@ -72,26 +84,29 @@ public class BackpackManager : MonoBehaviour
             Button button = newItem.GetComponent<Button>(); 
             if (button != null)
             {
-                InventoryData seedRef = item.Key;
-
+                InventoryData itemRef = item.Key;
                 button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(delegate { SelectSeed(seedRef); });
 
-                if (seedManager != null)
+                if (item.Key.seedPrefab != null) // If it's a seed, allow planting
                 {
-                    button.onClick.AddListener(delegate { seedManager.ActivatePlantingMode(); });
+                    button.onClick.AddListener(delegate { SelectSeed(itemRef); });
+                    if (seedManager != null)
+                    {
+                        button.onClick.AddListener(delegate { seedManager.ActivatePlantingMode(); });
+                    }
                 }
             }
+
             newItem.transform.localScale = Vector3.one;
         }
     }
-    
+
     public void SelectSeed(InventoryData seed)
     {
         selectedSeed = seed;
         ToggleBackpack(false);
     }
-
+    
     public InventoryData GetSelectedSeed()
     {
         return selectedSeed;
@@ -101,7 +116,7 @@ public class BackpackManager : MonoBehaviour
     {
         backpackPanel.SetActive(show);
     }
-    
+
     public void RemoveItem(InventoryData itemData)
     {
         if (collectedItems.ContainsKey(itemData))

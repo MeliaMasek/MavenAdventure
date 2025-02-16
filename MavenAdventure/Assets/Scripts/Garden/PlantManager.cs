@@ -12,7 +12,7 @@ public class PlantManager : MonoBehaviour
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
         public InventoryData plantData;
-
+        
         [HideInInspector] public GameObject currentStageObject;
         [HideInInspector] public int currentStage = -1;
         [HideInInspector] public int daysElapsed = 0;
@@ -21,6 +21,7 @@ public class PlantManager : MonoBehaviour
 
         public Transform spawnLocator;
         public Vector3 spawnScale;
+        public bool isHarvestable => currentStage == 2;
     }
 
     public int dayCounter = 1;
@@ -62,46 +63,56 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    private void EndDay()
+private void EndDay()
+{
+    List<Plant> plantsToRemove = new List<Plant>();
+
+    foreach (var plant in plants)
     {
-        List<Plant> plantsToRemove = new List<Plant>();
+        Debug.Log($"Plant: {plant.plantData.displayName}, Days Elapsed: {plant.daysElapsed}, Current Stage: {plant.currentStage}");
 
-        foreach (var plant in plants)
+        if (plant.isWatered)
         {
-            if (plant.isWatered)
+            plant.daysElapsed++;
+            int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToSprout - 1) : plant.plantData.daysToSprout;
+            int matureDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToMature - 1) : plant.plantData.daysToMature;
+
+            Debug.Log($"Sprout Days: {sproutDays}, Mature Days: {matureDays}, Days Elapsed: {plant.daysElapsed}");
+
+            // Transition from empty bed to seed (stage -1 to 0)
+            if (plant.currentStage == -1 && plant.daysElapsed >= sproutDays)
             {
-                plant.daysElapsed++;
-                int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToSprout - 1) : plant.plantData.daysToSprout;
-                int matureDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToMature - 1) : plant.plantData.daysToMature;
-
-                if (plant.currentStage == -1 && plant.daysElapsed >= sproutDays)
-                {
-                    SetStage(plant, 0);
-                }
-                else if (plant.currentStage == 0 && plant.daysElapsed >= sproutDays)
-                {
-                    SetStage(plant, 1);
-                }
-                if (plant.currentStage == 0 && (plant.daysElapsed - sproutDays) >= matureDays) 
-                {
-                    SetStage(plant, 2);
-                }
+                Debug.Log($"Transitioning {plant.plantData.displayName} from Empty Bed to Seed (Stage 0)");
+                SetStage(plant, 0); // Transition to seed stage
             }
-
-            plant.isWatered = false;
-            plant.isFertilized = false;
+            // Transition from seed to sprout (stage 0 to 1)
+            else if (plant.currentStage == 0 && plant.daysElapsed >= sproutDays)
+            {
+                Debug.Log($"Transitioning {plant.plantData.displayName} from Seed to Sprout (Stage 1)");
+                SetStage(plant, 1); // Transition to sprout stage
+            }
+            // Transition from sprout to mature (stage 1 to 2), only if plant is already sprout
+            if (plant.currentStage == 1 && plant.daysElapsed >= sproutDays + matureDays)
+            {
+                Debug.Log($"Transitioning {plant.plantData.displayName} from Sprout to Mature (Stage 2)");
+                SetStage(plant, 2); // Transition to mature stage
+            }
         }
 
-        dayCounter++;
-
-        foreach (var plant in plantsToRemove)
-        {
-            plants.Remove(plant);
-        }
-
-        ResetDirtToDry();
-        UpdateDayCounterUI();
+        plant.isWatered = false;
+        plant.isFertilized = false;
     }
+
+    dayCounter++;
+
+    foreach (var plant in plantsToRemove)
+    {
+        plants.Remove(plant);
+    }
+
+    ResetDirtToDry();
+    UpdateDayCounterUI();
+}
 
     private void ResetDirtToDry()
     {
@@ -134,10 +145,6 @@ public class PlantManager : MonoBehaviour
 
     public void SetStage(Plant plant, int stage)
     {
-        Vector3 previousScale = plant.currentStageObject != null
-            ? plant.currentStageObject.transform.localScale
-            : plant.spawnScale;
-
         if (plant.currentStageObject != null)
         {
             Destroy(plant.currentStageObject);
@@ -164,13 +171,14 @@ public class PlantManager : MonoBehaviour
         }
 
         plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
+        plant.currentStage = stage;  // Update plant's growth stage
 
-        if (plant.currentStageObject == null)
+        // Mark as harvestable if it's mature
+        if (plant.currentStage == 2)
         {
-            return;
+            Debug.Log($"{plant.plantData.displayName} is ready to be harvested.");
         }
     }
-
     private void UpdateDayCounterUI()
     {
         if (dayCounterText != null)
@@ -183,14 +191,22 @@ public class PlantManager : MonoBehaviour
 
     public void CollectPlant(Plant plant)
     {
-        if (plant.currentStage == 2)
+        if (plant.isHarvestable)
         {
-            FindObjectOfType<BackpackManager>().AddToBackpack(plant.plantData);
+            // Add the mature plant to the backpack
+            backpack.AddToBackpack(plant.plantData);
 
-            SetStage(plant, -2);
+            // Reset the plant to an empty bed
+            SetStage(plant, -1); // Set back to empty stage
+            plant.spawnLocator.GetComponent<EmptyBed>().isOccupied = false;
+
+            Debug.Log($"{plant.plantData.displayName} collected and added to backpack!");
+        }
+        else
+        {
+            Debug.Log($"{plant.plantData.displayName} is not ready for harvest.");
         }
     }
-    
     public void PlantSeedAt(Transform planterLocation)
     {
         Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);

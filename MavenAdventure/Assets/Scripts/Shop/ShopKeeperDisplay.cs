@@ -247,7 +247,7 @@ public class ShopKeeperDisplay : MonoBehaviour
     {
         var data = shopSlotsUI.AssignedItemSlot.ItemData;
         
-        itemPreviewSprite.sprite = data.icon;
+        itemPreviewSprite.sprite = data.Seedicon;
         itemPreviewSprite.color = Color.white;
         itemPreviewName.text = data.displayName;
         itemPreviewDescription.text = data.description;

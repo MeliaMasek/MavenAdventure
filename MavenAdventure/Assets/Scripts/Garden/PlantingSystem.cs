@@ -25,6 +25,12 @@ public class PlantingSystem : MonoBehaviour
 
     private void TryPlantSeed(EmptyBed bed)
     {
+        if (bed.isOccupied)
+        {
+            Debug.Log("Bed is already occupied!");
+            return; // Don't plant if the bed is occupied
+        }
+
         if (backpackManager.selectedSeed != null)
         {
             GameObject seedling = Instantiate(backpackManager.selectedSeed.seedPrefab, bed.transform.position, Quaternion.identity);
@@ -50,4 +56,5 @@ public class PlantingSystem : MonoBehaviour
             Debug.Log("No seed selected!");
         }
     }
+
 }

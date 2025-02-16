@@ -387,8 +387,6 @@ MonoBehaviour:
     sproutPrefab: {fileID: 2224027994747136607, guid: c1f61d0c863ea914f8e16adcfab28cf9, type: 3}
     maturePrefab: {fileID: 2252904469261119460, guid: 1032c6b7dc9a3f445ad0d23a7181c13b, type: 3}
     plantData: {fileID: 11400000, guid: c30a1a8c68d59204e81757162187abe1, type: 2}
-    daysToSprout: 1
-    daysToMature: 2
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
@@ -397,12 +395,10 @@ MonoBehaviour:
     spawnLocator: {fileID: 1781861327}
     spawnScale: {x: 70, y: 70, z: 70}
   - basePrefab: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
-    seedPrefab: {fileID: 4352389096216153976, guid: 8cf82665e8f6a024694c6b35dbe9796b, type: 3}
-    sproutPrefab: {fileID: 8038207266640838015, guid: 2a81e25115c919f47920eaf85f6aeeec, type: 3}
-    maturePrefab: {fileID: 1658498308759800137, guid: d79ab12cee717f8468c5cab969660373, type: 3}
-    plantData: {fileID: 11400000, guid: 6d08762b6ba250b45be10ac65e1836f4, type: 2}
-    daysToSprout: 1
-    daysToMature: 2
+    seedPrefab: {fileID: 6100879739379839684, guid: b7b665fb5a4c4ff4a855c4a0ba7d82d9, type: 3}
+    sproutPrefab: {fileID: 2224027994747136607, guid: c1f61d0c863ea914f8e16adcfab28cf9, type: 3}
+    maturePrefab: {fileID: 2252904469261119460, guid: 1032c6b7dc9a3f445ad0d23a7181c13b, type: 3}
+    plantData: {fileID: 11400000, guid: c30a1a8c68d59204e81757162187abe1, type: 2}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
@@ -411,12 +407,10 @@ MonoBehaviour:
     spawnLocator: {fileID: 28287015}
     spawnScale: {x: 70, y: 70, z: 70}
   - basePrefab: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
-    seedPrefab: {fileID: 7528818466681106443, guid: 3e2422d90089a134f999a29592384123, type: 3}
-    sproutPrefab: {fileID: 6746097066852740716, guid: 8c8c273d10dbcbb47b5ca10c0737baeb, type: 3}
-    maturePrefab: {fileID: 4739671149124689440, guid: 0609f212036ab0e4bb0b4f86850a0a2a, type: 3}
-    plantData: {fileID: 11400000, guid: bc613e0df3ea38d4c8009c2a7b6e6a18, type: 2}
-    daysToSprout: 1
-    daysToMature: 2
+    seedPrefab: {fileID: 6100879739379839684, guid: b7b665fb5a4c4ff4a855c4a0ba7d82d9, type: 3}
+    sproutPrefab: {fileID: 2224027994747136607, guid: c1f61d0c863ea914f8e16adcfab28cf9, type: 3}
+    maturePrefab: {fileID: 2252904469261119460, guid: 1032c6b7dc9a3f445ad0d23a7181c13b, type: 3}
+    plantData: {fileID: 11400000, guid: c30a1a8c68d59204e81757162187abe1, type: 2}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
@@ -425,12 +419,10 @@ MonoBehaviour:
     spawnLocator: {fileID: 1260972124}
     spawnScale: {x: 70, y: 70, z: 70}
   - basePrefab: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
-    seedPrefab: {fileID: 6507370149535935096, guid: 41409af1cdc5fd944af058710b130eb7, type: 3}
-    sproutPrefab: {fileID: 1830122086222572268, guid: 4a2ce78792bfffd4d8bd43007abd54cb, type: 3}
-    maturePrefab: {fileID: 914415539827045990, guid: 9274ea2b8718e864da2542fe2363ca63, type: 3}
-    plantData: {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
-    daysToSprout: 1
-    daysToMature: 2
+    seedPrefab: {fileID: 6100879739379839684, guid: b7b665fb5a4c4ff4a855c4a0ba7d82d9, type: 3}
+    sproutPrefab: {fileID: 2224027994747136607, guid: c1f61d0c863ea914f8e16adcfab28cf9, type: 3}
+    maturePrefab: {fileID: 2252904469261119460, guid: 1032c6b7dc9a3f445ad0d23a7181c13b, type: 3}
+    plantData: {fileID: 11400000, guid: c30a1a8c68d59204e81757162187abe1, type: 2}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0

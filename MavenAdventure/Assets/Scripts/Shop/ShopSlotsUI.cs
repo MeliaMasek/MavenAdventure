@@ -46,7 +46,7 @@ public class ShopSlotsUI : MonoBehaviour
     {
         if (assignedItemSlot.ItemData != null)
         {
-            itemSprite.sprite = assignedItemSlot.ItemData.icon;
+            itemSprite.sprite = assignedItemSlot.ItemData.Seedicon;
             itemSprite.color = Color.white;
             itemCount.text = assignedItemSlot.StackSize.ToString();
             var modifiedPrice = ShopKeeperDisplay.GetModifiedPrice(assignedItemSlot.ItemData, 1, MarkUp);

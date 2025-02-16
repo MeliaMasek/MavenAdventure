@@ -22,7 +22,7 @@ public class CraftingListItemUI : MonoBehaviour
     {
        parentDisplay = _parentDisplay;
        recipe = _recipe;
-       recipeSprite.sprite = recipe.CraftedItem.icon;
+       recipeSprite.sprite = recipe.CraftedItem.Seedicon;
        recipeName.text = recipe.CraftedItem.displayName;
     }
     

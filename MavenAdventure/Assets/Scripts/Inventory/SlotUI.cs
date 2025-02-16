@@ -32,7 +32,7 @@ public class SlotUI : MonoBehaviour
     {
         if (assignedInventorySlot.ItemData != null)
         {
-            itemSprite.sprite = slot.ItemData.icon;
+            itemSprite.sprite = slot.ItemData.Seedicon;
             itemSprite.color = Color.white;
 
             if (slot.StackSize > 1) itemCount.text = slot.StackSize.ToString();

@@ -14,7 +14,7 @@ public class IngredientSlotUI : MonoBehaviour
     {
         assignedData = data;
         itemSprite.preserveAspect = true;
-        itemSprite.sprite = data.icon;
+        itemSprite.sprite = data.Seedicon;
         itemSprite.color = Color.white;
         UpdateRequiredAmount(amount);
     }

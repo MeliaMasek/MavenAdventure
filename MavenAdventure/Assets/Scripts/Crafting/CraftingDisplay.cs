@@ -98,7 +98,7 @@ public class CraftingDisplay : MonoBehaviour
    
    private void DisplayItemPreview(InventoryData data)
    {
-       itemPreviewSprite.sprite = data.icon;
+       itemPreviewSprite.sprite = data.Seedicon;
        itemPreviewSprite.color = Color.white;
        itemPreviewName.text = data.displayName;
        itemPreviewDescription.text = data.description;
