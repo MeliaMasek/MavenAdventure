@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1881972403619002657}
   - component: {fileID: 451374270082501034}
   - component: {fileID: 5774082302355835658}
+  - component: {fileID: 1673049603398999476}
   m_Layer: 6
   m_Name: Empty_Plant_Bed
   m_TagString: PlantBed
@@ -61,6 +62,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   validSeeds: []
+--- !u!114 &1673049603398999476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249127958283297691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2cb42dc58debf2418a5b62a882464bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOccupied: 0
 --- !u!1 &3400099530495340622
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class HarvestPlant : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (plantData != null && plantData.isHarvestable)
+        if (plantData != null && plantData.isReadytoHarvest)
         {
             plantManager.CollectPlant(plantData);
         }

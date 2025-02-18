@@ -9,20 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c950878a92ac714cb145efc294f15d8, type: 3}
+  m_Script: {fileID: 11500000, guid: c3081b11ce9343c46b8c54e676c5f191, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  ID: -1
   displayName: Apple
-  description: 
-  Seedicon: {fileID: 0}
   ProduceIcon: {fileID: 21300000, guid: 03f12b526d453b541bec2d886bdd7c9e, type: 3}
-  maxStackSize: 10
-  GoldValue: 5
-  seedPrefab: {fileID: 0}
-  sproutPrefab: {fileID: 0}
-  maturePrefab: {fileID: 0}
-  daysToSprout: 0
-  daysToMature: 0
-  tags:
-  - Produce
+  stackSize: 5

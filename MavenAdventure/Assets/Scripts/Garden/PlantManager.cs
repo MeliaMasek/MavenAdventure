@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class PlantManager : MonoBehaviour
 {
     [System.Serializable]
@@ -12,7 +11,8 @@ public class PlantManager : MonoBehaviour
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
         public InventoryData plantData;
-        
+        public ProduceData produceData;
+
         [HideInInspector] public GameObject currentStageObject;
         [HideInInspector] public int currentStage = -1;
         [HideInInspector] public int daysElapsed = 0;
@@ -21,7 +21,7 @@ public class PlantManager : MonoBehaviour
 
         public Transform spawnLocator;
         public Vector3 spawnScale;
-        public bool isHarvestable => currentStage == 2;
+        public bool isReadytoHarvest;
     }
 
     public int dayCounter = 1;
@@ -48,6 +48,9 @@ public class PlantManager : MonoBehaviour
 
         foreach (var plant in plants)
         {
+            plant.currentStage = -1; // Ensure all start empty
+            Debug.Log($"Initialized bed at {plant.spawnLocator.position} with stage {plant.currentStage}");
+            
             if (plant.spawnLocator != null)
             {
                 GameObject baseStage = Instantiate(
@@ -154,6 +157,9 @@ private void EndDay()
 
         switch (stage)
         {
+            case -1:  // Empty bed stage
+                newStagePrefab = plant.basePrefab;  // Ensure basePrefab is correctly set to the empty bed
+                break;
             case 0:
                 newStagePrefab = plant.seedPrefab;
                 break;
@@ -173,12 +179,15 @@ private void EndDay()
         plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
         plant.currentStage = stage;  // Update plant's growth stage
 
-        // Mark as harvestable if it's mature
-        if (plant.currentStage == 2)
+        // If resetting to an empty bed, clear any plant data
+        if (stage == -1)
         {
-            Debug.Log($"{plant.plantData.displayName} is ready to be harvested.");
+            plant.daysElapsed = 0;
+            plant.isWatered = false;
+            plant.isFertilized = false;
         }
     }
+    
     private void UpdateDayCounterUI()
     {
         if (dayCounterText != null)
@@ -191,55 +200,96 @@ private void EndDay()
 
     public void CollectPlant(Plant plant)
     {
-        if (plant.isHarvestable)
+        if (plant.isReadytoHarvest)
         {
-            // Add the mature plant to the backpack
-            backpack.AddToBackpack(plant.plantData);
+            // Reference to the corresponding ProduceData
+            //ProduceData produceData = plant.produceData;  // Use plant.produceData instead of plantData.produceData
 
-            // Reset the plant to an empty bed
-            SetStage(plant, -1); // Set back to empty stage
-            plant.spawnLocator.GetComponent<EmptyBed>().isOccupied = false;
+            // Add the harvested produce to the backpack
+            //backpack.AddToBackpack(produceData);
 
-            Debug.Log($"{plant.plantData.displayName} collected and added to backpack!");
+            // Reset plant state to empty bed
+            SetStage(plant, -1);  // Reset to empty bed
+            plant.daysElapsed = 0;  // Reset growth timer
+            plant.isWatered = false;
+            plant.isFertilized = false;
+            plant.currentStage = -1;
+
+            // Mark the planter location as available for new planting
+            if (plant.spawnLocator.TryGetComponent(out EmptyBed emptyBed))
+            {
+                emptyBed.isOccupied = false;
+            }
+
+            //Debug.Log($"{produceData.displayName} collected! The bed is now empty.");
         }
         else
         {
             Debug.Log($"{plant.plantData.displayName} is not ready for harvest.");
         }
     }
+    
     public void PlantSeedAt(Transform planterLocation)
     {
-        Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
+        Debug.Log("PlantSeedAt method called!");
+        
+        // Make sure we have a valid planter location and selected seed
+        InventoryData selectedSeed = backpack.GetSelectedSeed();  // Access from BackpackManager
 
-        if (emptyBed == null)
-        {
-            return;
-        }
-
-        InventoryData selectedSeed = backpack.GetSelectedSeed();
         if (selectedSeed == null)
         {
+            Debug.LogError("Planting failed: No seed selected from BackpackManager!");
+            return;
+        }
+        
+        Debug.Log($"Planting Seed: {selectedSeed.displayName} at {planterLocation.position}");
+
+        // Find an empty bed at the location
+        Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
+        if (emptyBed == null)
+        {
+            Debug.LogError("No empty bed found at the location!");
             return;
         }
 
+        // Check if the selected seed has the necessary prefabs (seed, sprout, mature)
         if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null)
         {
+            Debug.LogError("Selected seed is missing one of the required prefabs!");
             return;
         }
 
+        // Create a new plant instance and assign the correct seed data
         Plant newPlant = new Plant
         {
-            plantData = selectedSeed,
+            plantData = selectedSeed,  // Assign seed data
+            produceData = selectedSeed.produceData,  // Assign produce data
             basePrefab = emptyBed.basePrefab,
             spawnLocator = planterLocation,
             spawnScale = emptyBed.spawnScale,
         };
 
-        plants.Remove(emptyBed);
+        // You can now add this plant to your plant list (or whatever your game logic requires)
         plants.Add(newPlant);
+        Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
+    }
+    
+    public void HarvestPlant(Plant plant)
+    {
+        if (plant != null && plant.produceData != null)
+        {
+            // Call method to add the produce to the backpack
+            backpack.AddProduceToBackpack(plant.produceData, 1);
 
-        SetStage(newPlant, 0); // Start at seed stage
+            // Optionally, reset the plant bed (set back to empty, etc.)
+            SetStage(plant, -1); // Set to empty bed stage
+            plant.spawnLocator.GetComponent<EmptyBed>().isOccupied = false;
 
-        backpack.RemoveItem(selectedSeed);
+            Debug.Log($"{plant.produceData.displayName} added to backpack!");
+        }
+        else
+        {
+            Debug.LogError("Produce data or plant is null!");
+        }
     }
 }
