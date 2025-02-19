@@ -232,19 +232,17 @@ private void EndDay()
     public void PlantSeedAt(Transform planterLocation)
     {
         Debug.Log("PlantSeedAt method called!");
-        
-        // Make sure we have a valid planter location and selected seed
-        InventoryData selectedSeed = backpack.GetSelectedSeed();  // Access from BackpackManager
+    
+        InventoryData selectedSeed = backpack.GetSelectedSeed(); // Get the selected seed from BackpackManager
 
         if (selectedSeed == null)
         {
             Debug.LogError("Planting failed: No seed selected from BackpackManager!");
             return;
         }
-        
+    
         Debug.Log($"Planting Seed: {selectedSeed.displayName} at {planterLocation.position}");
 
-        // Find an empty bed at the location
         Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
         if (emptyBed == null)
         {
@@ -262,17 +260,18 @@ private void EndDay()
         // Create a new plant instance and assign the correct seed data
         Plant newPlant = new Plant
         {
-            plantData = selectedSeed,  // Assign seed data
-            produceData = selectedSeed.produceData,  // Assign produce data
+            plantData = selectedSeed,
+            produceData = selectedSeed.produceData,
             basePrefab = emptyBed.basePrefab,
             spawnLocator = planterLocation,
             spawnScale = emptyBed.spawnScale,
         };
 
-        // You can now add this plant to your plant list (or whatever your game logic requires)
         plants.Add(newPlant);
+        backpack.RemoveSeed(selectedSeed); // Remove seed from backpack
         Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
     }
+
     
     public void HarvestPlant(Plant plant)
     {

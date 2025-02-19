@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -162,15 +163,15 @@ public class BackpackManager : MonoBehaviour
         }
     }
     
-    public void RemoveItem(InventoryData itemData)
+    public void RemoveItem(InventoryData seed)
     {
-        if (collectedItems.ContainsKey(itemData))
+        if (collectedSeeds.ContainsKey(seed))
         {
-            collectedItems[itemData]--;
+            collectedSeeds[seed]--;
 
-            if (collectedItems[itemData] <= 0)
+            if (collectedSeeds[seed] <= 0)
             {
-                collectedItems.Remove(itemData);
+                collectedSeeds.Remove(seed);
             }
             UpdateBackpackUI();
         }
