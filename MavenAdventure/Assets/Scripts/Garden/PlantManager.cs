@@ -29,7 +29,7 @@ public class PlantManager : MonoBehaviour
 
     public WateringInteraction wateringInteraction;
     public BackpackManager backpack;
-
+    
     public List<Plant> plants = new List<Plant>();
 
     private void Start()
@@ -49,7 +49,7 @@ public class PlantManager : MonoBehaviour
         foreach (var plant in plants)
         {
             plant.currentStage = -1; // Ensure all start empty
-            Debug.Log($"Initialized bed at {plant.spawnLocator.position} with stage {plant.currentStage}");
+            //Debug.Log($"Initialized bed at {plant.spawnLocator.position} with stage {plant.currentStage}");
             
             if (plant.spawnLocator != null)
             {
@@ -72,7 +72,7 @@ private void EndDay()
 
     foreach (var plant in plants)
     {
-        Debug.Log($"Plant: {plant.plantData.displayName}, Days Elapsed: {plant.daysElapsed}, Current Stage: {plant.currentStage}");
+        //Debug.Log($"Plant: {plant.plantData.displayName}, Days Elapsed: {plant.daysElapsed}, Current Stage: {plant.currentStage}");
 
         if (plant.isWatered)
         {
@@ -80,24 +80,16 @@ private void EndDay()
             int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToSprout - 1) : plant.plantData.daysToSprout;
             int matureDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToMature - 1) : plant.plantData.daysToMature;
 
-            Debug.Log($"Sprout Days: {sproutDays}, Mature Days: {matureDays}, Days Elapsed: {plant.daysElapsed}");
-
-            // Transition from empty bed to seed (stage -1 to 0)
             if (plant.currentStage == -1 && plant.daysElapsed >= sproutDays)
             {
-                Debug.Log($"Transitioning {plant.plantData.displayName} from Empty Bed to Seed (Stage 0)");
                 SetStage(plant, 0); // Transition to seed stage
             }
-            // Transition from seed to sprout (stage 0 to 1)
             else if (plant.currentStage == 0 && plant.daysElapsed >= sproutDays)
             {
-                Debug.Log($"Transitioning {plant.plantData.displayName} from Seed to Sprout (Stage 1)");
                 SetStage(plant, 1); // Transition to sprout stage
             }
-            // Transition from sprout to mature (stage 1 to 2), only if plant is already sprout
             if (plant.currentStage == 1 && plant.daysElapsed >= sproutDays + matureDays)
             {
-                Debug.Log($"Transitioning {plant.plantData.displayName} from Sprout to Mature (Stage 2)");
                 SetStage(plant, 2); // Transition to mature stage
             }
         }
@@ -148,25 +140,31 @@ private void EndDay()
 
     public void SetStage(Plant plant, int stage)
     {
+        Debug.Log("started set stage");
         if (plant.currentStageObject != null)
         {
+            Debug.Log("object plant is null, destroying object");
             Destroy(plant.currentStageObject);
         }
-
+        Debug.Log("object plant is not null");
         GameObject newStagePrefab = null;
-
+        
         switch (stage)
         {
             case -1:  // Empty bed stage
+                Debug.Log("case -1");
                 newStagePrefab = plant.basePrefab;  // Ensure basePrefab is correctly set to the empty bed
                 break;
             case 0:
+                Debug.Log("case 0");
                 newStagePrefab = plant.seedPrefab;
                 break;
             case 1:
+                Debug.Log("case 1");
                 newStagePrefab = plant.sproutPrefab;
                 break;
             case 2:
+                Debug.Log("case 2");
                 newStagePrefab = plant.maturePrefab;
                 break;
         }
@@ -175,17 +173,19 @@ private void EndDay()
         {
             return;
         }
-
+        Debug.Log("completed type check. intsantied new stage prefab");
         plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
         plant.currentStage = stage;  // Update plant's growth stage
 
         // If resetting to an empty bed, clear any plant data
         if (stage == -1)
         {
+            Debug.Log("reset bed");
             plant.daysElapsed = 0;
             plant.isWatered = false;
             plant.isFertilized = false;
         }
+        Debug.Log("completed set stage");
     }
     
     private void UpdateDayCounterUI()
@@ -221,7 +221,7 @@ private void EndDay()
                 emptyBed.isOccupied = false;
             }
 
-            //Debug.Log($"{produceData.displayName} collected! The bed is now empty.");
+            Debug.Log($"{plant} collected! The bed is now empty.");
         }
         else
         {
@@ -270,25 +270,5 @@ private void EndDay()
         plants.Add(newPlant);
         backpack.RemoveSeed(selectedSeed); // Remove seed from backpack
         Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
-    }
-
-    
-    public void HarvestPlant(Plant plant)
-    {
-        if (plant != null && plant.produceData != null)
-        {
-            // Call method to add the produce to the backpack
-            backpack.AddProduceToBackpack(plant.produceData, 1);
-
-            // Optionally, reset the plant bed (set back to empty, etc.)
-            SetStage(plant, -1); // Set to empty bed stage
-            plant.spawnLocator.GetComponent<EmptyBed>().isOccupied = false;
-
-            Debug.Log($"{plant.produceData.displayName} added to backpack!");
-        }
-        else
-        {
-            Debug.LogError("Produce data or plant is null!");
-        }
     }
 }

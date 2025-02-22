@@ -1,4 +1,5 @@
 
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,22 +47,6 @@ public class BackpackManager : MonoBehaviour
         else
         {
             collectedSeeds[seed] = amount;
-        }
-
-        UpdateBackpackUI();
-    }
-
-    public void AddProduceToBackpack(ProduceData produce, int amount = 1)
-    {
-        if (produce == null) return;
-
-        if (collectedProduce.ContainsKey(produce))
-        {
-            collectedProduce[produce] += amount;
-        }
-        else
-        {
-            collectedProduce[produce] = amount;
         }
 
         UpdateBackpackUI();
@@ -192,4 +177,26 @@ public class BackpackManager : MonoBehaviour
 
         UpdateBackpackUI();
     }
+    
+    public void AddProduceToBackpack(ProduceData produce, int amount = 1)
+    {
+        if (produce == null)
+        {
+            Debug.LogError("Attempted to add null produce to backpack!");
+            return;
+        }
+
+        if (collectedProduce.ContainsKey(produce))
+        {
+            collectedProduce[produce] += amount;
+        }
+        else
+        {
+            collectedProduce[produce] = amount;
+        }
+
+        Debug.Log($"Added {produce.displayName} to backpack. New count: {collectedProduce[produce]}");
+        UpdateBackpackUI();
+    }
+
 }

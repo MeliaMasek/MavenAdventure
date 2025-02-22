@@ -9,26 +9,21 @@ public class HarvestPlant : MonoBehaviour
     private void Start()
     {
         plantManager = FindObjectOfType<PlantManager>();
-
-        if (plantData == null)
-        {
-            Debug.LogWarning($"Plant data not assigned for {gameObject.name}. Call SetPlantData().");
-        }
     }
 
     private void OnMouseDown()
     {
-        if (plantData != null && plantData.isReadytoHarvest)
+        if (plantData == null)
         {
-            // Assuming you have a HarvestManager instance
+            return; // Prevent interaction until data is set
+        }
+
+        if (plantData.isReadytoHarvest)
+        {
             HarvestManager harvestManager = FindObjectOfType<HarvestManager>();
             if (harvestManager != null)
             {
-                harvestManager.HarvestPlant(plantData, produceData); // Pass the produce data as well
-            }
-            else
-            {
-                Debug.LogError("No HarvestManager found in the scene.");
+                harvestManager.HarvestPlant(plantData, produceData);
             }
         }
     }
