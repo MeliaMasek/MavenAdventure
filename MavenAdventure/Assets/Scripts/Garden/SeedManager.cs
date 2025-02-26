@@ -14,17 +14,20 @@ public class SeedManager : MonoBehaviour
 
     private void Update()
     {
-        if (isPlantingMode && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, plantLayer.value))
+            // 🌱 Planting Mode: Detect only the "PlantBed" layer
+            if (isPlantingMode && Physics.Raycast(ray, out hit, 100f, plantLayer.value))
             {
                 foreach (var plant in plantManager.plants)
                 {
                     if (plant.currentStageObject == hit.collider.gameObject)  
                     {
-                        if (plant.currentStage == -1)
+                        // Ensure only empty beds can be planted in, not mature plants
+                        if (plant.currentStage == -1 && plant.currentStageObject.CompareTag("PlantBed"))  
                         {
                             PlantBed plantBed = hit.collider.GetComponentInParent<PlantBed>();
                             if (plantBed != null)
@@ -33,32 +36,37 @@ public class SeedManager : MonoBehaviour
                             }
                         }
                         isPlantingMode = false;
-                        break;
+                        return; // Exit the function after planting
                     }
+                }
+            }
+
+            // 🍎 Harvesting: Detect only the "Harvest" layer
+            if (Physics.Raycast(ray, out hit, 100f, LayerMask.GetMask("Harvest")))
+            {
+                PlantManager.Plant plant = plantManager.plants.Find(p => p.currentStageObject == hit.collider.gameObject);
+                if (plant != null)
+                {
+                    plantManager.CollectPlant(plant);
                 }
             }
         }
     }
 
+
     public void PlantSeed(PlantManager.Plant oldPlant, PlantBed plantBed)
     {
+        if (oldPlant.currentStage != -1)
+        {
+            Debug.LogError("Cannot plant seed: The bed is not empty!");
+            return;
+        }
+
         InventoryData selectedSeed = FindObjectOfType<BackpackManager>().GetSelectedSeed();
-        if (selectedSeed == null)
-        {
-            return;
-        }
+        if (selectedSeed == null) return;
+        if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null) return;
 
-        if (selectedSeed.seedPrefab == null)
-        {
-            return;
-        }
-
-        if (selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null)
-        {
-            return;
-        }
-
-        Destroy(oldPlant.currentStageObject);
+        Destroy(oldPlant.currentStageObject);  // ✅ Only destroys if it's an empty bed
 
         PlantManager.Plant newPlant = new PlantManager.Plant
         {
@@ -75,9 +83,10 @@ public class SeedManager : MonoBehaviour
 
         plantManager.plants.Remove(oldPlant);
         plantManager.plants.Add(newPlant);
-        
+
         FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
     }
+
     
     private void ChangeDirtMaterial(GameObject stageObject)
     {

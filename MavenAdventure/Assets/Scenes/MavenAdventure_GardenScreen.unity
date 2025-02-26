@@ -2230,7 +2230,6 @@ MonoBehaviour:
   itemGrid: {fileID: 1839887698}
   itemPrefab: {fileID: 1754524198587233181, guid: bcf2ba9d3a9f0a34ba9a39d7cd893917, type: 3}
   selectedSeed: {fileID: 0}
-  plantingButton: {fileID: 3860242168465815964, guid: bcf2ba9d3a9f0a34ba9a39d7cd893917, type: 3}
   seedManager: {fileID: 1394431278}
   startingSeeds:
   - {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
@@ -2238,6 +2237,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d08762b6ba250b45be10ac65e1836f4, type: 2}
   - {fileID: 11400000, guid: c30a1a8c68d59204e81757162187abe1, type: 2}
   startingSeedAmount: 5
+  startingProduce:
+  - {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
+  - {fileID: 11400000, guid: e9009876f7771144f95e1fe12866ef13, type: 2}
+  startingProduceAmount: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5207,7 +5210,6 @@ Transform:
   - {fileID: 1394431279}
   - {fileID: 1729086646}
   - {fileID: 700242543}
-  - {fileID: 1807919293}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6129,52 +6131,6 @@ Transform:
   m_Father: {fileID: 122597702}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1807919292
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1807919293}
-  - component: {fileID: 1807919294}
-  m_Layer: 0
-  m_Name: HarvestManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1807919293
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807919292}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1441374282}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1807919294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807919292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca9b6fead387163458c7dc19a93c5380, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backpackManager: {fileID: 700242544}
-  plantManager: {fileID: 162928836}
 --- !u!1 &1839887697
 GameObject:
   m_ObjectHideFlags: 0
@@ -6233,7 +6189,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 360, y: -50}
+  m_Spacing: {x: 550, y: -50}
   m_Constraint: 2
   m_ConstraintCount: 3
 --- !u!1 &1843256022

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1310044996871974998}
   - component: {fileID: 6420054604185085604}
   m_Layer: 6
-  m_Name: Apple_Sapling
+  m_Name: SproutStage
   m_TagString: PlantBed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

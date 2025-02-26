@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +8,7 @@ public class BackpackManager : MonoBehaviour
     public Transform itemGrid;
     public GameObject itemPrefab;
     public InventoryData selectedSeed;
-    public Button plantingButton;
+    //public Button plantingButton;
     public SeedManager seedManager;
     
     private Dictionary<InventoryData, int> collectedSeeds = new Dictionary<InventoryData, int>();
@@ -22,9 +20,16 @@ public class BackpackManager : MonoBehaviour
     public List<InventoryData> startingSeeds;
     public int startingSeedAmount = 5;
     
+    [Header("Starting Produce")] 
+    public List<ProduceData> startingProduce;
+    public int startingProduceAmount = 5;
+    
+    private List<ProduceData> inventoryList = new List<ProduceData>();
+
     private void Start()
     {
         InitializeStartingSeeds();
+        InitializeStartingProduce();
         UpdateBackpackUI();
     }
     
@@ -35,7 +40,13 @@ public class BackpackManager : MonoBehaviour
             AddSeedToBackpack(seed, startingSeedAmount);
         }
     }
-
+    private void InitializeStartingProduce()
+    {
+        foreach (ProduceData produce in startingProduce)
+        {
+            AddProduceToBackpack(produce, startingProduceAmount);
+        }
+    }
     public void AddSeedToBackpack(InventoryData seed, int amount = 1)
     {
         if (seed == null) return;
@@ -186,17 +197,31 @@ public class BackpackManager : MonoBehaviour
             return;
         }
 
+        // Log the current state before adding
         if (collectedProduce.ContainsKey(produce))
         {
-            collectedProduce[produce] += amount;
+            Debug.Log($"Current count for {produce.displayName}: {collectedProduce[produce]}");
+            collectedProduce[produce] += amount; // Increment the count
+            Debug.Log($"Increased count for {produce.displayName} to {collectedProduce[produce]}");
         }
         else
         {
-            collectedProduce[produce] = amount;
+            collectedProduce[produce] = amount; // Initialize the count
+            Debug.Log($"Added new produce: {produce.displayName} with count {amount}");
         }
 
-        Debug.Log($"Added {produce.displayName} to backpack. New count: {collectedProduce[produce]}");
-        UpdateBackpackUI();
+        UpdateBackpackUI(); // Update the UI to reflect changes
     }
+    
+    public void AddItem(ProduceData produce)
+    {
+        if (produce == null)
+        {
+            Debug.LogError("Tried to add a null item to the backpack!");
+            return;
+        }
 
+        inventoryList.Add(produce); // Ensure 'inventoryList' exists
+        Debug.Log($"Added {produce.name} to the backpack.");
+    }
 }
