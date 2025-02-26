@@ -14,10 +14,9 @@ public class InventoryData : ScriptableObject
     public Sprite Seedicon;
     public int maxStackSize;
     public int GoldValue;
-    public GameObject seedPrefab; // Only needed for planting
-    public GameObject sproutPrefab; // Only needed for planting
-    public GameObject maturePrefab; // Only needed for planting
-    public ProduceData produceData;
-    public int daysToSprout;  // Number of days to sprout
-    public int daysToMature;  // Number of days to mature
+    public GameObject seedPrefab;
+    public GameObject sproutPrefab;
+    public GameObject maturePrefab;
+    public int daysToSprout;
+    public int daysToMature;
 }

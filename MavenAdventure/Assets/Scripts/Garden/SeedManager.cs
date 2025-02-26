@@ -36,12 +36,11 @@ public class SeedManager : MonoBehaviour
                             }
                         }
                         isPlantingMode = false;
-                        return; // Exit the function after planting
+                        return;
                     }
                 }
             }
 
-            // 🍎 Harvesting: Detect only the "Harvest" layer
             if (Physics.Raycast(ray, out hit, 100f, LayerMask.GetMask("Harvest")))
             {
                 PlantManager.Plant plant = plantManager.plants.Find(p => p.currentStageObject == hit.collider.gameObject);
@@ -53,12 +52,10 @@ public class SeedManager : MonoBehaviour
         }
     }
 
-
     public void PlantSeed(PlantManager.Plant oldPlant, PlantBed plantBed)
     {
         if (oldPlant.currentStage != -1)
         {
-            Debug.LogError("Cannot plant seed: The bed is not empty!");
             return;
         }
 
@@ -86,7 +83,6 @@ public class SeedManager : MonoBehaviour
 
         FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
     }
-
     
     private void ChangeDirtMaterial(GameObject stageObject)
     {

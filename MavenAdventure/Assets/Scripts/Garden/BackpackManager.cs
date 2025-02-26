@@ -8,13 +8,12 @@ public class BackpackManager : MonoBehaviour
     public Transform itemGrid;
     public GameObject itemPrefab;
     public InventoryData selectedSeed;
-    //public Button plantingButton;
     public SeedManager seedManager;
     
     private Dictionary<InventoryData, int> collectedSeeds = new Dictionary<InventoryData, int>();
     private Dictionary<ProduceData, int> collectedProduce = new Dictionary<ProduceData, int>();
-
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
+    private List<ProduceData> inventoryList = new List<ProduceData>();
 
     [Header("Starting Seeds")] 
     public List<InventoryData> startingSeeds;
@@ -24,8 +23,6 @@ public class BackpackManager : MonoBehaviour
     public List<ProduceData> startingProduce;
     public int startingProduceAmount = 5;
     
-    private List<ProduceData> inventoryList = new List<ProduceData>();
-
     private void Start()
     {
         InitializeStartingSeeds();
@@ -47,6 +44,7 @@ public class BackpackManager : MonoBehaviour
             AddProduceToBackpack(produce, startingProduceAmount);
         }
     }
+    
     public void AddSeedToBackpack(InventoryData seed, int amount = 1)
     {
         if (seed == null) return;
@@ -65,19 +63,16 @@ public class BackpackManager : MonoBehaviour
 
     public void UpdateBackpackUI()
     {
-        // Clear UI first
         foreach (Transform child in itemGrid)
         {
             Destroy(child.gameObject);
         }
 
-        // Display seeds
         foreach (var item in collectedSeeds)
         {
             CreateBackpackItem(item.Key.Seedicon, item.Key.displayName, item.Value, () => SelectSeed(item.Key));
         }
 
-        // Display produce
         foreach (var item in collectedProduce)
         {
             CreateBackpackItem(item.Key.ProduceIcon, item.Key.displayName, item.Value, null);
@@ -117,7 +112,7 @@ public class BackpackManager : MonoBehaviour
 
         if (seedManager != null)
         {
-            seedManager.ActivatePlantingMode(); // Activate planting on selection
+            seedManager.ActivatePlantingMode();
         }
     }
     
@@ -193,21 +188,16 @@ public class BackpackManager : MonoBehaviour
     {
         if (produce == null)
         {
-            Debug.LogError("Attempted to add null produce to backpack!");
             return;
         }
 
-        // Log the current state before adding
         if (collectedProduce.ContainsKey(produce))
         {
-            Debug.Log($"Current count for {produce.displayName}: {collectedProduce[produce]}");
             collectedProduce[produce] += amount; // Increment the count
-            Debug.Log($"Increased count for {produce.displayName} to {collectedProduce[produce]}");
         }
         else
         {
             collectedProduce[produce] = amount; // Initialize the count
-            Debug.Log($"Added new produce: {produce.displayName} with count {amount}");
         }
 
         UpdateBackpackUI(); // Update the UI to reflect changes
@@ -217,11 +207,8 @@ public class BackpackManager : MonoBehaviour
     {
         if (produce == null)
         {
-            Debug.LogError("Tried to add a null item to the backpack!");
             return;
         }
-
         inventoryList.Add(produce); // Ensure 'inventoryList' exists
-        Debug.Log($"Added {produce.name} to the backpack.");
     }
 }

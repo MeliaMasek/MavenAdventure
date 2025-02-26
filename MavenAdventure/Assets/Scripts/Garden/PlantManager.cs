@@ -48,8 +48,7 @@ public class PlantManager : MonoBehaviour
 
         foreach (var plant in plants)
         {
-            plant.currentStage = -1; // Ensure all start empty
-            //Debug.Log($"Initialized bed at {plant.spawnLocator.position} with stage {plant.currentStage}");
+            plant.currentStage = -1;
             
             if (plant.spawnLocator != null)
             {
@@ -72,8 +71,6 @@ private void EndDay()
 
     foreach (var plant in plants)
     {
-        //Debug.Log($"Plant: {plant.plantData.displayName}, Days Elapsed: {plant.daysElapsed}, Current Stage: {plant.currentStage}");
-
         if (plant.isWatered)
         {
             plant.daysElapsed++;
@@ -178,7 +175,6 @@ private void EndDay()
         }
     }
 
-    
     private void UpdateDayCounterUI()
     {
         if (dayCounterText != null)
@@ -193,14 +189,12 @@ private void EndDay()
     {
         if (plant.currentStageObject == null)
         {
-            Debug.LogError("No mature plant object found!");
             return;
         }
 
         HarvestPlant harvestPlant = plant.currentStageObject.GetComponent<HarvestPlant>();
         if (harvestPlant == null || harvestPlant.GetProduceData() == null)
         {
-            Debug.LogError("ProduceData is missing from the mature plant! Cannot add to backpack.");
             return;
         }
 
@@ -209,25 +203,12 @@ private void EndDay()
         BackpackManager backpack = FindObjectOfType<BackpackManager>();
         if (backpack != null)
         {
-            // Replace the following line
-            // backpack.AddItem(produceData);
-        
-            // With this line to ensure proper counting
             backpack.AddProduceToBackpack(produceData);
-        
-            // Add a log to check the count after adding
-            //Debug.Log($"Added {produceData.name} to backpack. Current count: {backpack.GetProduceCount(produceData)}");
-        }
-        else
-        {
-            Debug.LogError("BackpackManager not found!");
         }
 
-        // Remove the plant after collection
         Destroy(plant.currentStageObject);
         plants.Remove(plant);
     }
-
     
     private void ResetPlantAfterCollection(Plant plant)
     {
@@ -238,47 +219,26 @@ private void EndDay()
         }
     }
 
-
     public void PlantSeedAt(Transform planterLocation)
     {
-        Debug.Log("PlantSeedAt method called!");
-    
-        InventoryData selectedSeed = backpack.GetSelectedSeed(); // Get the selected seed from BackpackManager
-
-        if (selectedSeed == null)
-        {
-            Debug.LogError("Planting failed: No seed selected from BackpackManager!");
-            return;
-        }
-    
-        Debug.Log($"Planting Seed: {selectedSeed.displayName} at {planterLocation.position}");
+        InventoryData selectedSeed = backpack.GetSelectedSeed();
 
         Plant emptyBed = plants.Find(p => p.spawnLocator == planterLocation && p.currentStage == -1);
-        if (emptyBed == null)
-        {
-            Debug.LogError("No empty bed found at the location!");
-            return;
-        }
 
-        // Check if the selected seed has the necessary prefabs (seed, sprout, mature)
         if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null)
         {
-            Debug.LogError("Selected seed is missing one of the required prefabs!");
             return;
         }
 
-        // Create a new plant instance and assign the correct seed data
         Plant newPlant = new Plant
         {
             plantData = selectedSeed,
-            produceData = selectedSeed.produceData,
             basePrefab = emptyBed.basePrefab,
             spawnLocator = planterLocation,
             spawnScale = emptyBed.spawnScale,
         };
 
         plants.Add(newPlant);
-        backpack.RemoveSeed(selectedSeed); // Remove seed from backpack
-        Debug.Log($"Planted {selectedSeed.displayName} at {planterLocation.position}");
+        backpack.RemoveSeed(selectedSeed);
     }
 }
