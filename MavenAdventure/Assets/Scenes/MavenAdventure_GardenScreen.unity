@@ -352,57 +352,57 @@ MonoBehaviour:
     sproutPrefab: {fileID: 1830122086222572268, guid: 4a2ce78792bfffd4d8bd43007abd54cb, type: 3}
     maturePrefab: {fileID: 914415539827045990, guid: 9274ea2b8718e864da2542fe2363ca63, type: 3}
     plantData: {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
-    produceData: {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
+    baseStageObject: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
     isWatered: 0
     isFertilized: 0
+    isReadytoHarvest: 0
     spawnLocator: {fileID: 1781861327}
     spawnScale: {x: 70, y: 70, z: 70}
-    isReadytoHarvest: 0
   - basePrefab: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     seedPrefab: {fileID: 6507370149535935096, guid: 41409af1cdc5fd944af058710b130eb7, type: 3}
     sproutPrefab: {fileID: 1830122086222572268, guid: 4a2ce78792bfffd4d8bd43007abd54cb, type: 3}
     maturePrefab: {fileID: 914415539827045990, guid: 9274ea2b8718e864da2542fe2363ca63, type: 3}
     plantData: {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
-    produceData: {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
+    baseStageObject: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
     isWatered: 0
     isFertilized: 0
+    isReadytoHarvest: 0
     spawnLocator: {fileID: 28287015}
     spawnScale: {x: 70, y: 70, z: 70}
-    isReadytoHarvest: 0
   - basePrefab: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     seedPrefab: {fileID: 6507370149535935096, guid: 41409af1cdc5fd944af058710b130eb7, type: 3}
     sproutPrefab: {fileID: 1830122086222572268, guid: 4a2ce78792bfffd4d8bd43007abd54cb, type: 3}
     maturePrefab: {fileID: 914415539827045990, guid: 9274ea2b8718e864da2542fe2363ca63, type: 3}
     plantData: {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
-    produceData: {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
+    baseStageObject: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
     isWatered: 0
     isFertilized: 0
+    isReadytoHarvest: 0
     spawnLocator: {fileID: 1260972124}
     spawnScale: {x: 70, y: 70, z: 70}
-    isReadytoHarvest: 0
   - basePrefab: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     seedPrefab: {fileID: 6507370149535935096, guid: 41409af1cdc5fd944af058710b130eb7, type: 3}
     sproutPrefab: {fileID: 1830122086222572268, guid: 4a2ce78792bfffd4d8bd43007abd54cb, type: 3}
     maturePrefab: {fileID: 914415539827045990, guid: 9274ea2b8718e864da2542fe2363ca63, type: 3}
     plantData: {fileID: 11400000, guid: d67b8550f32bf254a8915d25d5e65f8d, type: 2}
-    produceData: {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
+    baseStageObject: {fileID: 1249127958283297691, guid: 3dd3882877354aa4183e862803d14ec9, type: 3}
     currentStageObject: {fileID: 0}
     currentStage: 0
     daysElapsed: 0
     isWatered: 0
     isFertilized: 0
+    isReadytoHarvest: 0
     spawnLocator: {fileID: 1017477804}
     spawnScale: {x: 70, y: 70, z: 70}
-    isReadytoHarvest: 0
 --- !u!4 &162928837
 Transform:
   m_ObjectHideFlags: 0

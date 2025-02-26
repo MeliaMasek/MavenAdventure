@@ -19,8 +19,6 @@ public class PlantInteraction : MonoBehaviour
         {
             return;
         }
-
-        ProduceData produceData = plantData.produceData;
     }
 
     private void OnTriggerEnter(Collider other)

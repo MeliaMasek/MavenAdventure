@@ -11,17 +11,20 @@ public class PlantManager : MonoBehaviour
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
         public InventoryData plantData;
-        public ProduceData produceData;
-
-        [HideInInspector] public GameObject currentStageObject;
-        [HideInInspector] public int currentStage = -1;
+       
+        public GameObject baseStageObject; // Store base stage reference
+        public GameObject currentStageObject;
+        public int currentStage = -1;
+        
+        //[HideInInspector] public GameObject currentStageObject;
+        //[HideInInspector] public int currentStage = -1;
         [HideInInspector] public int daysElapsed = 0;
         [HideInInspector] public bool isWatered = false;
         [HideInInspector] public bool isFertilized = false;
+        [HideInInspector] public bool isReadytoHarvest;
 
         public Transform spawnLocator;
         public Vector3 spawnScale;
-        public bool isReadytoHarvest;
     }
 
     public int dayCounter = 1;
@@ -139,39 +142,41 @@ private void EndDay()
     {
         if (plant.currentStageObject != null)
         {
-            Destroy(plant.currentStageObject);
+            Destroy(plant.currentStageObject); // Only destroy the current stage object
         }
 
         GameObject newStagePrefab = null;
-    
+
         switch (stage)
         {
             case -1:
-                newStagePrefab = plant.basePrefab;
+                newStagePrefab = plant.basePrefab; // Set to base prefab
                 break;
             case 0:
-                newStagePrefab = plant.seedPrefab;
+                newStagePrefab = plant.seedPrefab; 
                 break;
             case 1:
-                newStagePrefab = plant.sproutPrefab;
+                newStagePrefab = plant.sproutPrefab; 
                 break;
             case 2:
-                newStagePrefab = plant.maturePrefab;
-                plant.isReadytoHarvest = true;  // Set ready to harvest when mature
+                newStagePrefab = plant.maturePrefab; 
+                plant.isReadytoHarvest = true; // Set ready to harvest when mature
                 break;
         }
 
         if (newStagePrefab == null) return;
 
+        // Instantiate the new stage object
         plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
         plant.currentStage = stage;
 
+        // Reset plant data when clearing the bed
         if (stage == -1)
         {
             plant.daysElapsed = 0;
             plant.isWatered = false;
             plant.isFertilized = false;
-            plant.isReadytoHarvest = false;  // Reset harvest status when clearing the bed
+            plant.isReadytoHarvest = false; // Reset harvest status when clearing the bed
         }
     }
 
@@ -189,36 +194,48 @@ private void EndDay()
     {
         if (plant.currentStageObject == null)
         {
+            Debug.LogError("No mature plant object found!");
             return;
         }
 
         HarvestPlant harvestPlant = plant.currentStageObject.GetComponent<HarvestPlant>();
         if (harvestPlant == null || harvestPlant.GetProduceData() == null)
         {
+            Debug.LogError("ProduceData is missing from the mature plant! Cannot add to backpack.");
             return;
         }
 
         ProduceData produceData = harvestPlant.GetProduceData();
-    
+
         BackpackManager backpack = FindObjectOfType<BackpackManager>();
         if (backpack != null)
         {
             backpack.AddProduceToBackpack(produceData);
+            Debug.Log($"Added {produceData.name} to backpack.");
+        }
+        else
+        {
+            Debug.LogError("BackpackManager not found!");
         }
 
-        Destroy(plant.currentStageObject);
-        plants.Remove(plant);
+        ResetPlantAfterCollection(plant);
     }
     
-    private void ResetPlantAfterCollection(Plant plant)
+    private void ResetPlantAfterCollection(PlantManager.Plant plant)
     {
-        SetStage(plant, -1);
-        if (plant.spawnLocator.TryGetComponent(out EmptyBed emptyBed))
+        if (plant.baseStageObject != null)
         {
-            emptyBed.isOccupied = false;
+            Debug.Log("Reactivating base stage object...");
+            plant.baseStageObject.SetActive(true);
         }
-    }
+        else
+        {
+            Debug.LogWarning("Base stage object is missing!");
+        }
 
+        SetStage(plant, -1);
+    }
+    
     public void PlantSeedAt(Transform planterLocation)
     {
         InventoryData selectedSeed = backpack.GetSelectedSeed();

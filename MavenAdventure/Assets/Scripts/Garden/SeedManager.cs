@@ -56,14 +56,21 @@ public class SeedManager : MonoBehaviour
     {
         if (oldPlant.currentStage != -1)
         {
-            return;
+            return; // Return if not in base stage
         }
 
         InventoryData selectedSeed = FindObjectOfType<BackpackManager>().GetSelectedSeed();
         if (selectedSeed == null) return;
         if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null) return;
 
-        Destroy(oldPlant.currentStageObject);  // ✅ Only destroys if it's an empty bed
+        // Store reference to base stage before deactivating
+        oldPlant.baseStageObject = oldPlant.currentStageObject;
+
+        // Disable base stage instead of destroying it
+        if (oldPlant.baseStageObject != null && oldPlant.baseStageObject.CompareTag("PlantBed"))
+        {
+            oldPlant.baseStageObject.SetActive(false);
+        }
 
         PlantManager.Plant newPlant = new PlantManager.Plant
         {
@@ -72,15 +79,14 @@ public class SeedManager : MonoBehaviour
             sproutPrefab = selectedSeed.sproutPrefab,
             maturePrefab = selectedSeed.maturePrefab,
             spawnLocator = oldPlant.spawnLocator,
-            spawnScale = Vector3.one
+            spawnScale = Vector3.one,
+            baseStageObject = oldPlant.baseStageObject // Carry base stage reference
         };
 
         newPlant.currentStageObject = Instantiate(newPlant.seedPrefab, newPlant.spawnLocator.position, Quaternion.identity);
         newPlant.currentStage = 0;
 
-        plantManager.plants.Remove(oldPlant);
         plantManager.plants.Add(newPlant);
-
         FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
     }
     
