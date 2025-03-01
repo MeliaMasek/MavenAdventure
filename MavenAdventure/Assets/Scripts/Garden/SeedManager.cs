@@ -9,7 +9,7 @@ public class SeedManager : MonoBehaviour
 
     public void ActivatePlantingMode()
     {
-        isPlantingMode = true;
+        FindObjectOfType<WateringInteraction>().DeactivateWateringMode();
     }
 
     private void Update()
@@ -19,14 +19,12 @@ public class SeedManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // 🌱 Planting Mode: Detect only the "PlantBed" layer
             if (isPlantingMode && Physics.Raycast(ray, out hit, 100f, plantLayer.value))
             {
                 foreach (var plant in plantManager.plants)
                 {
                     if (plant.currentStageObject == hit.collider.gameObject)  
                     {
-                        // Ensure only empty beds can be planted in, not mature plants
                         if (plant.currentStage == -1 && plant.currentStageObject.CompareTag("PlantBed"))  
                         {
                             PlantBed plantBed = hit.collider.GetComponentInParent<PlantBed>();
@@ -56,17 +54,15 @@ public class SeedManager : MonoBehaviour
     {
         if (oldPlant.currentStage != -1)
         {
-            return; // Return if not in base stage
+            return;
         }
 
         InventoryData selectedSeed = FindObjectOfType<BackpackManager>().GetSelectedSeed();
         if (selectedSeed == null) return;
         if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null) return;
 
-        // Store reference to base stage before deactivating
         oldPlant.baseStageObject = oldPlant.currentStageObject;
 
-        // Disable base stage instead of destroying it
         if (oldPlant.baseStageObject != null && oldPlant.baseStageObject.CompareTag("PlantBed"))
         {
             oldPlant.baseStageObject.SetActive(false);
@@ -80,7 +76,7 @@ public class SeedManager : MonoBehaviour
             maturePrefab = selectedSeed.maturePrefab,
             spawnLocator = oldPlant.spawnLocator,
             spawnScale = Vector3.one,
-            baseStageObject = oldPlant.baseStageObject // Carry base stage reference
+            baseStageObject = oldPlant.baseStageObject
         };
 
         newPlant.currentStageObject = Instantiate(newPlant.seedPrefab, newPlant.spawnLocator.position, Quaternion.identity);
@@ -104,7 +100,7 @@ public class SeedManager : MonoBehaviour
 
                 if (meshRenderer != null)
                 {
-                    meshRenderer.material = dirtDry; // Change to wet material
+                    meshRenderer.material = dirtDry;
                     materialChanged = true;
                 }
             }

@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class TimedEnergyBar : MonoBehaviour
 {
-    public IntData currentEnergy; // ScriptableObject for energy
-    public IntData maxEnergy;     // Max energy stored as ScriptableObject
-    public IntData reduceEnergyRate; // Energy reduction per click
-    public float rechargeRate = 10f; // Energy gained per hour (real-time)
+    public IntData currentEnergy;
+    public IntData maxEnergy;
+    public IntData reduceEnergyRate;
+    public float rechargeRate;
 
     public Slider energySlider;  
     public Text energyText;      
 
     private void Start()
     {
-        LoadEnergy(); // Load saved energy when game starts
+        LoadEnergy();
         RegenerateEnergy(); 
         UpdateEnergyUI();
     }
@@ -36,8 +36,8 @@ public class TimedEnergyBar : MonoBehaviour
     private void RegenerateEnergy()
     {
         System.DateTime lastTime = LoadLastPlayedTime();
-        float hoursPassed = (float)(System.DateTime.Now - lastTime).TotalHours;
-        int energyToRestore = Mathf.FloorToInt(hoursPassed * rechargeRate);
+        float minutesPassed = (float)(System.DateTime.Now - lastTime).TotalMinutes;
+        int energyToRestore = Mathf.FloorToInt(minutesPassed * rechargeRate);
 
         if (energyToRestore > 0)
         {
@@ -47,13 +47,12 @@ public class TimedEnergyBar : MonoBehaviour
 
         UpdateEnergyUI();
     }
-
+    
     private void UpdateEnergyUI()
     {
         energySlider.value = (float)currentEnergy.value / maxEnergy.value;
         energyText.text = currentEnergy.value.ToString();
     }
-
     private void SaveEnergy()
     {
         PlayerPrefs.SetInt("SavedEnergy", currentEnergy.value);

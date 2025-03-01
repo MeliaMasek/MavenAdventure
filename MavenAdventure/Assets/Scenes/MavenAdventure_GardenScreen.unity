@@ -4450,9 +4450,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4475,18 +4475,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1625897600}
         m_TargetAssemblyTypeName: WateringInteraction, Assembly-CSharp
         m_MethodName: ActivateWateringMode
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1729086645}
-        m_TargetAssemblyTypeName: TimedEnergyBar, Assembly-CSharp
-        m_MethodName: ReduceEnergyOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5034,7 +5022,7 @@ MonoBehaviour:
   currentEnergy: {fileID: 11400000, guid: 1aa65cf626c8be54b80cd535a4549c22, type: 2}
   maxEnergy: {fileID: 11400000, guid: e7bdfba972247bb4a8cb69057cabbaf8, type: 2}
   reduceEnergyRate: {fileID: 11400000, guid: 622ae13e7bed1db4ca4364413d30c0cd, type: 2}
-  rechargeRate: 10
+  rechargeRate: 0.1
   energySlider: {fileID: 1469392758}
   energyText: {fileID: 1662167981}
 --- !u!4 &1729086646

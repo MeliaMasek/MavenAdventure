@@ -12,12 +12,10 @@ public class PlantManager : MonoBehaviour
         public GameObject maturePrefab;
         public InventoryData plantData;
        
-        public GameObject baseStageObject; // Store base stage reference
+        public GameObject baseStageObject;
         public GameObject currentStageObject;
         public int currentStage = -1;
         
-        //[HideInInspector] public GameObject currentStageObject;
-        //[HideInInspector] public int currentStage = -1;
         [HideInInspector] public int daysElapsed = 0;
         [HideInInspector] public bool isWatered = false;
         [HideInInspector] public bool isFertilized = false;
@@ -160,23 +158,21 @@ private void EndDay()
                 break;
             case 2:
                 newStagePrefab = plant.maturePrefab; 
-                plant.isReadytoHarvest = true; // Set ready to harvest when mature
+                plant.isReadytoHarvest = true;
                 break;
         }
 
         if (newStagePrefab == null) return;
 
-        // Instantiate the new stage object
         plant.currentStageObject = Instantiate(newStagePrefab, plant.spawnLocator.position, Quaternion.identity);
         plant.currentStage = stage;
 
-        // Reset plant data when clearing the bed
         if (stage == -1)
         {
             plant.daysElapsed = 0;
             plant.isWatered = false;
             plant.isFertilized = false;
-            plant.isReadytoHarvest = false; // Reset harvest status when clearing the bed
+            plant.isReadytoHarvest = false;
         }
     }
 
@@ -194,14 +190,12 @@ private void EndDay()
     {
         if (plant.currentStageObject == null)
         {
-            Debug.LogError("No mature plant object found!");
             return;
         }
 
         HarvestPlant harvestPlant = plant.currentStageObject.GetComponent<HarvestPlant>();
         if (harvestPlant == null || harvestPlant.GetProduceData() == null)
         {
-            Debug.LogError("ProduceData is missing from the mature plant! Cannot add to backpack.");
             return;
         }
 
@@ -211,11 +205,6 @@ private void EndDay()
         if (backpack != null)
         {
             backpack.AddProduceToBackpack(produceData);
-            Debug.Log($"Added {produceData.name} to backpack.");
-        }
-        else
-        {
-            Debug.LogError("BackpackManager not found!");
         }
 
         ResetPlantAfterCollection(plant);
@@ -225,12 +214,7 @@ private void EndDay()
     {
         if (plant.baseStageObject != null)
         {
-            Debug.Log("Reactivating base stage object...");
             plant.baseStageObject.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("Base stage object is missing!");
         }
 
         SetStage(plant, -1);
