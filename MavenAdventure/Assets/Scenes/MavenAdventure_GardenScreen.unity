@@ -2441,7 +2441,7 @@ RectTransform:
   m_GameObject: {fileID: 962879445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.2502203, y: 2.963324, z: 2.963324}
+  m_LocalScale: {x: 5.57, y: 1.7870326, z: 2.963324}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1192217259}
@@ -2451,7 +2451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 200.3, y: 22}
+  m_AnchoredPosition: {x: 200.3, y: 105}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &962879447
@@ -2474,8 +2474,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: d83db25a6a55a0d4e87a623a4df0b16e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3152,7 +3152,7 @@ RectTransform:
   m_GameObject: {fileID: 1192217258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04395814, y: 0.09006892, z: 0.09006892}
+  m_LocalScale: {x: 0.06455253, y: 0.13226621, z: 0.13226621}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 962879446}
@@ -3160,7 +3160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11, y: 46.1}
+  m_AnchoredPosition: {x: -36, y: 26}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1192217260
@@ -3196,7 +3196,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Spring
+  m_Text: '
 
 '
 --- !u!222 &1192217261
@@ -4363,7 +4363,7 @@ RectTransform:
   m_GameObject: {fileID: 1553738944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.07616918, y: 1, z: 1}
+  m_LocalScale: {x: 0.0953545, y: 1.5811214, z: 1.2518777}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 962879446}
@@ -4371,7 +4371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 42.1, y: 29.7}
+  m_AnchoredPosition: {x: 36.199993, y: 1.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1553738946
@@ -4443,15 +4443,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 985addd6970f6594e91898bc54a3ec25, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5467,7 +5467,13 @@ MonoBehaviour:
   calendarGrid: {fileID: 1699274659}
   totalDays: 30
   defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  currentDayColor: {r: 0.7176471, g: 0.5803922, b: 0, a: 1}
+  currentDayColor: {r: 0.60784316, g: 0.9098039, b: 0.91764706, a: 1}
+  seasons:
+  - Spring
+  - Summer
+  - Autumn
+  - Winter
+  seasonText: {fileID: 1192217260}
 --- !u!1 &2004078145
 GameObject:
   m_ObjectHideFlags: 0
