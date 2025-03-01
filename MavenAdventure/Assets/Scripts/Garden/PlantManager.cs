@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class PlantManager : MonoBehaviour
         public GameObject sproutPrefab;
         public GameObject maturePrefab;
         public InventoryData plantData;
-       
+
         public GameObject baseStageObject;
         public GameObject currentStageObject;
         public int currentStage = -1;

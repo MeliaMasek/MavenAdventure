@@ -21,5 +21,6 @@ MonoBehaviour:
   seedPrefab: {fileID: 4352389096216153976, guid: 8cf82665e8f6a024694c6b35dbe9796b, type: 3}
   sproutPrefab: {fileID: 8038207266640838015, guid: 2a81e25115c919f47920eaf85f6aeeec, type: 3}
   maturePrefab: {fileID: 1658498308759800137, guid: d79ab12cee717f8468c5cab969660373, type: 3}
+  produceData: {fileID: 11400000, guid: 954a58111c10bfb46a81dc80b764bc62, type: 2}
   daysToSprout: 1
   daysToMature: 2

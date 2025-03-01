@@ -4,6 +4,6 @@ using UnityEngine;
 public class ProduceData : ScriptableObject
 {
     public string displayName;
-    public Sprite ProduceIcon;
+    public Sprite produceIcon;
     public int stackSize;
 }

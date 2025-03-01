@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 451374270082501034}
   - component: {fileID: 5774082302355835658}
   - component: {fileID: 1673049603398999476}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Empty_Plant_Bed
   m_TagString: PlantBed
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 2728249046595411565}
   - component: {fileID: 8127567404510386985}
   - component: {fileID: 672882186190483297}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Empty_Bed
   m_TagString: PlantBed
   m_Icon: {fileID: 0}
@@ -168,9 +168,9 @@ GameObject:
   - component: {fileID: 2814962704094643235}
   - component: {fileID: 494908469616461907}
   - component: {fileID: 2483914856164951001}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Empty_Bed_Dirt1
-  m_TagString: PlantBed
+  m_TagString: Dirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,7 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4626656806383012144}
   - component: {fileID: 6581303019656080808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

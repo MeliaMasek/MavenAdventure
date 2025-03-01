@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class CalendarManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class CalendarManager : MonoBehaviour
     private int currentMonth = 1;
     private int currentSeasonIndex = 0;
     private GameObject[] dayCells;
+
+    // Dictionary to store multiple harvests per day with different plants
+    private Dictionary<int, Sprite> harvestDays = new Dictionary<int, Sprite>();
 
     void Start()
     {
@@ -35,6 +39,11 @@ public class CalendarManager : MonoBehaviour
         }
     }
 
+    public int GetCurrentDay()
+    {
+        return currentDay;
+    }
+
     public void AdvanceDay()
     {
         currentDay++;
@@ -44,15 +53,30 @@ public class CalendarManager : MonoBehaviour
             currentDay = 1;
             currentMonth++;
 
-            if (currentMonth > 12)
-            {
-                currentMonth = 1;
-            }
+            if (currentMonth > 12) currentMonth = 1;
 
-            if (currentMonth == 1 || currentMonth == 4 || currentMonth == 7 || currentMonth == 10) 
+            // Change season every 3 months
+            if (currentMonth == 1 || currentMonth == 4 || currentMonth == 7 || currentMonth == 10)
             {
                 currentSeasonIndex = (currentSeasonIndex + 1) % seasons.Length;
             }
+        }
+
+        UpdateCalendarUI();
+    }
+
+    public void MarkHarvestDay(int growthDuration, Sprite plantIcon)
+    {
+        int harvestDay = currentDay + growthDuration;
+        if (harvestDay > totalDays)
+        {
+            harvestDay -= totalDays; // Wrap to next month
+        }
+
+        // Store different plant icons per day
+        if (!harvestDays.ContainsKey(harvestDay))
+        {
+            harvestDays[harvestDay] = plantIcon;
         }
 
         UpdateCalendarUI();
@@ -65,9 +89,22 @@ public class CalendarManager : MonoBehaviour
         for (int i = 0; i < totalDays; i++)
         {
             CalendarDayCell dayCell = dayCells[i].GetComponent<CalendarDayCell>();
-            if (dayCell != null && dayCell.backgroundImage != null)
+
+            if (dayCell != null)
             {
-                dayCell.backgroundImage.color = (i + 1 == currentDay) ? currentDayColor : Color.white;
+                // Set the color for the background image based on whether it's the current day
+                dayCell.backgroundImage.color = (i + 1 == currentDay) ? currentDayColor : defaultColor;
+
+                // Check if this day has a harvest icon and update the icon
+                if (harvestDays.ContainsKey(i + 1))
+                {
+                    dayCell.harvestIcon.sprite = harvestDays[i + 1];
+                    dayCell.harvestIcon.enabled = true;
+                }
+                else
+                {
+                    dayCell.harvestIcon.enabled = false;
+                }
             }
         }
     }

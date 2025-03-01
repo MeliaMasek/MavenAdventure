@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class SeedManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class SeedManager : MonoBehaviour
     public void ActivatePlantingMode()
     {
         FindObjectOfType<WateringInteraction>().DeactivateWateringMode();
+        isPlantingMode = true; // ✅ Enable planting mode when selecting a seed
     }
 
     private void Update()
@@ -57,6 +59,7 @@ public class SeedManager : MonoBehaviour
             return;
         }
 
+        // Get the selected seed from the backpack
         InventoryData selectedSeed = FindObjectOfType<BackpackManager>().GetSelectedSeed();
         if (selectedSeed == null) return;
         if (selectedSeed.seedPrefab == null || selectedSeed.sproutPrefab == null || selectedSeed.maturePrefab == null) return;
@@ -83,8 +86,20 @@ public class SeedManager : MonoBehaviour
         newPlant.currentStage = 0;
 
         plantManager.plants.Add(newPlant);
+    
+        // Call the calendar manager to mark the harvest day
+        // Assuming growth duration is stored in PlantData and is in days
+        int growthDuration = selectedSeed.daysToMature;  // Ensure you have growth duration in your seed data
+        Sprite plantIcon = selectedSeed.produceData.produceIcon;  // Accessing the icon from ProduceData
+
+        // Call the CalendarManager to register the harvest day and icon
+        CalendarManager calendarManager = FindObjectOfType<CalendarManager>();
+        calendarManager.MarkHarvestDay(growthDuration + FindObjectOfType<CalendarManager>().GetCurrentDay(), plantIcon);
+
+        // Remove the seed from the backpack
         FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
     }
+
     
     private void ChangeDirtMaterial(GameObject stageObject)
     {

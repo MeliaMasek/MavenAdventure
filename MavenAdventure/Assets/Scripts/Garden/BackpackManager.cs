@@ -75,7 +75,7 @@ public class BackpackManager : MonoBehaviour
 
         foreach (var item in collectedProduce)
         {
-            CreateBackpackItem(item.Key.ProduceIcon, item.Key.displayName, item.Value, null);
+            CreateBackpackItem(item.Key.produceIcon, item.Key.displayName, item.Value, null);
         }
     }
 

@@ -17,6 +17,7 @@ public class InventoryData : ScriptableObject
     public GameObject seedPrefab;
     public GameObject sproutPrefab;
     public GameObject maturePrefab;
+    public ProduceData produceData;  // Reference to the ProduceData for this seed
     public int daysToSprout;
     public int daysToMature;
 }
