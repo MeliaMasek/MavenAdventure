@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: 
   displayName: Carrot
-  ProduceIcon: {fileID: 21300000, guid: 5af5ffa2dd5c1a547bce7d30554ef6fb, type: 3}
+  ProduceIcon: {fileID: 21300000, guid: d4dcadfef04f6a7428167ce775f35405, type: 3}
   stackSize: 0
