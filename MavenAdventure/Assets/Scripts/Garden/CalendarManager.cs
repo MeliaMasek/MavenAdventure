@@ -19,7 +19,7 @@ public class CalendarManager : MonoBehaviour
     private GameObject[] dayCells;
 
     // Dictionary to store multiple harvests per day with different plants
-    private Dictionary<int, Sprite> harvestDays = new Dictionary<int, Sprite>();
+    private Dictionary<int, List<Sprite>> harvestDays = new Dictionary<int, List<Sprite>>();
 
     void Start()
     {
@@ -73,14 +73,33 @@ public class CalendarManager : MonoBehaviour
             harvestDay -= totalDays; // Wrap to next month
         }
 
-        // Store different plant icons per day
-        if (!harvestDays.ContainsKey(harvestDay))
+        // Find the correct calendar cell
+        GameObject dayCell = dayCells[harvestDay - 1];
+
+        // Get or create the HarvestIconContainer
+        Transform iconContainer = dayCell.transform.Find("HarvestGrid");
+        if (iconContainer == null)
         {
-            harvestDays[harvestDay] = plantIcon;
+            GameObject newContainer = new GameObject("HarvestGrid");
+            newContainer.transform.SetParent(dayCell.transform);
+            newContainer.AddComponent<RectTransform>();
+            GridLayoutGroup grid = newContainer.AddComponent<GridLayoutGroup>();
+
+            // Configure Grid Layout
+            grid.cellSize = new Vector2(50, 50); // Adjust size as needed
+            grid.spacing = new Vector2(5, 5);
+            grid.childAlignment = TextAnchor.MiddleCenter;
+
+            iconContainer = newContainer.transform;
         }
 
-        UpdateCalendarUI();
+        // Create and add the icon to the container
+        GameObject newIcon = new GameObject("HarvestIcon");
+        newIcon.transform.SetParent(iconContainer);
+        Image iconImage = newIcon.AddComponent<Image>();
+        iconImage.sprite = plantIcon;
     }
+
 
     void UpdateCalendarUI()
     {
@@ -92,18 +111,18 @@ public class CalendarManager : MonoBehaviour
 
             if (dayCell != null)
             {
-                // Set the color for the background image based on whether it's the current day
+                // Change background color
                 dayCell.backgroundImage.color = (i + 1 == currentDay) ? currentDayColor : defaultColor;
 
-                // Check if this day has a harvest icon and update the icon
+                // If there are harvests for this day, show all icons
                 if (harvestDays.ContainsKey(i + 1))
                 {
-                    dayCell.harvestIcon.sprite = harvestDays[i + 1];
-                    dayCell.harvestIcon.enabled = true;
+                    dayCell.ShowMultipleIcons(harvestDays[i + 1]); 
                 }
                 else
                 {
-                    dayCell.harvestIcon.enabled = false;
+                    // If no harvests, clear previous icons
+                    dayCell.ShowMultipleIcons(new List<Sprite>());
                 }
             }
         }

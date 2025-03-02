@@ -2508,7 +2508,7 @@ RectTransform:
   m_GameObject: {fileID: 716321789}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.28, y: 7.172096, z: 5.337611}
+  m_LocalScale: {x: 5.642589, y: 8.742436, z: 5.7149806}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1355660538}
@@ -2516,7 +2516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 199, y: -231}
+  m_AnchoredPosition: {x: 199, y: -225}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &716321791
@@ -2532,15 +2532,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9490196, g: 0.8666667, b: 0.5254902, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 335621ca6a6893e488f2d7e8e953925d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3233,7 +3233,7 @@ RectTransform:
   m_GameObject: {fileID: 962879445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.57, y: 1.7870326, z: 2.963324}
+  m_LocalScale: {x: 5.7671785, y: 1.8502936, z: 3.0682259}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1192217259}
@@ -3243,7 +3243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 200.3, y: 105}
+  m_AnchoredPosition: {x: 200.3, y: 111}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &962879447
@@ -5004,7 +5004,7 @@ RectTransform:
   m_GameObject: {fileID: 1355660537}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4938866, y: 0.9267287, z: 0.9267287}
+  m_LocalScale: {x: 1.503549, y: 0.93272275, z: 0.93272275}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 716321790}
@@ -5015,7 +5015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -307.76, y: 187}
+  m_AnchoredPosition: {x: -292, y: 200}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1355660539
@@ -6496,7 +6496,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 0, y: 7.5}
   m_Constraint: 1
   m_ConstraintCount: 5
 --- !u!1 &1729086644
@@ -7210,7 +7210,7 @@ MonoBehaviour:
   dayCellPrefab: {fileID: 2907443189656506401, guid: 12a8c3ea4e7db5f40b582ab91bd68af0, type: 3}
   calendarGrid: {fileID: 1699274659}
   totalDays: 30
-  defaultColor: {r: 1, g: 1, b: 1, a: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   currentDayColor: {r: 0.60784316, g: 0.9098039, b: 0.91764706, a: 1}
   seasons:
   - Spring
