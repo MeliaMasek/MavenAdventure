@@ -13,7 +13,8 @@ public class BackpackManager : MonoBehaviour
     private Dictionary<InventoryData, int> collectedSeeds = new Dictionary<InventoryData, int>();
     private Dictionary<ProduceData, int> collectedProduce = new Dictionary<ProduceData, int>();
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
-    private List<ProduceData> inventoryList = new List<ProduceData>();
+    private List<ProduceData> inventoryproduceList = new List<ProduceData>();
+    private List<InventoryData> inventoryseedList = new List<InventoryData>();
 
     [Header("Starting Seeds")] 
     public List<InventoryData> startingSeeds;
@@ -154,7 +155,7 @@ public class BackpackManager : MonoBehaviour
         }
     }
     
-    public void RemoveItem(InventoryData seed)
+    public bool RemoveItem(InventoryData seed)
     {
         if (collectedSeeds.ContainsKey(seed))
         {
@@ -166,6 +167,8 @@ public class BackpackManager : MonoBehaviour
             }
             UpdateBackpackUI();
         }
+
+        return false;
     }
     
     public void AddToBackpack(InventoryData itemData, int amount = 1)
@@ -203,12 +206,25 @@ public class BackpackManager : MonoBehaviour
         UpdateBackpackUI(); // Update the UI to reflect changes
     }
     
-    public void AddItem(ProduceData produce)
+    public void AddItem(object item)
     {
-        if (produce == null)
+        if (item == null)
         {
             return;
         }
-        inventoryList.Add(produce); // Ensure 'inventoryList' exists
+
+        if (item is InventoryData inventoryItem)
+        {
+            inventoryseedList.Add(inventoryItem); // Add InventoryData to the inventory
+        }
+        else if (item is ProduceData produceItem)
+        {
+            inventoryproduceList.Add(produceItem); // Add ProduceData to the inventory
+        }
+        else
+        {
+            Debug.LogWarning("Invalid item type.");
+        }
     }
+
 }

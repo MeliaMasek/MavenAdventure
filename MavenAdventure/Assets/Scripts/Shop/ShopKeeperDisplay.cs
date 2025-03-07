@@ -267,7 +267,7 @@ public class ShopKeeperDisplay : MonoBehaviour
     
     public static int GetModifiedPrice(InventoryData data, int amount, float markUp)
     {
-        var baseValue = data.GoldValue * amount;
+        var baseValue = data.goldValue * amount;
         
         return Mathf.FloorToInt(baseValue + baseValue * markUp);    
     }

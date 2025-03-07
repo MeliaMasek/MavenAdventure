@@ -4,8 +4,8 @@ using UnityEngine;
 public class IntData : ScriptableObject
 {
     public int value;
-    //public UnityEvent disableEvent;
-    
+    public string text;
+
     public void SetValue(int num)
     {
         value = num;

@@ -13,7 +13,7 @@ public class InventoryData : ScriptableObject
     public string description;
     public Sprite Seedicon;
     public int maxStackSize;
-    public int GoldValue;
+    public int goldValue; // Add this field for shop transactions
     public GameObject seedPrefab;
     public GameObject sproutPrefab;
     public GameObject maturePrefab;
