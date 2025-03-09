@@ -53,7 +53,7 @@ public class CharacterMovement : MonoBehaviour
         if (movementInput.sqrMagnitude > 0.01f) // Move only if there's significant input
         {
             // Move the character by using CharacterController on the movement object
-            characterMovementObject.Translate(moveDirection * (Time.deltaTime * speed.value));
+            controller.Move(moveDirection * (Time.deltaTime * speed.value));
 
             // Rotate the character mesh to face the movement direction
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
