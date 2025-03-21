@@ -36,6 +36,8 @@ public class PlantManager : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
+
         if (wateringInteraction == null)
         {
             wateringInteraction = FindObjectOfType<WateringInteraction>();

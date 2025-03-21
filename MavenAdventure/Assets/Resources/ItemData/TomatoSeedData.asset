@@ -17,10 +17,10 @@ MonoBehaviour:
   description: 
   Seedicon: {fileID: 21300000, guid: 9cfaa5fae3dc1984c90d409dae2c0c5c, type: 3}
   maxStackSize: 50
-  GoldValue: 2
-  seedPrefab: {fileID: 6100879739379839684, guid: b7b665fb5a4c4ff4a855c4a0ba7d82d9, type: 3}
-  sproutPrefab: {fileID: 2224027994747136607, guid: c1f61d0c863ea914f8e16adcfab28cf9, type: 3}
-  maturePrefab: {fileID: 2252904469261119460, guid: 1032c6b7dc9a3f445ad0d23a7181c13b, type: 3}
+  goldValue: 0
+  seedPrefab: {fileID: 7845870900865658264, guid: 6ef26ebde568c8a408e3306d58b2b751, type: 3}
+  sproutPrefab: {fileID: 3672355488477070876, guid: 775f1b304ae527c419c59c1e72cf9143, type: 3}
+  maturePrefab: {fileID: 1891921615929019786, guid: 9b9db312d0268de4b9a9e18171ffe199, type: 3}
   produceData: {fileID: 11400000, guid: 6670d9c1472e72e40bc8f662483c7aa5, type: 2}
   daysToSprout: 1
   daysToMature: 2
