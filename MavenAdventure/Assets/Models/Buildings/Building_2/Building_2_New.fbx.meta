@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6586369deb8f5274c813cc15fbd9a1fa
+guid: 138e05a1066987146bb87aa8532c6848
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
@@ -8,42 +8,27 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Building_Base
-    second: {fileID: 2100000, guid: 6d2ae4d9a23f90242b685f4b369081db, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Door
-    second: {fileID: 2100000, guid: a0a9edf8cd89378458f428fdb23d1c53, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Knob
-    second: {fileID: 2100000, guid: 026275797f08ed24c8a21b973516b8fa, type: 2}
+    second: {fileID: 2100000, guid: 7a14b445c87b74b40b8f5833b387af41, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Building_Molding
-    second: {fileID: 2100000, guid: 0bd591f93db4d604396d997f843a059c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Steps
-    second: {fileID: 2100000, guid: f3b23380a4d0cf14d80e1e7204a47392, type: 2}
+    second: {fileID: 2100000, guid: b40c48a8a92319e49882d7c7e7a316a6, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Building_Top
-    second: {fileID: 2100000, guid: 5a27fbe5378b09b44b18f0ab0c4cadf0, type: 2}
+    second: {fileID: 2100000, guid: beadf0f184f2eee48bfae5199fe5bf8e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Building_Window
-    second: {fileID: 2100000, guid: f3c4a5970fabf3c41a62dcdf97f4cd27, type: 2}
+    second: {fileID: 2100000, guid: 94b0363cc6b92be47953e0d2c3120a06, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Building_Windowframe
-    second: {fileID: 2100000, guid: 66c1e3543d4ec284d8cf0d186911d8c0, type: 2}
+    second: {fileID: 2100000, guid: bab0cead3f3b9d44e95f2e59387e2301, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

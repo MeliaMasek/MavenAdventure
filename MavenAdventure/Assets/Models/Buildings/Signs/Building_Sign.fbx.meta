@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6586369deb8f5274c813cc15fbd9a1fa
+guid: 16550df9431ebe34e9c4bf5e4c33ab21
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
@@ -7,43 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Building_Base
-    second: {fileID: 2100000, guid: 6d2ae4d9a23f90242b685f4b369081db, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Door
-    second: {fileID: 2100000, guid: a0a9edf8cd89378458f428fdb23d1c53, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Knob
-    second: {fileID: 2100000, guid: 026275797f08ed24c8a21b973516b8fa, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Molding
-    second: {fileID: 2100000, guid: 0bd591f93db4d604396d997f843a059c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Steps
-    second: {fileID: 2100000, guid: f3b23380a4d0cf14d80e1e7204a47392, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Top
-    second: {fileID: 2100000, guid: 5a27fbe5378b09b44b18f0ab0c4cadf0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Window
-    second: {fileID: 2100000, guid: f3c4a5970fabf3c41a62dcdf97f4cd27, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Windowframe
-    second: {fileID: 2100000, guid: 66c1e3543d4ec284d8cf0d186911d8c0, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: ac80ed6e150a91c499dd102108f4bd7e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

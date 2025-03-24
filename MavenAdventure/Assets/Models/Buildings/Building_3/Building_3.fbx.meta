@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 601518f256af98b49a216cb512a38413
+guid: 13a2f959dc01df048997d4ef6e8acabb
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
@@ -14,11 +14,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Building_Door
     second: {fileID: 2100000, guid: 938f8f03830f29948943be5e8a3ea85b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Building_Doorframe
-    second: {fileID: 2100000, guid: 5e99e3b9aaf8142418f43e9a676e3090, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
