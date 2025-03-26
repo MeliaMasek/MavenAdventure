@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   Seedicon: {fileID: 21300000, guid: 9cfaa5fae3dc1984c90d409dae2c0c5c, type: 3}
   maxStackSize: 50
-  goldValue: 0
+  goldValue: 10
   seedPrefab: {fileID: 7845870900865658264, guid: 6ef26ebde568c8a408e3306d58b2b751, type: 3}
   sproutPrefab: {fileID: 3672355488477070876, guid: 775f1b304ae527c419c59c1e72cf9143, type: 3}
   maturePrefab: {fileID: 1891921615929019786, guid: 9b9db312d0268de4b9a9e18171ffe199, type: 3}

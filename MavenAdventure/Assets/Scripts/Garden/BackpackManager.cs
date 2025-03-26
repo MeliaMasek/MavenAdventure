@@ -155,19 +155,23 @@ public class BackpackManager : MonoBehaviour
         }
     }
     
-    public bool RemoveItem(InventoryData seed)
+    public bool RemoveItem(InventoryData item, int amount = 1)
     {
-        if (collectedSeeds.ContainsKey(seed))
+        if (collectedSeeds.ContainsKey(item))
         {
-            collectedSeeds[seed]--;
+            collectedSeeds[item] -= amount;
 
-            if (collectedSeeds[seed] <= 0)
+            // If the amount is reduced to zero or less, remove the item
+            if (collectedSeeds[item] <= 0)
             {
-                collectedSeeds.Remove(seed);
+                collectedSeeds.Remove(item);
             }
+
             UpdateBackpackUI();
+            return true;
         }
 
+        // If the item doesn't exist in the backpack
         return false;
     }
     
@@ -215,16 +219,35 @@ public class BackpackManager : MonoBehaviour
 
         if (item is InventoryData inventoryItem)
         {
-            inventoryseedList.Add(inventoryItem); // Add InventoryData to the inventory
+            InventoryData existingItem = inventoryseedList.Find(i => i.displayName == inventoryItem.displayName);
+            if (existingItem != null)
+            {
+                existingItem.maxStackSize++; // Increase the stack size
+            }
+            else
+            {
+                inventoryItem.maxStackSize = 1; // Initialize stack size if new
+                inventoryseedList.Add(inventoryItem);
+            }
         }
         else if (item is ProduceData produceItem)
         {
-            inventoryproduceList.Add(produceItem); // Add ProduceData to the inventory
+            ProduceData existingProduce = inventoryproduceList.Find(p => p.displayName == produceItem.displayName);
+            if (existingProduce != null)
+            {
+                existingProduce.maxStackSize++; // Increase stack size
+            }
+            else
+            {
+                produceItem.maxStackSize = 1;
+                inventoryproduceList.Add(produceItem);
+            }
         }
         else
         {
             Debug.LogWarning("Invalid item type.");
         }
-    }
 
+        UpdateBackpackUI(); // Ensure the UI updates after adding an item
+    }
 }
