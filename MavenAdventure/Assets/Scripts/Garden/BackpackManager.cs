@@ -9,9 +9,10 @@ public class BackpackManager : MonoBehaviour
     public GameObject itemPrefab;
     public InventoryData selectedSeed;
     public SeedManager seedManager;
-    
-    private Dictionary<InventoryData, int> collectedSeeds = new Dictionary<InventoryData, int>();
-    private Dictionary<ProduceData, int> collectedProduce = new Dictionary<ProduceData, int>();
+    public ShopUI shopUI;
+
+    public Dictionary<InventoryData, int> collectedSeeds = new Dictionary<InventoryData, int>();
+    public Dictionary<ProduceData, int> collectedProduce = new Dictionary<ProduceData, int>();
     private Dictionary<InventoryData, int> collectedItems = new Dictionary<InventoryData, int>();
     private List<ProduceData> inventoryproduceList = new List<ProduceData>();
     private List<InventoryData> inventoryseedList = new List<InventoryData>();
@@ -29,6 +30,7 @@ public class BackpackManager : MonoBehaviour
         InitializeStartingSeeds();
         InitializeStartingProduce();
         UpdateBackpackUI();
+        shopUI.UpdateShopUI();
     }
     
     private void InitializeStartingSeeds()
@@ -42,7 +44,10 @@ public class BackpackManager : MonoBehaviour
     {
         foreach (ProduceData produce in startingProduce)
         {
-            AddProduceToBackpack(produce, startingProduceAmount);
+            if (!collectedProduce.ContainsKey(produce))
+            {
+                collectedProduce[produce] = startingProduceAmount;
+            }
         }
     }
     

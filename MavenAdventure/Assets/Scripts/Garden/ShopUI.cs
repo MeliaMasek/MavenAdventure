@@ -15,7 +15,9 @@ public class ShopUI : MonoBehaviour
 
     public void UpdateShopUI()
     {
-        goldText.text = $"Gold: {shopManager.playerGold.value}"; // Display gold correctly
+        Debug.Log("Updating Shop UI");
+
+        goldText.text = $"Gold: {shopManager.playerGold.value}"; 
 
         // Clear existing shop items before updating
         foreach (Transform child in shopItemsParent)
@@ -23,27 +25,58 @@ public class ShopUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // Populate the shop with available seeds
+        // Populate shop with seeds
         foreach (InventoryData seed in shopManager.seedsForSale)
         {
-            CreateShopItem(seed);
+            CreateShopItem(seed, isProduce: false);
+        }
+
+        // Populate shop with produce
+        foreach (ProduceData produce in shopManager.GetSellableProduce())
+        {
+            CreateShopItem(produce, isProduce: true);
         }
     }
     
-    private void CreateShopItem(InventoryData item)
+    private void CreateShopItem(object item, bool isProduce)
     {
         GameObject shopItem = Instantiate(shopItemPrefab, shopItemsParent);
-        shopItem.transform.Find("ItemName").GetComponent<Text>().text = item.displayName;
-        shopItem.transform.Find("ItemPrice").GetComponent<Text>().text = item.goldValue.ToString();
-        shopItem.transform.Find("ItemIcon").GetComponent<Image>().sprite = item.Seedicon;
+
+        string itemName = isProduce ? ((ProduceData)item).displayName : ((InventoryData)item).displayName;
+        int itemPrice = isProduce ? ((ProduceData)item).goldValue : ((InventoryData)item).goldValue;
+        Sprite itemIcon = isProduce ? ((ProduceData)item).produceIcon : ((InventoryData)item).Seedicon;
+
+        int itemAmount = isProduce 
+            ? (backpackManager.collectedProduce.ContainsKey((ProduceData)item) ? backpackManager.collectedProduce[(ProduceData)item] : 0) 
+            : (backpackManager.collectedSeeds.ContainsKey((InventoryData)item) ? backpackManager.collectedSeeds[(InventoryData)item] : 0);
+
+        shopItem.transform.Find("ItemName").GetComponent<Text>().text = $"{itemName} x{itemAmount}";
+        shopItem.transform.Find("ItemPrice").GetComponent<Text>().text = itemPrice.ToString();
+        shopItem.transform.Find("ItemIcon").GetComponent<Image>().sprite = itemIcon;
 
         Button buyButton = shopItem.transform.Find("BuyButton").GetComponent<Button>();
-        buyButton.onClick.AddListener(() => BuyItemWithUIUpdate(item));
-        
+        buyButton.gameObject.SetActive(!isProduce); // Hide buy button for produce
+
         Button sellButton = shopItem.transform.Find("SellButton").GetComponent<Button>();
-        sellButton.onClick.AddListener(() => shopManager.SellSeed(item));
+        sellButton.onClick.RemoveAllListeners();
+
+        if (isProduce)
+        {
+            sellButton.onClick.AddListener(() => shopManager.SellProduce((ProduceData)item));
+        }
+        else
+        {
+            sellButton.onClick.AddListener(() => shopManager.SellSeed((InventoryData)item));
+
+            // 🛠 FIX: Add listener for buying seeds
+            buyButton.onClick.RemoveAllListeners(); // Clear old listeners to prevent duplicates
+            buyButton.onClick.AddListener(() =>
+            {
+                Debug.Log("Buy button clicked for: " + ((InventoryData)item).displayName); // Debug
+                shopManager.BuyItem((InventoryData)item);
+            });
+        }
     }
-    
     private void BuyItemWithUIUpdate(InventoryData item)
     {
         if (shopManager.playerGold.value >= item.goldValue) // Ensure player has enough gold
