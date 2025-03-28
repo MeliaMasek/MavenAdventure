@@ -15,9 +15,9 @@ MonoBehaviour:
   ID: 20
   displayName: Carrot Seed
   description: 
-  Seedicon: {fileID: 21300000, guid: 4a173d586b98fa6448cef8b423c5f641, type: 3}
+  Seedicon: {fileID: 21300000, guid: 74a3be79e45e38247b9b14de978354a0, type: 3}
   maxStackSize: 0
-  goldValue: 10
+  goldValue: 1
   seedPrefab: {fileID: 2405037110271787193, guid: 4dd27dc8af2788a4483daffdebdffaf7, type: 3}
   sproutPrefab: {fileID: 6635341112016741383, guid: 9478b1d5707ad2e4d8dd88148891ec6f, type: 3}
   maturePrefab: {fileID: 5441564699319500419, guid: 39d56fc6ce7bdc842a14e333ceb56360, type: 3}
