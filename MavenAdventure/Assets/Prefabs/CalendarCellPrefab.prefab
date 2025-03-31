@@ -63,7 +63,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 2750034131321930926}
-  harvestIcon: {fileID: 8639997143507395885}
+  defaultIconSize: 80
+  maxIconSize: 80
+  minIconSize: 40
+  iconSize3x3: 27
+  iconSize2x2: 40
+  spacing: 0.01
+  offsetX: 13
+  offsetY: 4
 --- !u!1 &5209146316894835559
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +249,7 @@ RectTransform:
   m_GameObject: {fileID: 6404310545434133011}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 11.08345}
-  m_LocalScale: {x: 1.2119743, y: 1, z: 1}
+  m_LocalScale: {x: 2.658102, y: 2.1932, z: 2.1932}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8067574807322403234}
@@ -273,7 +280,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: -13.87, y: -5}
   m_Constraint: 1
   m_ConstraintCount: 2
