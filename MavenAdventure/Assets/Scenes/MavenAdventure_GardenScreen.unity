@@ -3862,8 +3862,10 @@ MonoBehaviour:
   startingProduce:
   - {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
   - {fileID: 11400000, guid: e9009876f7771144f95e1fe12866ef13, type: 2}
-  - {fileID: 11400000, guid: 954a58111c10bfb46a81dc80b764bc62, type: 2}
   - {fileID: 11400000, guid: 6670d9c1472e72e40bc8f662483c7aa5, type: 2}
+  - {fileID: 11400000, guid: 954a58111c10bfb46a81dc80b764bc62, type: 2}
+  - {fileID: 11400000, guid: 82fbb395d7c16bc4c83ee176b884edfc, type: 2}
+  - {fileID: 11400000, guid: 5e14c64285ab9df4e9b740dde3940981, type: 2}
   startingProduceAmount: 0
 --- !u!1001 &701201027
 PrefabInstance:

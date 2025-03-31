@@ -18,9 +18,9 @@ MonoBehaviour:
   Seedicon: {fileID: 21300000, guid: 931089f0b00260b4685687f331cc2ec2, type: 3}
   maxStackSize: 50
   goldValue: 15
-  seedPrefab: {fileID: 0}
-  sproutPrefab: {fileID: 0}
-  maturePrefab: {fileID: 0}
+  seedPrefab: {fileID: 4013305900101722794, guid: 99d8d7ff0a0f4154fa8cf324721af2fd, type: 3}
+  sproutPrefab: {fileID: 4126022000314767652, guid: bcc25b673ed428141949ef69faccef71, type: 3}
+  maturePrefab: {fileID: 7864866244838907859, guid: 966f0308be4d5204e8ed55b75ca0fd09, type: 3}
   produceData: {fileID: 11400000, guid: 5e14c64285ab9df4e9b740dde3940981, type: 2}
   daysToSprout: 3
   daysToMature: 4
