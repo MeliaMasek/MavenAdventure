@@ -65,42 +65,34 @@ public class CalendarManager : MonoBehaviour
         UpdateCalendarUI();
     }
 
-    public void MarkHarvestDay(int growthDuration, Sprite plantIcon)
+    public void MarkHarvestDay(int plantingDay, int growthDuration, Sprite plantIcon, InventoryData selectedSeed)
     {
-        int harvestDay = currentDay + growthDuration;
+        // Use the daysToSprout from the selected seed data
+        int sproutDuration = selectedSeed.daysToSprout;
+
+        // Calculate harvest day based on planting day, growth duration, and sprout duration
+        int harvestDay = plantingDay + growthDuration + sproutDuration;
+
+        // Handle overflow to the next month (wraparound)
         if (harvestDay > totalDays)
         {
             harvestDay -= totalDays; // Wrap to next month
         }
 
-        // Find the correct calendar cell
-        GameObject dayCell = dayCells[harvestDay - 1];
-
-        // Get or create the HarvestIconContainer
-        Transform iconContainer = dayCell.transform.Find("HarvestGrid");
-        if (iconContainer == null)
+        // Ensure the dictionary entry exists
+        if (!harvestDays.ContainsKey(harvestDay))
         {
-            GameObject newContainer = new GameObject("HarvestGrid");
-            newContainer.transform.SetParent(dayCell.transform);
-            newContainer.AddComponent<RectTransform>();
-            GridLayoutGroup grid = newContainer.AddComponent<GridLayoutGroup>();
-
-            // Configure Grid Layout
-            grid.cellSize = new Vector2(50, 50); // Adjust size as needed
-            grid.spacing = new Vector2(5, 5);
-            grid.childAlignment = TextAnchor.MiddleCenter;
-
-            iconContainer = newContainer.transform;
+            harvestDays[harvestDay] = new List<Sprite>();
         }
 
-        // Create and add the icon to the container
-        GameObject newIcon = new GameObject("HarvestIcon");
-        newIcon.transform.SetParent(iconContainer);
-        Image iconImage = newIcon.AddComponent<Image>();
-        iconImage.sprite = plantIcon;
+        // Add the plant icon to the harvestDays dictionary
+        harvestDays[harvestDay].Add(plantIcon);
+
+        Debug.Log($"Plant: {selectedSeed.displayName}, Planted on: {plantingDay}, Growth: {growthDuration}, Sprout Duration: {sproutDuration}, Final Harvest Day: {harvestDay}");
+
+        UpdateCalendarUI();
     }
-
-
+    
     void UpdateCalendarUI()
     {
         seasonText.text = seasons[currentSeasonIndex];

@@ -22,5 +22,5 @@ MonoBehaviour:
   sproutPrefab: {fileID: 2751595471628171585, guid: d36b03b722ad6514d8ddd65f6236de7f, type: 3}
   maturePrefab: {fileID: 7126508596090597871, guid: 507f31eadbca01a4396136fdbe6813e9, type: 3}
   produceData: {fileID: 11400000, guid: 4548743e434d103459e1f9aab3b9ac7c, type: 2}
-  daysToSprout: 2
-  daysToMature: 3
+  daysToSprout: 1
+  daysToMature: 2

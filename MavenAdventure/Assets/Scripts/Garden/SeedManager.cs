@@ -94,7 +94,7 @@ public class SeedManager : MonoBehaviour
 
         // Call the CalendarManager to register the harvest day and icon
         CalendarManager calendarManager = FindObjectOfType<CalendarManager>();
-        calendarManager.MarkHarvestDay(growthDuration + FindObjectOfType<CalendarManager>().GetCurrentDay(), plantIcon);
+        calendarManager.MarkHarvestDay(calendarManager.GetCurrentDay(), growthDuration, plantIcon, selectedSeed);
 
         // Remove the seed from the backpack
         FindObjectOfType<BackpackManager>().RemoveItem(selectedSeed);
