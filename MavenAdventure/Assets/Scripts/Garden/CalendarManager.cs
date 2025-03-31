@@ -21,6 +21,7 @@ public class CalendarManager : MonoBehaviour
 
     // Dictionary to store multiple harvests per day with different plants
     private Dictionary<int, List<Sprite>> harvestDays = new Dictionary<int, List<Sprite>>();
+    private Dictionary<int, int> harvestMonths = new Dictionary<int, int>(); // Tracks which month the harvest happens in
 
     void Start()
     {
@@ -54,7 +55,8 @@ public class CalendarManager : MonoBehaviour
             currentDay = 1;
             currentMonth++;
 
-            if (currentMonth > 12) currentMonth = 1;
+            if (currentMonth > 12) 
+                currentMonth = 1;
 
             // Change season every 3 months
             if (currentMonth == 1 || currentMonth == 4 || currentMonth == 7 || currentMonth == 10)
@@ -71,25 +73,29 @@ public class CalendarManager : MonoBehaviour
         // Use the daysToSprout from the selected seed data
         int sproutDuration = selectedSeed.daysToSprout;
 
-        // Calculate harvest day based on planting day, growth duration, and sprout duration
+        // Calculate the total harvest day
         int harvestDay = plantingDay + growthDuration + sproutDuration;
+        int harvestMonth = currentMonth;
 
-        // Handle overflow to the next month (wraparound)
-        if (harvestDay > totalDays)
+        // Handle overflow to the next month
+        while (harvestDay > totalDays)
         {
-            harvestDay -= totalDays; // Wrap to next month
+            harvestDay -= totalDays; // Wrap to the next month
+            harvestMonth++; // Move to the next month
+            if (harvestMonth > 12) harvestMonth = 1; // Wrap around for a new year
         }
 
         // Ensure the dictionary entry exists
         if (!harvestDays.ContainsKey(harvestDay))
         {
             harvestDays[harvestDay] = new List<Sprite>();
+            harvestMonths[harvestDay] = harvestMonth; // Store the month as well
         }
 
         // Add the plant icon to the harvestDays dictionary
         harvestDays[harvestDay].Add(plantIcon);
 
-        Debug.Log($"Plant: {selectedSeed.displayName}, Planted on: {plantingDay}, Growth: {growthDuration}, Sprout Duration: {sproutDuration}, Final Harvest Day: {harvestDay}");
+        Debug.Log($"Plant: {selectedSeed.displayName}, Planted on: {plantingDay}, Growth: {growthDuration}, Sprout Duration: {sproutDuration}, Final Harvest Day: {harvestDay}, Harvest Month: {harvestMonth}");
 
         UpdateCalendarUI();
     }
@@ -104,13 +110,24 @@ public class CalendarManager : MonoBehaviour
 
             if (dayCell != null)
             {
-                // Change background color
+                // Change background color for the current day
                 dayCell.backgroundImage.color = (i + 1 == currentDay) ? currentDayColor : defaultColor;
 
-                // If there are harvests for this day, show all icons
+                // Debug log to check which days have harvests
                 if (harvestDays.ContainsKey(i + 1))
                 {
-                    dayCell.ShowMultipleIcons(harvestDays[i + 1]); 
+                    Debug.Log($"Updating Day {i + 1}: Showing {harvestDays[i + 1].Count} harvest icons");
+                    
+                    // Ensure we're displaying the correct icons only for the current month
+                    if (harvestMonths[i + 1] == currentMonth)
+                    {
+                        dayCell.ShowMultipleIcons(harvestDays[i + 1]); 
+                    }
+                    else
+                    {
+                        // Clear icons if the harvest is from a different month
+                        dayCell.ShowMultipleIcons(new List<Sprite>());
+                    }
                 }
                 else
                 {
