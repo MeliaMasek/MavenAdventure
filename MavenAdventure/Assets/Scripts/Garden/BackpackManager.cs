@@ -83,6 +83,9 @@ public class BackpackManager : MonoBehaviour
         {
             CreateBackpackItem(item.Key.produceIcon, item.Key.displayName, item.Value, null);
         }
+
+        // Force layout update for correct positioning in scroll view
+        LayoutRebuilder.ForceRebuildLayoutImmediate(itemGrid.GetComponent<RectTransform>());
     }
 
     private void CreateBackpackItem(Sprite icon, string name, int amount, System.Action onClick)
