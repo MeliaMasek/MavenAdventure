@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,12 +89,18 @@ public class WateringInteraction : MonoBehaviour
         }
     }
 
-    private bool TryWaterPlant(GameObject clickedObject)
+    public bool TryWaterPlant(GameObject clickedObject)
     {
         foreach (var plant in plantManager.plants)
         {
             if (plant.currentStageObject == clickedObject)
             {
+                if (energyBar.currentEnergy.value < energyBar.reduceEnergyRate.value)
+                {
+                    Debug.Log("Not enough energy to water the plant.");
+                    return false; // Not enough energy
+                }
+
                 if (plant.currentStage == -1)
                 {
                     return false; 

@@ -10,6 +10,10 @@ public class TimedEnergyBar : MonoBehaviour
 
     public Slider energySlider;  
     public Text energyText;      
+    
+    public LayerMask plantLayer;  // Declare the LayerMask variable
+
+    public WateringInteraction wateringInteraction;
 
     private void Start()
     {
@@ -25,13 +29,30 @@ public class TimedEnergyBar : MonoBehaviour
 
     public void ReduceEnergyOnClick()
     {
-        if (currentEnergy.value > 0)
+        if (currentEnergy.value >= reduceEnergyRate.value)
         {
-            currentEnergy.value -= reduceEnergyRate.value; 
+            currentEnergy.value -= reduceEnergyRate.value;
             SaveEnergy();
             UpdateEnergyUI();
+
+            // Call the TryWaterPlant method from the WateringInteraction script
+            if (wateringInteraction != null)
+            {
+                // Assuming 'clickedObject' is the object you want to water, this would be passed as a parameter
+                // Replace clickedObject with the correct object you are interacting with
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, 100f, plantLayer))
+                {
+                    wateringInteraction.TryWaterPlant(hit.collider.gameObject);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Not enough energy to complete this task.");
         }
     }
+
 
     private void RegenerateEnergy()
     {
