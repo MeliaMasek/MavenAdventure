@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Building_Sign
+  m_Name: BuildingHome
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: bf4f3a1d6a4930e40bf7fce40e55ae68, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0605535ce7db8f44c833f6d80fb09b10, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -44,15 +44,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 4ba50366db51ea04a926dec266c8bf22, type: 3}
+        m_Texture: {fileID: 2800000, guid: 17faf286c72eedc44bedb3bd0f276406, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 802481bc707de2641ab0c5c6ff6bcf39, type: 3}
+        m_Texture: {fileID: 2800000, guid: 32312cc2080cb654dada028c0d0bf046, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 877c3621db7142f49809fa91a18ccc06, type: 3}
+        m_Texture: {fileID: 2800000, guid: 856e036c7701d174ab38a4e5b6e11afd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: 718191e5949b5ad45b1f3d588e4434c1, type: 3}
+        m_Texture: {fileID: 2800000, guid: fd80a2165b60aec48b0b043ca8c2da58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

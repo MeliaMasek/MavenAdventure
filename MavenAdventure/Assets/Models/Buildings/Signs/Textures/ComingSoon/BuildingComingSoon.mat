@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Grass_
+  m_Name: BuildingComingSoon
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: d28bf9dbaadc84f4295f274339b59449, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6722ad795842ad142abee3ca5e54c56e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -44,15 +44,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 6c5fceb034a190746b30139505846c03, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6219895e09a1d9245b22470792c32410, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 617291b2bb7712d4889e04458f0af458, type: 3}
+        m_Texture: {fileID: 2800000, guid: bcd5bd57c7c0d9e4a93dca43fb30ba99, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 992a41f9bea85a246afa133cd07f796a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3b94c1d8e7744014ebb34170458dae48, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: 5f1766a4f10404845813bf1a206588ff, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7a9deb51abef4394690e59f2ab268e92, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -69,7 +69,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _GlossMapScale: 0.25
+    - _GlossMapScale: 0.5
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
