@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: 684e679b9228e4144baf46e5463fd852
+guid: 88e0cf22cddfee04385d7370d94cfe15
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bushes1Mat
+    second: {fileID: 2100000, guid: 8ed654a11a2918f49bdde138a8ce7ee7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PotMat
+    second: {fileID: 2100000, guid: a664102332673d640a8c95a165540297, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
