@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2462989117241648656}
   - component: {fileID: 2635563691048549923}
   - component: {fileID: 285020878922734759}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCylinder1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1432247401808769824}
   - component: {fileID: 3048747021478892909}
   - component: {fileID: 980688724373969618}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bed_Dirt_HP:Bed_HPdirt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3823328219851187182}
   - component: {fileID: 6808256819690210385}
   - component: {fileID: 273011654955012911}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,11 +259,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2940335878751097125}
   - component: {fileID: 6996090616981121858}
-  - component: {fileID: 3813015126634109781}
-  - component: {fileID: 2033551671512533128}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Purchase_Bed 1
-  m_TagString: PlantBed
+  m_TagString: LockedBed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -298,32 +296,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.049349174, y: 0.039855525, z: 0.048851475}
   m_Center: {x: 0.0005125925, y: 0.01659187, z: 0.0005351743}
---- !u!114 &3813015126634109781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2559728265723628447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cebad39df8c8d4f4db7d9942b10ba2c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  validSeeds: []
---- !u!114 &2033551671512533128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2559728265723628447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2cb42dc58debf2418a5b62a882464bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isOccupied: 0
 --- !u!1 &3023663265742358614
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4719896867286759060}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +341,7 @@ GameObject:
   - component: {fileID: 2525241307059661397}
   - component: {fileID: 1208823162820263062}
   - component: {fileID: 8321696207794514763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +424,7 @@ GameObject:
   - component: {fileID: 2205399968309860884}
   - component: {fileID: 2090623000819700392}
   - component: {fileID: 2188155917048489298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bed_Dirt_HP:baseBed_HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2892114551438275787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

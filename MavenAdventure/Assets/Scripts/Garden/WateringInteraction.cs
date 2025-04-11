@@ -12,6 +12,9 @@ public class WateringInteraction : MonoBehaviour
 
     public TimedEnergyBar energyBar;
     public Button wateringButton;
+    
+    public AudioClip wateringSound;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -24,6 +27,8 @@ public class WateringInteraction : MonoBehaviour
         {
             backpackManager = FindObjectOfType<BackpackManager>();
         }
+        
+        audioSource = GetComponent<AudioSource>();
     }
     
     private void Update()
@@ -108,9 +113,16 @@ public class WateringInteraction : MonoBehaviour
 
                 if (!plant.isWatered) 
                 {
-                    plant.isWatered = true; 
+                    plant.isWatered = true;
                     ChangeDirtMaterial(plant.currentStageObject);
                     energyBar.ReduceEnergyOnClick();
+
+                    // ✅ Play watering sound
+                    if (wateringSound != null && audioSource != null)
+                    {
+                        audioSource.PlayOneShot(wateringSound);
+                    }
+
                     return true;
                 }
                 else

@@ -8,6 +8,8 @@ public class ShopUI : MonoBehaviour
     public Transform shopItemsParent;
     public GameObject shopItemPrefab;
     public Text goldText;
+    public AudioSource audioSource;
+    public AudioClip sellSound;
     private void Start()
     {
         UpdateShopUI();
@@ -62,18 +64,41 @@ public class ShopUI : MonoBehaviour
 
         if (isProduce)
         {
-            sellButton.onClick.AddListener(() => shopManager.SellProduce((ProduceData)item));
+            sellButton.onClick.AddListener(() =>
+            {
+                shopManager.SellProduce((ProduceData)item);
+
+                // ✅ Play the sound here
+                if (sellSound != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(sellSound);
+                }
+            });
         }
         else
         {
-            sellButton.onClick.AddListener(() => shopManager.SellSeed((InventoryData)item));
+            sellButton.onClick.AddListener(() =>
+            {
+                shopManager.SellSeed((InventoryData)item);
 
-            // 🛠 FIX: Add listener for buying seeds
-            buyButton.onClick.RemoveAllListeners(); // Clear old listeners to prevent duplicates
+                // ✅ Play the sound here too if you want it for seeds
+                if (sellSound != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(sellSound);
+                }
+            });
+
+            buyButton.onClick.RemoveAllListeners();
             buyButton.onClick.AddListener(() =>
             {
-                Debug.Log("Buy button clicked for: " + ((InventoryData)item).displayName); // Debug
+                Debug.Log("Buy button clicked for: " + ((InventoryData)item).displayName);
                 shopManager.BuyItem((InventoryData)item);
+
+                // ✅ Play sound for buying
+                if (sellSound != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(sellSound);
+                }
             });
         }
     }

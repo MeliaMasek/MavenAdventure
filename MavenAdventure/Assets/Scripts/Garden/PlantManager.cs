@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,18 +20,23 @@ public class PlantManager : MonoBehaviour
         [HideInInspector] public bool isWatered = false;
         [HideInInspector] public bool isFertilized = false;
         [HideInInspector] public bool isReadytoHarvest;
-
+        
         public Transform spawnLocator;
         public Vector3 spawnScale;
     }
 
     public int dayCounter = 1;
     public Text dayCounterText;
+    
+    private GameObject currentLockedInstance;
+    public GameObject lockedPrefab;
+    public Transform spawnPoint;
 
     public WateringInteraction wateringInteraction;
     public BackpackManager backpack;
     
     public List<Plant> plants = new List<Plant>();
+    private List<GameObject> currentLockedInstances = new List<GameObject>();
 
     private void Start()
     {
@@ -244,5 +248,38 @@ private void EndDay()
 
         plants.Add(newPlant);
         backpack.RemoveSeed(selectedSeed);
+    }
+    
+    public void ReplaceWithUnlocked(GameObject unlockedPrefab, GameObject lockedInstance)
+    {
+        if (lockedInstance != null)
+        {
+            Vector3 pos = lockedInstance.transform.position;
+            Quaternion rot = lockedInstance.transform.rotation;
+
+            // Destroy the locked object (make sure it's an instance)
+            Destroy(lockedInstance);
+
+            // Instantiate the unlocked prefab in the same position
+            GameObject unlockedObject = Instantiate(unlockedPrefab, pos, rot);
+
+            // Optionally, you could assign this instantiated object back to a reference variable if needed.
+        }
+    }
+    
+    public void SpawnLockedObject()
+    {
+        // Instantiate the locked prefab
+        GameObject lockedInstance = Instantiate(lockedPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        // Get the PurchaseBed script component to link the instantiated object
+        PurchaseBed purchaseBedScript = lockedInstance.GetComponent<PurchaseBed>();
+        if (purchaseBedScript != null)
+        {
+            purchaseBedScript.lockedObject = lockedInstance;  // Link the current instance to the PurchaseBed
+            purchaseBedScript.plantManager = this; // Link to the PlantManager
+        }
+
+        currentLockedInstances.Add(lockedInstance);  // Track the instantiated object
     }
 }

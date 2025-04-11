@@ -4,40 +4,47 @@ public class OpenMenuOnClick : MonoBehaviour
 {
     public GameObject menuPanel; // Assign the UI menu panel in the Inspector
     private Collider doorCollider; // Reference to the door's collider
-
+    public AudioSource audioSource; // Sound to play when the door is clicked 
+    public AudioClip doorOpenSound; // Clip to play when the door is clicked
 
     private void Start()
     {
-        // Ensure we have the door's collider reference
         doorCollider = GetComponent<Collider>();
+
+        // Try to get AudioSource from this GameObject
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            // If there's no AudioSource, add one
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void OnMouseDown()
     {
         if (menuPanel != null)
         {
-            // If the menu is open, do nothing when clicking the door
             if (menuPanel.activeSelf)
+                return;
+
+            // Play the sound
+            if (doorOpenSound != null)
             {
-                return; // Prevent interaction with door when menu is open
+                audioSource.volume = 0.25f; // Range is 0.0 (mute) to 1.0 (full volume)
+                audioSource.PlayOneShot(doorOpenSound);
             }
 
-            // Otherwise, toggle the menu when clicked
-            menuPanel.SetActive(!menuPanel.activeSelf);
+            // Toggle the menu panel
+            menuPanel.SetActive(true);
         }
     }
 
+    // Optional: Handle trigger areas if you want to allow interaction only when nearby
     private void OnTriggerEnter(Collider other)
     {
-        // Only allow opening the menu when the player is near the door and the menu is not open
         if (other.CompareTag("Player") && !menuPanel.activeSelf)
         {
-            // Allow interaction with the door
+            // You could set a flag here to allow interaction
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // Handle when the player exits the door's trigger area
     }
 }

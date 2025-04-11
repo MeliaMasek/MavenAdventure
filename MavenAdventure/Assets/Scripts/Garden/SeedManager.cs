@@ -1,6 +1,4 @@
-
-
-
+using System;
 using UnityEngine;
 
 public class SeedManager : MonoBehaviour
@@ -9,6 +7,14 @@ public class SeedManager : MonoBehaviour
     public LayerMask plantLayer;
     public PlantManager plantManager;
     public Material dirtDry;
+    
+    public AudioClip plantingSound;
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void ActivatePlantingMode()
     {
@@ -85,6 +91,12 @@ public class SeedManager : MonoBehaviour
         };
 
         newPlant.currentStageObject = Instantiate(newPlant.seedPrefab, newPlant.spawnLocator.position, Quaternion.identity);
+        
+        if (plantingSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(plantingSound);
+        }
+        
         newPlant.currentStage = 0;
 
         plantManager.plants.Add(newPlant);

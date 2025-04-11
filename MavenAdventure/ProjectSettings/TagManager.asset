@@ -9,6 +9,8 @@ TagManager:
   - Dirt
   - PlantBed
   - Harvest
+  - CameraSwitchZone
+  - LockedBed
   layers:
   - Default
   - TransparentFX
