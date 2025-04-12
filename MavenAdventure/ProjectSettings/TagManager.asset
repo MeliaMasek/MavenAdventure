@@ -11,6 +11,7 @@ TagManager:
   - Harvest
   - CameraSwitchZone
   - LockedBed
+  - Lock
   layers:
   - Default
   - TransparentFX

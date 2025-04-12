@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e82d515da6960c8448148f8bb6187abb, type: 3}
-  m_Name: Coins
+  m_Name: UnlockCost
   m_EditorClassIdentifier: 
-  value: 20
+  value: 10

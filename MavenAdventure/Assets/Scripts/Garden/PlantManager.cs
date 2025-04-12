@@ -29,14 +29,11 @@ public class PlantManager : MonoBehaviour
     public Text dayCounterText;
     
     private GameObject currentLockedInstance;
-    public GameObject lockedPrefab;
-    public Transform spawnPoint;
 
     public WateringInteraction wateringInteraction;
     public BackpackManager backpack;
     
     public List<Plant> plants = new List<Plant>();
-    private List<GameObject> currentLockedInstances = new List<GameObject>();
 
     private void Start()
     {
@@ -250,36 +247,25 @@ private void EndDay()
         backpack.RemoveSeed(selectedSeed);
     }
     
-    public void ReplaceWithUnlocked(GameObject unlockedPrefab, GameObject lockedInstance)
+    public void AddNewPlant(GameObject basePrefab, Transform spawnLocator, Vector3 spawnScale, InventoryData plantData)
     {
-        if (lockedInstance != null)
+        // Instantiate the base stage object
+        GameObject baseStage = Instantiate(basePrefab, spawnLocator.position, spawnLocator.rotation);
+        baseStage.transform.localScale = spawnScale;
+
+        // Create a new Plant instance
+        Plant newPlant = new Plant
         {
-            Vector3 pos = lockedInstance.transform.position;
-            Quaternion rot = lockedInstance.transform.rotation;
+            basePrefab = basePrefab,
+            spawnLocator = spawnLocator,
+            spawnScale = spawnScale,
+            plantData = plantData,
+            baseStageObject = baseStage,
+            currentStageObject = baseStage,
+            currentStage = -1
+        };
 
-            // Destroy the locked object (make sure it's an instance)
-            Destroy(lockedInstance);
-
-            // Instantiate the unlocked prefab in the same position
-            GameObject unlockedObject = Instantiate(unlockedPrefab, pos, rot);
-
-            // Optionally, you could assign this instantiated object back to a reference variable if needed.
-        }
-    }
-    
-    public void SpawnLockedObject()
-    {
-        // Instantiate the locked prefab
-        GameObject lockedInstance = Instantiate(lockedPrefab, spawnPoint.position, spawnPoint.rotation);
-
-        // Get the PurchaseBed script component to link the instantiated object
-        PurchaseBed purchaseBedScript = lockedInstance.GetComponent<PurchaseBed>();
-        if (purchaseBedScript != null)
-        {
-            purchaseBedScript.lockedObject = lockedInstance;  // Link the current instance to the PurchaseBed
-            purchaseBedScript.plantManager = this; // Link to the PlantManager
-        }
-
-        currentLockedInstances.Add(lockedInstance);  // Track the instantiated object
+        // Add the new plant to the list
+        plants.Add(newPlant);
     }
 }
