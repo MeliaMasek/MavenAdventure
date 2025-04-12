@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class PlantManager : MonoBehaviour
 {
     [System.Serializable]
@@ -15,25 +16,29 @@ public class PlantManager : MonoBehaviour
         public GameObject baseStageObject;
         public GameObject currentStageObject;
         public int currentStage = -1;
-        
+
         [HideInInspector] public int daysElapsed = 0;
         [HideInInspector] public bool isWatered = false;
         [HideInInspector] public bool isFertilized = false;
         [HideInInspector] public bool isReadytoHarvest;
-        
+
         public Transform spawnLocator;
         public Vector3 spawnScale;
+        public bool isBedLocked = true;
     }
 
     public int dayCounter = 1;
     public Text dayCounterText;
-    
+
     private GameObject currentLockedInstance;
+    public IntData playerCoins;
 
     public WateringInteraction wateringInteraction;
     public BackpackManager backpack;
-    
+
     public List<Plant> plants = new List<Plant>();
+    private List<GameObject> lockedBeds = new List<GameObject>();
+
 
     private void Start()
     {
@@ -50,11 +55,12 @@ public class PlantManager : MonoBehaviour
         }
 
         UpdateDayCounterUI();
+        //InitializeBeds();
 
         foreach (var plant in plants)
         {
             plant.currentStage = -1;
-            
+
             if (plant.spawnLocator != null)
             {
                 GameObject baseStage = Instantiate(
@@ -70,46 +76,72 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-private void EndDay()
-{
-    List<Plant> plantsToRemove = new List<Plant>();
-
-    foreach (var plant in plants)
+    private void InitializeBeds()
     {
-        if (plant.isWatered)
+        foreach (var plant in plants)
         {
-            plant.daysElapsed++;
-            int sproutDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToSprout - 1) : plant.plantData.daysToSprout;
-            int matureDays = plant.isFertilized ? Mathf.Max(1, plant.plantData.daysToMature - 1) : plant.plantData.daysToMature;
-
-            if (plant.currentStage == -1 && plant.daysElapsed >= sproutDays)
+            if (plant.isBedLocked)
             {
-                SetStage(plant, 0); // Transition to seed stage
+                // Instantiate locked bed prefab
+                plant.baseStageObject = Instantiate(plant.basePrefab, plant.spawnLocator.position,
+                    plant.spawnLocator.rotation);
+                plant.baseStageObject.SetActive(false); // Hide locked bed
             }
-            else if (plant.currentStage == 0 && plant.daysElapsed >= sproutDays)
+            else
             {
-                SetStage(plant, 1); // Transition to sprout stage
-            }
-            if (plant.currentStage == 1 && plant.daysElapsed >= sproutDays + matureDays)
-            {
-                SetStage(plant, 2); // Transition to mature stage
+                // Instantiate unlocked bed prefab
+                plant.baseStageObject = Instantiate(plant.basePrefab, plant.spawnLocator.position,
+                    plant.spawnLocator.rotation);
+                plant.baseStageObject.SetActive(true);
             }
         }
-
-        plant.isWatered = false;
-        plant.isFertilized = false;
     }
 
-    dayCounter++;
-
-    foreach (var plant in plantsToRemove)
+    private void EndDay()
     {
-        plants.Remove(plant);
-    }
+        List<Plant> plantsToRemove = new List<Plant>();
 
-    ResetDirtToDry();
-    UpdateDayCounterUI();
-}
+        foreach (var plant in plants)
+        {
+            if (plant.isWatered)
+            {
+                plant.daysElapsed++;
+                int sproutDays = plant.isFertilized
+                    ? Mathf.Max(1, plant.plantData.daysToSprout - 1)
+                    : plant.plantData.daysToSprout;
+                int matureDays = plant.isFertilized
+                    ? Mathf.Max(1, plant.plantData.daysToMature - 1)
+                    : plant.plantData.daysToMature;
+
+                if (plant.currentStage == -1 && plant.daysElapsed >= sproutDays)
+                {
+                    SetStage(plant, 0); // Transition to seed stage
+                }
+                else if (plant.currentStage == 0 && plant.daysElapsed >= sproutDays)
+                {
+                    SetStage(plant, 1); // Transition to sprout stage
+                }
+
+                if (plant.currentStage == 1 && plant.daysElapsed >= sproutDays + matureDays)
+                {
+                    SetStage(plant, 2); // Transition to mature stage
+                }
+            }
+
+            plant.isWatered = false;
+            plant.isFertilized = false;
+        }
+
+        dayCounter++;
+
+        foreach (var plant in plantsToRemove)
+        {
+            plants.Remove(plant);
+        }
+
+        ResetDirtToDry();
+        UpdateDayCounterUI();
+    }
 
     private void ResetDirtToDry()
     {
@@ -155,13 +187,13 @@ private void EndDay()
                 newStagePrefab = plant.basePrefab; // Set to base prefab
                 break;
             case 0:
-                newStagePrefab = plant.seedPrefab; 
+                newStagePrefab = plant.seedPrefab;
                 break;
             case 1:
-                newStagePrefab = plant.sproutPrefab; 
+                newStagePrefab = plant.sproutPrefab;
                 break;
             case 2:
-                newStagePrefab = plant.maturePrefab; 
+                newStagePrefab = plant.maturePrefab;
                 plant.isReadytoHarvest = true;
                 break;
         }
@@ -213,7 +245,7 @@ private void EndDay()
 
         ResetPlantAfterCollection(plant);
     }
-    
+
     private void ResetPlantAfterCollection(PlantManager.Plant plant)
     {
         if (plant.baseStageObject != null)
@@ -223,7 +255,7 @@ private void EndDay()
 
         SetStage(plant, -1);
     }
-    
+
     public void PlantSeedAt(Transform planterLocation)
     {
         InventoryData selectedSeed = backpack.GetSelectedSeed();
@@ -246,7 +278,7 @@ private void EndDay()
         plants.Add(newPlant);
         backpack.RemoveSeed(selectedSeed);
     }
-    
+
     public void AddNewPlant(GameObject basePrefab, Transform spawnLocator, Vector3 spawnScale, InventoryData plantData)
     {
         // Instantiate the base stage object
@@ -267,5 +299,57 @@ private void EndDay()
 
         // Add the new plant to the list
         plants.Add(newPlant);
+    }
+
+    public void PurchaseBed(GameObject bedPrefab, List<Transform> spawnLocations, Vector3 spawnScale, int cost,
+        bool isUnlocking, bool instantiateBed = true)
+    {
+        if (playerCoins.value >= cost)
+        {
+            playerCoins.value -= cost;
+
+            if (isUnlocking)
+            {
+                // Deactivate all GameObjects tagged as "LockedBed"
+                GameObject[] lockedBeds = GameObject.FindGameObjectsWithTag("LockedBed");
+                foreach (GameObject bed in lockedBeds)
+                {
+                    bed.SetActive(false);
+                }
+
+                if (instantiateBed)
+                {
+                    // Instantiate unlocked beds at specified locations
+                    foreach (Transform spawnLocation in spawnLocations)
+                    {
+                        GameObject newBed = Instantiate(bedPrefab, spawnLocation.position, spawnLocation.rotation);
+                        newBed.transform.localScale = spawnScale;
+                    }
+                }
+
+                Debug.Log("Unlocked beds purchased and instantiated.");
+            }
+            else
+            {
+                if (spawnLocations.Count > 0 && instantiateBed)
+                {
+                    Transform spawnLocator = spawnLocations[0];
+                    GameObject lockedBed = Instantiate(bedPrefab, spawnLocator.position, spawnLocator.rotation);
+                    lockedBed.transform.localScale = spawnScale;
+                    lockedBed.tag = "LockedBed";
+                    lockedBed.SetActive(false);
+
+                    Debug.Log("Locked bed purchased and instantiated.");
+                }
+                else
+                {
+                    Debug.LogWarning("No spawn locations provided for locked bed or instantiation disabled.");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Not enough coins to purchase the bed.");
+        }
     }
 }

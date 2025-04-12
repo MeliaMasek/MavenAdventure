@@ -1656,6 +1656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayCounter: 1
   dayCounterText: {fileID: 2081855278}
+  playerCoins: {fileID: 11400000, guid: 5a6f89e35a338334e9a9e4e925e9cf54, type: 2}
   wateringInteraction: {fileID: 1625897600}
   backpack: {fileID: 700242544}
   plants:
@@ -1673,7 +1674,8 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1781861327}
     spawnScale: {x: 75, y: 75, z: 75}
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+    isBedLocked: 1
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1686,8 +1688,9 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 28287015}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+    spawnScale: {x: 75, y: 75, z: 75}
+    isBedLocked: 1
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1700,7 +1703,8 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1260972124}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    spawnScale: {x: 75, y: 75, z: 75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1715,6 +1719,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1017477804}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1729,6 +1734,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 55176419}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1743,6 +1749,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 2065830485}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1757,6 +1764,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 785148396}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1771,6 +1779,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1175100325}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1785,6 +1794,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1618714944}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1799,6 +1809,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1648276529}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1813,6 +1824,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1791812457}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
@@ -1827,6 +1839,7 @@ MonoBehaviour:
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1536164016}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    isBedLocked: 1
 --- !u!4 &162928837
 Transform:
   m_ObjectHideFlags: 0
@@ -8082,9 +8095,11 @@ MonoBehaviour:
   unlockMenuUI: {fileID: 1123749099}
   bedPrefabs:
   - {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
-  spawnLocations: []
+  spawnLocations:
+  - {fileID: 1781861327}
   spawnIndex: 0
   spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+  plantManager: {fileID: 162928836}
 --- !u!1 &1045052025 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 81b6ab73508ceb64d88fd70f5effe628, type: 3}

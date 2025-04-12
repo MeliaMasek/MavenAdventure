@@ -1,30 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PurchaseBed : MonoBehaviour
 {
-    [Header("Bed Prefabs")]
-    public GameObject lockedBedPrefab; // Reference to the locked bed prefab
+    [Header("Bed Prefabs")] public GameObject lockedBedPrefab; // Reference to the locked bed prefab
     public GameObject unlockedBedPrefab; // Reference to the unlocked bed prefab
 
-    [Header("Purchase Settings")]
-    public int bedCost; // Cost to unlock the bed
-    //public UnityEngine.UI.Text coinText; // UI Text to display player's coins
-    public IntData playerCoins;
+    [Header("Purchase Settings")] public int bedCost; // Cost to unlock the bed
+    public IntData playerCoins; // Reference to the player's coin data
 
     private bool isBedUnlocked = false;
 
     public GameObject unlockMenuUI; // Your confirm panel UI
-
     public GameObject[] bedPrefabs; // Array to hold different bed prefabs
-    public Transform[] spawnLocations; // Array to hold spawn locations (locators)
+    public List<Transform> spawnLocations;
 
     private GameObject currentBedInstance;
     public int spawnIndex = 0; // Replace with your desired index
     public Vector3 spawnScale;
 
+    public PlantManager plantManager;
+    private InventoryData plantData;
 
     void Start()
     {
+        // Initialize the PlantManager reference
+        plantManager = FindObjectOfType<PlantManager>();
+
         // Load player's coin count and bed purchase status
         isBedUnlocked = PlayerPrefs.GetInt("IsBedUnlocked", 0) == 1;
 
@@ -51,7 +53,7 @@ public class PurchaseBed : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("UnlockedUI is not assigned.");
+                        Debug.LogWarning("UnlockMenuUI is not assigned.");
                     }
                 }
             }
@@ -60,7 +62,6 @@ public class PurchaseBed : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Optional: Add logic to make sure this only runs when unlocked == false
         if (unlockMenuUI != null)
         {
             unlockMenuUI.SetActive(true);
@@ -85,13 +86,16 @@ public class PurchaseBed : MonoBehaviour
         {
             playerCoins.value -= bedCost;
 
-            if (bedIndex >= 0 && bedIndex < bedPrefabs.Length && spawnIndex >= 0 && spawnIndex < spawnLocations.Length)
+            if (bedIndex >= 0 && bedIndex < bedPrefabs.Length && spawnIndex >= 0 && spawnIndex < spawnLocations.Count)
             {
                 Transform spawnLocation = spawnLocations[spawnIndex];
                 GameObject bedPrefab = bedPrefabs[bedIndex];
 
                 // Instantiate the selected bed prefab at the chosen spawn location
                 Instantiate(bedPrefab, spawnLocation.position, spawnLocation.rotation);
+
+                // Unlock the bed in the PlantManager
+                UnlockBedInPlantManager(spawnLocation);
             }
             else
             {
@@ -103,6 +107,21 @@ public class PurchaseBed : MonoBehaviour
             Debug.Log("Not enough coins to purchase the bed.");
         }
     }
+
+    private void UnlockBedInPlantManager(Transform spawnLocation)
+    {
+        foreach (var plant in plantManager.plants)
+        {
+            if (plant.spawnLocator == spawnLocation)
+            {
+                plant.isBedLocked = false;
+                plant.baseStageObject.SetActive(true);
+                Debug.Log("Bed unlocked in PlantManager.");
+                break;
+            }
+        }
+    }
+
     private void ReplaceBedPrefab(GameObject newPrefab, Transform spawnLocation = null, Vector3? customScale = null)
     {
         // Destroy the current bed instance if it exists
@@ -117,28 +136,40 @@ public class PurchaseBed : MonoBehaviour
         Quaternion rotation = spawnLocation != null ? spawnLocation.rotation : Quaternion.identity;
 
         // Instantiate the new bed prefab
-        currentBedInstance = Instantiate(newPrefab, position, rotation);
+        //currentBedInstance = Instantiate(newPrefab, position, rotation);
 
         // Apply custom scale if provided
         if (customScale.HasValue)
         {
-            currentBedInstance.transform.localScale = customScale.Value;
+            //currentBedInstance.transform.localScale = customScale.Value;
         }
     }
-    
-    
+
     public void OnPurchaseConfirmed()
     {
         if (playerCoins.value >= bedCost)
         {
-            playerCoins.value -= bedCost;
+            // Assuming spawnLocations is a List<Transform>
+            foreach (Transform spawnLocator in spawnLocations)
+            {
+                // Create a list with a single spawn location
+                List<Transform> singleSpawnLocation = new List<Transform> { spawnLocator };
+
+                // Purchase and instantiate the bed at the spawn location
+                plantManager.PurchaseBed(unlockedBedPrefab, singleSpawnLocation, spawnScale, bedCost, true, false);
+
+                // Optionally, add a new plant at the spawn location
+                // Uncomment the next line if you want to add a plant
+                plantManager.AddNewPlant(unlockedBedPrefab, spawnLocator, spawnScale, plantData);
+            }
 
             isBedUnlocked = true;
             PlayerPrefs.SetInt("IsBedUnlocked", 1);
             PlayerPrefs.Save();
-            
-            Vector3 desiredScale = new Vector3(.75f, .75f, .75f);
+
+            Vector3 desiredScale = new Vector3(0.75f, 0.75f, 0.75f);
             ReplaceBedPrefab(unlockedBedPrefab, spawnLocations[spawnIndex], desiredScale);
+
             if (unlockMenuUI != null)
             {
                 unlockMenuUI.SetActive(false);
