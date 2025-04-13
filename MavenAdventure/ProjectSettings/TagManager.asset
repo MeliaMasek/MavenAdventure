@@ -10,8 +10,8 @@ TagManager:
   - PlantBed
   - Harvest
   - CameraSwitchZone
-  - LockedBed
-  - Lock
+  - LockedBed1
+  - LockedBed2
   layers:
   - Default
   - TransparentFX

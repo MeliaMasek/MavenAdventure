@@ -259,10 +259,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2940335878751097125}
   - component: {fileID: 6996090616981121858}
-  - component: {fileID: -930329765843461388}
+  - component: {fileID: 3790040877605215746}
   m_Layer: 6
-  m_Name: Purchase_Bed 1
-  m_TagString: LockedBed
+  m_Name: Purchase_Bed 2
+  m_TagString: LockedBed2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,7 +297,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.049349174, y: 0.039855525, z: 0.048851475}
   m_Center: {x: 0.0005125925, y: 0.01659187, z: 0.0005351743}
---- !u!114 &-930329765843461388
+--- !u!114 &3790040877605215746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -488,7 +488,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 21df577fe0ef2af47a9678c7ded815ab, type: 2}
+  - {fileID: 2100000, guid: 06c623261b111194a9ffb7f3154aa651, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

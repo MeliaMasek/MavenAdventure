@@ -1660,7 +1660,7 @@ MonoBehaviour:
   wateringInteraction: {fileID: 1625897600}
   backpack: {fileID: 700242544}
   plants:
-  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
+  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1673,9 +1673,9 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1781861327}
-    spawnScale: {x: 75, y: 75, z: 75}
+    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
     isBedLocked: 1
-  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
+  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1688,7 +1688,7 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 28287015}
-    spawnScale: {x: 75, y: 75, z: 75}
+    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
     isBedLocked: 1
   - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
@@ -1705,7 +1705,7 @@ MonoBehaviour:
     spawnLocator: {fileID: 1260972124}
     spawnScale: {x: 75, y: 75, z: 75}
     isBedLocked: 1
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1718,7 +1718,7 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1017477804}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    spawnScale: {x: 75, y: 75, z: 75}
     isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
@@ -1750,7 +1750,7 @@ MonoBehaviour:
     spawnLocator: {fileID: 2065830485}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
     isBedLocked: 1
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1763,9 +1763,9 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 785148396}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    spawnScale: {x: 75, y: 75, z: 75}
     isBedLocked: 1
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1778,7 +1778,7 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1175100325}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    spawnScale: {x: 75, y: 75, z: 75}
     isBedLocked: 1
   - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
     seedPrefab: {fileID: 0}
@@ -1810,7 +1810,7 @@ MonoBehaviour:
     spawnLocator: {fileID: 1648276529}
     spawnScale: {x: 0.75, y: 0.75, z: 0.75}
     isBedLocked: 1
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1823,9 +1823,9 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1791812457}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    spawnScale: {x: 75, y: 75, z: 75}
     isBedLocked: 1
-  - basePrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
+  - basePrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
     seedPrefab: {fileID: 0}
     sproutPrefab: {fileID: 0}
     maturePrefab: {fileID: 0}
@@ -1838,7 +1838,7 @@ MonoBehaviour:
     isFertilized: 0
     isReadytoHarvest: 0
     spawnLocator: {fileID: 1536164016}
-    spawnScale: {x: 0.75, y: 0.75, z: 0.75}
+    spawnScale: {x: 75, y: 75, z: 75}
     isBedLocked: 1
 --- !u!4 &162928837
 Transform:
@@ -1995,13 +1995,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 200
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Buy plot for $50
+  m_Text: "Buy additonal plots \nfor $500?"
 --- !u!222 &193521022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2019,7 +2019,7 @@ RectTransform:
   m_GameObject: {fileID: 193521020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.33674598, y: 0.33674598, z: 0.33674598}
+  m_LocalScale: {x: 0.2861499, y: 0.2861499, z: 0.2861499}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1123749103}
@@ -2027,7 +2027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: 140}
+  m_AnchoredPosition: {x: 28, y: 204}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &194064254
@@ -8090,13 +8090,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockedBedPrefab: {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
   unlockedBedPrefab: {fileID: 7926924890173149604, guid: 3cad87e32e1c18f458e69133fd75bc1a, type: 3}
-  bedCost: 10
+  bedCost: 500
   playerCoins: {fileID: 11400000, guid: 5a6f89e35a338334e9a9e4e925e9cf54, type: 2}
   unlockMenuUI: {fileID: 1123749099}
   bedPrefabs:
   - {fileID: 2559728265723628447, guid: 0d99fe21dcfcb9d45839e98fbc368dfb, type: 3}
   spawnLocations:
-  - {fileID: 1781861327}
+  - {fileID: 1260972124}
+  - {fileID: 1017477804}
+  - {fileID: 785148396}
+  - {fileID: 1175100325}
+  - {fileID: 1791812457}
+  - {fileID: 1536164016}
   spawnIndex: 0
   spawnScale: {x: 0.75, y: 0.75, z: 0.75}
   plantManager: {fileID: 162928836}
