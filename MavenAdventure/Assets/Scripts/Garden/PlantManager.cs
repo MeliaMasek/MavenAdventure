@@ -73,6 +73,14 @@ public class PlantManager : MonoBehaviour
                 baseStage.transform.localScale = plant.spawnScale;
                 plant.currentStageObject = baseStage;
                 plant.currentStage = -1;
+
+                // Only assign the manager if this prefab is the locked bed
+                BedLock bedLock = baseStage.GetComponent<BedLock>();
+                if (bedLock != null)
+                {
+                    bedLock.purchaseBed = FindObjectOfType<PurchaseBed>(); // or assign your specific reference
+                    Debug.Log($"Assigned PurchaseBed manager to {baseStage.name}");
+                }
             }
         }
     }

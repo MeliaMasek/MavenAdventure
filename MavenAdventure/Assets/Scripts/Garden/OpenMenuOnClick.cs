@@ -1,50 +1,89 @@
+using System;
 using UnityEngine;
 
 public class OpenMenuOnClick : MonoBehaviour
 {
     public GameObject menuPanel; // Assign the UI menu panel in the Inspector
-    private Collider doorCollider; // Reference to the door's collider
-    public AudioSource audioSource; // Sound to play when the door is clicked 
-    public AudioClip doorOpenSound; // Clip to play when the door is clicked
+    private Collider doorCollider;
+    public AudioSource audioSource;
+    public AudioClip doorOpenSound;
+
+    public float interactionDistance = 2f;
+    private bool isPlayerInRange = false;
+
+    public Transform player;
 
     private void Start()
     {
         doorCollider = GetComponent<Collider>();
 
-        // Try to get AudioSource from this GameObject
+        if (doorCollider == null)
+        {
+            Debug.LogError("No collider found on this object! Add a collider.");
+        }
+
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            // If there's no AudioSource, add one
             audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
 
+    private void Update()
+    {
+        if (player == null) return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        isPlayerInRange = distance <= interactionDistance;
+
+        if (doorCollider != null)
+        {
+            doorCollider.enabled = isPlayerInRange;
+        }
+    }
+
+    private bool IsPlayerEligible()
+    {
+        if (player == null)
+        {
+            Debug.LogError("Player reference not assigned!");
+            return false;
+        }
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        Debug.Log("Distance to player: " + distance);
+
+        return distance <= interactionDistance;
+    }
+
     private void OnMouseDown()
     {
+        if (player == null)
+        {
+            Debug.LogError("Player reference not assigned!");
+            return;
+        }
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        if (distance > interactionDistance)
+        {
+            Debug.Log("Player too far away to interact!");
+            return;
+        }
+
         if (menuPanel != null)
         {
             if (menuPanel.activeSelf)
                 return;
 
-            // Play the sound
             if (doorOpenSound != null)
             {
-                audioSource.volume = 0.25f; // Range is 0.0 (mute) to 1.0 (full volume)
+                audioSource.volume = 0.25f;
                 audioSource.PlayOneShot(doorOpenSound);
             }
 
-            // Toggle the menu panel
             menuPanel.SetActive(true);
-        }
-    }
-
-    // Optional: Handle trigger areas if you want to allow interaction only when nearby
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !menuPanel.activeSelf)
-        {
-            // You could set a flag here to allow interaction
+            Debug.Log("Menu opened!");
         }
     }
 }

@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +21,11 @@ public class PurchaseBed : MonoBehaviour
 
     public PlantManager plantManager;
     private InventoryData plantData;
+    
+    public float interactionDistance = 2f;
+    public Transform player;
+    
+    
 
     void Start()
     {
@@ -37,30 +41,50 @@ public class PurchaseBed : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Left mouse button click
+        if (Input.GetMouseButtonDown(0))  // Mobile taps register as mouse 0
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("LockedBed"))
+                if (hit.collider.gameObject == this.gameObject)
                 {
-                    Debug.Log("Clicked on the locked bed: " + hit.collider.gameObject.name);
-
-                    if (unlockMenuUI != null)
+                    if (IsPlayerInRange())
                     {
-                        unlockMenuUI.SetActive(true);
+                        Debug.Log("Clicked on bed within range!");
+
+                        if (unlockMenuUI != null)
+                        {
+                            unlockMenuUI.SetActive(true);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("UnlockMenuUI is not assigned.");
+                        }
                     }
                     else
                     {
-                        Debug.LogWarning("UnlockMenuUI is not assigned.");
+                        Debug.Log("Player too far away to interact!");
                     }
                 }
             }
         }
     }
 
+    private bool IsPlayerInRange()
+    {
+        if (player == null)
+        {
+            Debug.LogError("Player reference not assigned!");
+            return false;
+        }
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        Debug.Log("Distance to player: " + distance);
+        return distance <= interactionDistance;
+    }
+    
     private void OnMouseDown()
     {
         if (unlockMenuUI != null)
@@ -93,8 +117,12 @@ public class PurchaseBed : MonoBehaviour
                 GameObject bedPrefab = bedPrefabs[bedIndex];
 
                 // Instantiate the selected bed prefab at the chosen spawn location
-                Instantiate(bedPrefab, spawnLocation.position, spawnLocation.rotation);
-
+                GameObject newBed = Instantiate(bedPrefab, spawnLocation.position, spawnLocation.rotation);
+                BedLock bedLock = newBed.GetComponent<BedLock>();
+                if (bedLock != null)
+                {
+                    bedLock.purchaseBed = this;  // THIS assigns the manager!
+                }
                 // Unlock the bed in the PlantManager
                 UnlockBedInPlantManager(spawnLocation);
             }
@@ -180,5 +208,17 @@ public class PurchaseBed : MonoBehaviour
         {
             Debug.Log("Not enough coins to purchase the bed.");
         }
+    }
+    
+    public bool IsPlayerInRange(Transform target)
+    {
+        if (player == null) return false;
+        return Vector3.Distance(player.position, target.position) <= interactionDistance;
+    }
+    
+    public void ShowUnlockMenu()
+    {
+        if (unlockMenuUI != null)
+            unlockMenuUI.SetActive(true);
     }
 }
