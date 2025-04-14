@@ -52,7 +52,9 @@ public class ShopUI : MonoBehaviour
             ? (backpackManager.collectedProduce.ContainsKey((ProduceData)item) ? backpackManager.collectedProduce[(ProduceData)item] : 0) 
             : (backpackManager.collectedSeeds.ContainsKey((InventoryData)item) ? backpackManager.collectedSeeds[(InventoryData)item] : 0);
 
-        shopItem.transform.Find("ItemName").GetComponent<Text>().text = $"{itemName} x{itemAmount}";
+        shopItem.transform.Find("ItemName").GetComponent<Text>().text = $"{itemName}";
+        shopItem.transform.Find("ItemAmount").GetComponent<Text>().text = $"(Owned: {itemAmount})";
+
         shopItem.transform.Find("ItemPrice").GetComponent<Text>().text = itemPrice.ToString();
         shopItem.transform.Find("ItemIcon").GetComponent<Image>().sprite = itemIcon;
 

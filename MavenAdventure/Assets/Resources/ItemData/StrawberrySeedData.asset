@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StrawberrySeedData
   m_EditorClassIdentifier: 
   ID: 50
-  displayName: Strawberry Seed
+  displayName: Berry Seed
   description: 
   Seedicon: {fileID: 21300000, guid: b614f2228ac8a6c4e80e2b60cfba0858, type: 3}
   maxStackSize: 50
