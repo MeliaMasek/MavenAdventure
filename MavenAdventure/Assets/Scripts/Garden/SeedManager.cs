@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+//Code created, borrowed, and modified from Chat GPT
 
 public class SeedManager : MonoBehaviour
 {

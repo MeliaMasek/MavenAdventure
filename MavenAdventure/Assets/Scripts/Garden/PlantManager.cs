@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//Code created, borrowed, and modified from Chat GPT
 public class PlantManager : MonoBehaviour
 {
     [System.Serializable]

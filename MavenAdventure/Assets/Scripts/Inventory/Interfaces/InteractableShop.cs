@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+//Code created, borrowed, and modified from Chat GPT
 
 public class InteractableShop : MonoBehaviour, IInteractable
 {

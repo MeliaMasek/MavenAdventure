@@ -1,4 +1,5 @@
 using UnityEngine;
+//Code created, borrowed, and modified from Chat GPT
 
 [CreateAssetMenu(fileName = "New ProduceData", menuName = "Inventory/ProduceData")]
 public class ProduceData : ScriptableObject

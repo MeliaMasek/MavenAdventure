@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+//Code created, borrowed, and modified from Chat GPT
 
 public class ShopManager : MonoBehaviour
 {

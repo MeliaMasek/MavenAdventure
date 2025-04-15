@@ -1,4 +1,6 @@
 using UnityEngine;
+//Code created, borrowed, and modified from Chat GPT
+
 public class PlantingSystem : MonoBehaviour
 {
     public BackpackManager backpackManager;

@@ -1,7 +1,7 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+//Code created, borrowed, and modified from Chat GPT
 
 public class CalendarManager : MonoBehaviour
 {
