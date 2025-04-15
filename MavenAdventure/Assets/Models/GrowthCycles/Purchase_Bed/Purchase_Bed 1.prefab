@@ -311,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocked: 1
   spawnLocation: {fileID: 0}
+  purchaseBed: {fileID: 0}
 --- !u!1 &3023663265742358614
 GameObject:
   m_ObjectHideFlags: 0

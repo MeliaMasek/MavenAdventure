@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,11 +38,14 @@ public class PlantManager : MonoBehaviour
 
     public List<Plant> plants = new List<Plant>();
     private List<GameObject> lockedBeds = new List<GameObject>();
-
+    
+    public AudioClip harvestSound;
+    private AudioSource audioSource;
 
     private void Start()
     {
         Application.targetFrameRate = 60;
+        audioSource = GetComponent<AudioSource>();
 
         if (wateringInteraction == null)
         {
@@ -252,6 +254,10 @@ public class PlantManager : MonoBehaviour
             backpack.AddProduceToBackpack(produceData);
         }
 
+        if (audioSource != null && harvestSound != null)
+        {
+            audioSource.PlayOneShot(harvestSound);
+        }
         ResetPlantAfterCollection(plant);
     }
 
